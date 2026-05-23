@@ -219,7 +219,7 @@ function OtherWork({ projects }: { projects: Project[] }) {
             <Link
               key={p._id}
               href={`/projects/${p.slug}`}
-              className={`group bg-[#F4F3DE] aspect-square flex flex-col overflow-hidden transition-opacity duration-300
+              className={`group bg-[#F0F1ED] aspect-square flex flex-col overflow-hidden transition-opacity duration-300
                 border-[1.5px] border-[#1A1A18]
                 ${index > 0 ? "border-l-0" : ""}`}
             >
