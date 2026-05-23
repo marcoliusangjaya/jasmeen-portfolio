@@ -96,7 +96,7 @@ export default async function AboutPage() {
               <Link
                 key={f}
                 href="/"
-                className="font-satoshi text-xs tracking-wide px-5 py-2 rounded-full border-[1.5px] border-[#1A1A18] text-[#1A1A18] hover:bg-[#1A1A18] hover:text-[#F5F5F5] transition-colors duration-200"
+                className="font-satoshi text-xs tracking-wide px-5 py-2 rounded-full border-[1.5px] border-[#1A1A18] text-[#1A1A18] hover:bg-[#1A1A18] hover:text-[#F0F1ED] transition-colors duration-200"
               >
                 {f}
               </Link>

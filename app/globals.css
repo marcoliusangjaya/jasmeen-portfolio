@@ -27,7 +27,7 @@
 @tailwind utilities;
 
 :root {
-  --color-bg: #F5F5F5;
+  --color-bg: #F0F1ED;
   --color-text: #1A1A18;
   --color-footer: #4A4945;
   --color-border: #D0CBC2;
