@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import Nav from "@/components/Nav";
+import PageTransition from "@/components/PageTransition";
 
 export const metadata: Metadata = {
   title: "Jasmeen — Portfolio",
@@ -16,7 +17,7 @@ export default function RootLayout({
     <html lang="en">
       <body className="antialiased">
         <Nav />
-        {children}
+        <PageTransition>{children}</PageTransition>
       </body>
     </html>
   );
