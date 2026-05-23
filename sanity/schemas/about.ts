@@ -41,6 +41,14 @@ export default defineType({
         },
       ],
     }),
+    defineField({
+      name: "skills",
+      title: "Skills / Filter Pills",
+      description: "Shown as clickable pills on the About page",
+      type: "array",
+      of: [{ type: "string" }],
+      options: { layout: "tags" },
+    }),
     defineField({ name: "email", title: "Email", type: "string" }),
     defineField({ name: "resumeUrl", title: "Resume URL", type: "url" }),
     defineField({

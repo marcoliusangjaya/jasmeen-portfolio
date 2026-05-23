@@ -50,6 +50,7 @@ export const aboutQuery = groq`
       degree,
       school
     },
+    skills,
     email,
     resumeUrl,
     socialLinks[] {

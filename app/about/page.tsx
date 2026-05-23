@@ -12,9 +12,10 @@ type AboutData = {
   bio?: string;
   polaroidPhoto?: string;
   credentials?: Credential[];
+  skills?: string[];
 };
 
-const FILTERS = [
+const DEFAULT_FILTERS = [
   "Branding",
   "Events/Experiential",
   "Creative Technology",
@@ -24,6 +25,7 @@ const FILTERS = [
 
 export default async function AboutPage() {
   const about: AboutData = (await client.fetch(aboutQuery)) ?? {};
+  const filters = about.skills?.length ? about.skills : DEFAULT_FILTERS;
 
   return (
     <>
@@ -80,8 +82,8 @@ export default async function AboutPage() {
                 ]
             ).map((c, i) => (
               <div key={i} className="flex flex-col gap-1">
-                <span className="font-satoshi text-base text-text">{c.degree}</span>
-                <span className="font-satoshi text-xs tracking-widest uppercase text-text/60">
+                <span className="font-satoshi text-base leading-relaxed text-text">{c.degree}</span>
+                <span className="font-satoshi text-base leading-relaxed tracking-widest uppercase text-text/60">
                   {c.school}
                 </span>
               </div>
@@ -92,11 +94,11 @@ export default async function AboutPage() {
         {/* Filter pills — link to homepage */}
         <section className="py-14 border-t border-border">
           <div className="flex flex-wrap gap-3">
-            {FILTERS.map((f) => (
+            {filters.map((f) => (
               <Link
                 key={f}
                 href="/"
-                className="font-satoshi text-xs tracking-wide px-5 py-2 rounded-full border-[1.5px] border-[#1A1A18] text-[#1A1A18] hover:bg-[#1A1A18] hover:text-[#F0F1ED] transition-colors duration-200"
+                className="font-satoshi text-xs tracking-wide px-5 py-2 rounded-full border-[1.5px] border-[#1A1A18] text-[#1A1A18] hover:bg-[#1A1A18] hover:text-[#F4F3DE] transition-colors duration-200"
               >
                 {f}
               </Link>

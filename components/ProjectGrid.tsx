@@ -36,7 +36,7 @@ export default function ProjectGrid({ projects }: { projects: Project[] }) {
             onClick={() => toggle(f)}
             className={`font-satoshi text-xs tracking-wide px-5 py-2 rounded-full border-[1.5px] transition-colors duration-200 ${
               active === f
-                ? "bg-[#1A1A18] text-[#F0F1ED] border-[#1A1A18]"
+                ? "bg-[#1A1A18] text-[#F4F3DE] border-[#1A1A18]"
                 : "bg-transparent text-[#1A1A18] border-[#1A1A18] hover:bg-[#888] hover:text-white hover:border-[#888]"
             }`}
           >
@@ -55,7 +55,7 @@ export default function ProjectGrid({ projects }: { projects: Project[] }) {
             <Link
               key={project._id}
               href={`/projects/${project.slug}`}
-              className={`group bg-[#F0F1ED] aspect-square flex flex-col overflow-hidden transition-opacity duration-300
+              className={`group bg-[#F4F3DE] aspect-square flex flex-col overflow-hidden transition-opacity duration-300
                 border-[1.5px] border-[#1A1A18]
                 ${col > 0 ? "border-l-0" : ""}
                 ${row > 0 ? "border-t-0" : ""}
