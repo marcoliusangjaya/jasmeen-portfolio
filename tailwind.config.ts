@@ -9,8 +9,14 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        background: "var(--background)",
-        foreground: "var(--foreground)",
+        bg: "var(--color-bg)",
+        text: "var(--color-text)",
+        footer: "var(--color-footer)",
+        border: "var(--color-border)",
+      },
+      fontFamily: {
+        cabinet: ['"Cabinet Grotesk"', "sans-serif"],
+        satoshi: ['"Satoshi"', "sans-serif"],
       },
     },
   },
