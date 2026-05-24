@@ -38,10 +38,14 @@ function Cell({
         className={`relative overflow-hidden ${imgClass} ${src ? "cursor-zoom-in" : ""}`}
         onClick={() => src && onOpen(src)}
       >
-        {src && <Image src={src} alt={label ?? ""} fill className="object-cover" sizes={sizes} />}
+        {src && (
+          <div className="absolute inset-[20%]">
+            <Image src={src} alt={label ?? ""} fill className="object-contain" sizes={sizes} />
+          </div>
+        )}
         {label && (
           <div className="absolute top-3 left-3 z-10 pointer-events-none">
-            <span className="font-satoshi text-xs tracking-wide text-white drop-shadow-[0_1px_2px_rgba(0,0,0,0.6)] bg-black/30 px-2 py-0.5 rounded-sm">{label}</span>
+            <span className="font-satoshi text-xs tracking-wide text-[#1A1A18]/60">{label}</span>
           </div>
         )}
       </div>
@@ -61,7 +65,7 @@ function BentoSection({
   onOpen: (src: string) => void;
 }) {
   const items = section.items ?? [];
-  const outer = `${B}${isFirst ? "" : " border-t-0"}`;
+  const outer = isFirst ? "" : "mt-10";
 
   switch (section.layout) {
     case "three-large-top":
