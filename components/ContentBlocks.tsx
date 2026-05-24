@@ -39,7 +39,7 @@ function Cell({
         onClick={() => src && onOpen(src)}
       >
         {src && (
-          <div className="absolute inset-[20%]">
+          <div className="absolute inset-[14%]">
             <Image src={src} alt={label ?? ""} fill className="object-contain" sizes={sizes} />
           </div>
         )}
