@@ -167,7 +167,7 @@ function MockupRows({ rows, onOpen }: { rows: MockupRow[]; onOpen: (src: string)
   const colsClass: Record<number, string> = { 1: "grid-cols-1", 2: "grid-cols-2", 3: "grid-cols-3" };
 
   return (
-    <div className="px-[60px] flex flex-col gap-2 mt-16">
+    <div className="px-[120px] flex flex-col gap-2 mt-16">
       {rows.map((row, i) => {
         const imgs = (row.images ?? []).filter((img) => img.url);
         if (imgs.length === 0) return null;
@@ -175,15 +175,13 @@ function MockupRows({ rows, onOpen }: { rows: MockupRow[]; onOpen: (src: string)
         return (
           <div key={i} className={`grid ${colsClass[n]} gap-2`}>
             {imgs.map((img, j) => (
-              <div key={j} className="relative overflow-hidden cursor-zoom-in" onClick={() => onOpen(img.url)}>
+              <div key={j} className="relative aspect-[4/3] overflow-hidden cursor-zoom-in" onClick={() => onOpen(img.url)}>
                 <Image
                   src={img.url}
                   alt=""
-                  width={img.width ?? 1200}
-                  height={img.height ?? 800}
-                  style={{ width: "100%", height: "auto" }}
-                  className="block"
-                  sizes={n === 1 ? "80vw" : n === 2 ? "40vw" : "27vw"}
+                  fill
+                  className="object-cover"
+                  sizes={n === 1 ? "100vw" : n === 2 ? "50vw" : "33vw"}
                 />
               </div>
             ))}
@@ -230,7 +228,7 @@ export default function ContentBlocks({
     <>
       <div className="py-12">
         {sections.length > 0 && (
-          <div className="px-[120px]">
+          <div className="px-[220px]">
             {sections.map((section, i) => (
               <BentoSection key={i} section={section} isFirst={i === 0} onOpen={setLightboxSrc} />
             ))}
