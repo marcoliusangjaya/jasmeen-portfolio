@@ -8,7 +8,8 @@ export const projectsQuery = groq`
     category,
     location,
     date,
-    "coverImage": thumbnailImage.asset->url
+    "coverImage": thumbnailImage.asset->url,
+    "coverVideo": coverVideo.asset->url
   }
 `;
 
@@ -20,23 +21,25 @@ export const projectBySlugQuery = groq`
     category,
     location,
     date,
+    subheading,
     description,
     "coverImage": thumbnailImage.asset->url,
+    "coverVideo": coverVideo.asset->url,
     heroLayout,
     "heroImages": heroImages[].asset->url,
-    "contentSections": contentSections[] {
-      layout,
+    "sections": sections[] {
+      caption,
       "images": images[].asset->url
     },
-    sectionLabel,
-    sectionDescription,
+    "mockups": mockups[].asset->url,
     "otherWork": otherWork[]-> {
       _id,
       title,
       "slug": slug.current,
       category,
       location,
-      "coverImage": thumbnailImage.asset->url
+      "coverImage": thumbnailImage.asset->url,
+      "coverVideo": coverVideo.asset->url
     }
   }
 `;

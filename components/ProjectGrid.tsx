@@ -11,6 +11,7 @@ export type Project = {
   category: string;
   location?: string;
   coverImage?: string;
+  coverVideo?: string;
 };
 
 export default function ProjectGrid({ projects }: { projects: Project[] }) {
@@ -74,10 +75,19 @@ export default function ProjectGrid({ projects }: { projects: Project[] }) {
                   )}
                 </div>
 
-                {/* Thumbnail — ~1/4 of card area, centered */}
+                {/* Thumbnail */}
                 <div className="flex-1 flex items-center justify-center min-h-0 p-3">
                   <div className="relative w-1/2 aspect-square">
-                    {project.coverImage ? (
+                    {project.coverVideo ? (
+                      <video
+                        src={project.coverVideo}
+                        autoPlay
+                        muted
+                        loop
+                        playsInline
+                        className="absolute inset-0 w-full h-full object-contain"
+                      />
+                    ) : project.coverImage ? (
                       <Image
                         src={project.coverImage}
                         alt={project.title}

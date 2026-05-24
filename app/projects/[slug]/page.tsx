@@ -4,7 +4,7 @@ import { notFound } from "next/navigation";
 import { client } from "@/sanity/client";
 import { projectBySlugQuery, projectsQuery } from "@/sanity/queries";
 import Footer from "@/components/Footer";
-import ContentSections from "@/components/ContentSections";
+import ContentBlocks from "@/components/ContentBlocks";
 import type { Project } from "@/components/ProjectGrid";
 
 export const revalidate = 60;
@@ -17,29 +17,19 @@ type HeroLayout =
   | "two-col"
   | "single";
 
-type ContentLayout =
-  | "large-top-6"
-  | "large-bottom-6"
-  | "large-top-4"
-  | "large-bottom-4"
-  | "five-grid"
-  | "three-col"
-  | "two-col"
-  | "single";
-
-type ContentSection = {
-  layout: ContentLayout;
+type Section = {
+  caption?: string;
   images?: string[];
 };
 
 type ProjectDetail = Project & {
   date?: string;
+  subheading?: string;
   description?: string;
   heroLayout?: HeroLayout;
   heroImages?: string[];
-  contentSections?: ContentSection[];
-  sectionLabel?: string;
-  sectionDescription?: string;
+  sections?: Section[];
+  mockups?: string[];
   otherWork?: Project[];
 };
 
@@ -66,22 +56,26 @@ export default async function ProjectPage({
   return (
     <>
       <main>
-        {/* Hero mood board — full bleed */}
-        <HeroGrid images={heroImages} layout={project.heroLayout ?? "classic"} />
+        {/* Hero — full bleed */}
+        <HeroGrid images={heroImages} layout={project.heroLayout ?? "single"} />
 
-        {/* Category pill */}
-        <div className="px-[120px] pt-10 pb-6">
-          <span className="font-satoshi text-xs tracking-widest uppercase px-4 py-1.5 border-[1.5px] border-[#1A1A18] rounded-full">
-            {project.category}
-          </span>
-        </div>
-
-        {/* Title + meta */}
-        <section className="px-[120px] pb-10 border-b-[1.5px] border-border">
-          <div className="flex items-start justify-between gap-8">
-            <h1 className="font-cabinet text-4xl md:text-5xl font-medium leading-tight max-w-2xl">
-              {project.title}
-            </h1>
+        {/* Title block */}
+        <section className="px-[120px] pt-12 pb-16 border-b-[1.5px] border-border">
+          <div className="flex items-start justify-between gap-8 mb-6">
+            <div className="flex flex-col gap-3 max-w-2xl">
+              {/* Category pill */}
+              <span className="font-satoshi text-xs tracking-widest uppercase px-4 py-1.5 border-[1.5px] border-[#1A1A18] rounded-full self-start">
+                {project.category}
+              </span>
+              <h1 className="font-cabinet text-4xl md:text-5xl font-medium leading-tight">
+                {project.title}
+              </h1>
+              {project.subheading && (
+                <p className="font-satoshi text-lg text-text/60 leading-snug">
+                  {project.subheading}
+                </p>
+              )}
+            </div>
             <div className="text-right shrink-0 pt-1">
               {project.location && (
                 <p className="font-satoshi text-sm text-text/60">{project.location}</p>
@@ -91,35 +85,19 @@ export default async function ProjectPage({
               )}
             </div>
           </div>
-        </section>
 
-        {/* Description */}
-        {project.description && (
-          <section className="px-[120px] py-12 max-w-2xl">
-            <p className="font-satoshi text-sm leading-relaxed text-justify text-text/80">
+          {project.description && (
+            <p className="font-satoshi text-sm leading-relaxed text-text/70 max-w-xl">
               {project.description}
             </p>
-          </section>
-        )}
+          )}
+        </section>
 
-        {/* Content sections */}
-        {project.contentSections && project.contentSections.length > 0 && (
-          <ContentSections sections={project.contentSections} />
-        )}
-
-        {/* Section label + description */}
-        {project.sectionLabel && (
-          <section className="px-[120px] py-16 border-t-[1.5px] border-border">
-            <h2 className="font-cabinet text-2xl font-medium mb-4">
-              {project.sectionLabel}
-            </h2>
-            {project.sectionDescription && (
-              <p className="font-satoshi text-sm leading-relaxed text-text/70 max-w-xl">
-                {project.sectionDescription}
-              </p>
-            )}
-          </section>
-        )}
+        {/* Content blocks */}
+        <ContentBlocks
+          sections={project.sections ?? []}
+          mockups={project.mockups ?? []}
+        />
 
         {/* Other Work */}
         {project.otherWork && project.otherWork.length > 0 && (
@@ -136,9 +114,9 @@ export default async function ProjectPage({
 function HeroGrid({ images, layout }: { images: string[]; layout: HeroLayout }) {
   const [a, b, c, d] = images;
 
-  if (layout === "single") {
+  if (layout === "single" || images.length <= 1) {
     return (
-      <div className="relative w-full h-[70vh]">
+      <div className="relative w-full h-[75vh]">
         <ImgCell src={a} sizes="100vw" className="absolute inset-0" />
       </div>
     );
@@ -146,7 +124,7 @@ function HeroGrid({ images, layout }: { images: string[]; layout: HeroLayout }) 
 
   if (layout === "two-col") {
     return (
-      <div className="grid grid-cols-2 h-[70vh]">
+      <div className="grid grid-cols-2 h-[75vh]">
         <ImgCell src={a} sizes="50vw" />
         <ImgCell src={b} sizes="50vw" />
       </div>
@@ -155,7 +133,7 @@ function HeroGrid({ images, layout }: { images: string[]; layout: HeroLayout }) 
 
   if (layout === "four-grid") {
     return (
-      <div className="grid grid-cols-2 grid-rows-2 h-[70vh]">
+      <div className="grid grid-cols-2 grid-rows-2 h-[75vh]">
         <ImgCell src={a} sizes="50vw" />
         <ImgCell src={b} sizes="50vw" />
         <ImgCell src={c} sizes="50vw" />
@@ -165,9 +143,8 @@ function HeroGrid({ images, layout }: { images: string[]; layout: HeroLayout }) 
   }
 
   if (layout === "large-right") {
-    // 2 stacked left + 1 large right
     return (
-      <div className="grid grid-cols-2 h-[70vh]">
+      <div className="grid grid-cols-2 h-[75vh]">
         <div className="grid grid-rows-2">
           <ImgCell src={a} sizes="50vw" />
           <ImgCell src={b} sizes="50vw" />
@@ -178,9 +155,8 @@ function HeroGrid({ images, layout }: { images: string[]; layout: HeroLayout }) 
   }
 
   if (layout === "large-left-two-right") {
-    // 1 large left + 2 stacked right
     return (
-      <div className="grid grid-cols-2 h-[70vh]">
+      <div className="grid grid-cols-2 h-[75vh]">
         <ImgCell src={a} sizes="50vw" />
         <div className="grid grid-rows-2">
           <ImgCell src={b} sizes="50vw" />
@@ -190,9 +166,9 @@ function HeroGrid({ images, layout }: { images: string[]; layout: HeroLayout }) 
     );
   }
 
-  // classic (default): 1 large left · 1 top right · 2 small bottom right
+  // classic: large left · top right · 2 small bottom right
   return (
-    <div className="grid grid-cols-2 h-[70vh]">
+    <div className="grid grid-cols-2 h-[75vh]">
       <ImgCell src={a} sizes="50vw" />
       <div className="grid grid-rows-2">
         <ImgCell src={b} sizes="50vw" />
@@ -205,7 +181,7 @@ function HeroGrid({ images, layout }: { images: string[]; layout: HeroLayout }) 
   );
 }
 
-/* ─── Other Work ───────────────────────────────────────────────────────────── */
+/* ─── Other Work ────────────────────────────────────────────────────────────── */
 
 function OtherWork({ projects }: { projects: Project[] }) {
   return (
@@ -215,7 +191,7 @@ function OtherWork({ projects }: { projects: Project[] }) {
       </h2>
       <div className="flex justify-center">
         <div className="grid grid-cols-2 w-1/2">
-          {projects.map((p, index) => (
+          {projects.slice(0, 2).map((p, index) => (
             <Link
               key={p._id}
               href={`/projects/${p.slug}`}
@@ -236,7 +212,16 @@ function OtherWork({ projects }: { projects: Project[] }) {
                 </div>
                 <div className="flex-1 flex items-center justify-center min-h-0 p-3">
                   <div className="relative w-1/2 aspect-square">
-                    {p.coverImage ? (
+                    {p.coverVideo ? (
+                      <video
+                        src={p.coverVideo}
+                        autoPlay
+                        muted
+                        loop
+                        playsInline
+                        className="absolute inset-0 w-full h-full object-contain"
+                      />
+                    ) : p.coverImage ? (
                       <Image
                         src={p.coverImage}
                         alt={p.title}
@@ -263,7 +248,7 @@ function OtherWork({ projects }: { projects: Project[] }) {
   );
 }
 
-/* ─── Shared image cell ────────────────────────────────────────────────────── */
+/* ─── Shared image cell (hero only) ─────────────────────────────────────────── */
 
 function ImgCell({
   src,
@@ -279,13 +264,7 @@ function ImgCell({
   return (
     <div className={`relative overflow-hidden bg-border/10 ${className}`}>
       {src && (
-        <Image
-          src={src}
-          alt={alt}
-          fill
-          className="object-cover"
-          sizes={sizes}
-        />
+        <Image src={src} alt={alt} fill className="object-cover" sizes={sizes} />
       )}
     </div>
   );

@@ -55,6 +55,19 @@ export default defineType({
       options: { hotspot: true },
     }),
     defineField({
+      name: "coverVideo",
+      title: "Thumbnail Video",
+      description: "Optional — upload a video or GIF to replace the thumbnail image. Autoplays on loop.",
+      type: "file",
+      options: { accept: "video/mp4,video/webm,video/ogg" },
+    }),
+    defineField({
+      name: "subheading",
+      title: "Subheading",
+      description: "Short punchy line shown below the project title (e.g. 'How to build brand character')",
+      type: "string",
+    }),
+    defineField({
       name: "heroLayout",
       title: "Hero Layout",
       description: "How the hero images are arranged at the top of the project page",
@@ -88,9 +101,50 @@ export default defineType({
       rows: 6,
     }),
     defineField({
-      name: "contentSections",
+      name: "sections",
       title: "Content Sections",
-      description: "Image gallery sections — choose a layout for each section",
+      description: "Add as many sections as you like. Each section has an optional caption and images — layout adapts automatically to the number of images.",
+      type: "array",
+      of: [
+        {
+          type: "object",
+          name: "section",
+          title: "Section",
+          fields: [
+            defineField({
+              name: "caption",
+              title: "Caption / Section Title",
+              type: "string",
+              placeholder: "e.g. Logo Development, Color System, Cup Design…",
+            }),
+            defineField({
+              name: "images",
+              title: "Images",
+              type: "array",
+              of: [{ type: "image", options: { hotspot: true } }],
+            }),
+          ],
+          preview: {
+            select: { title: "caption", media: "images.0" },
+            prepare({ title, media }: Record<string, any>) {
+              return { title: title ?? "Untitled section", media };
+            },
+          },
+        },
+      ],
+    }),
+    defineField({
+      name: "mockups",
+      title: "Product Mockups",
+      description: "Full-width images shown after the content sections — great for branding projects",
+      type: "array",
+      of: [{ type: "image", options: { hotspot: true } }],
+    }),
+    // Legacy — hidden to preserve old data
+    defineField({
+      name: "contentSections",
+      title: "Content Sections (legacy)",
+      hidden: true,
       type: "array",
       of: [
         {
