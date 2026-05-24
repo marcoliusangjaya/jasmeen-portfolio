@@ -60,8 +60,10 @@ export default async function ProjectPage({
   return (
     <>
       <main>
-        {/* Hero — full bleed */}
-        <HeroGrid images={heroImages} layout={project.heroLayout ?? "single"} />
+        {/* Hero — full bleed, bleeds behind transparent nav */}
+        <div className="-mt-[68px]">
+          <HeroGrid images={heroImages} layout={project.heroLayout ?? "single"} />
+        </div>
 
         {/* Title block */}
         <section className="px-[120px] pt-12 pb-16 border-b-[1.5px] border-border">
@@ -127,7 +129,7 @@ function HeroGrid({ images, layout }: { images: string[]; layout: HeroLayout }) 
 
   if (layout === "single" || images.length <= 1) {
     return (
-      <div className="relative w-full h-[75vh]">
+      <div className="relative w-full h-[calc(100vh-100px)]">
         <ImgCell src={a} sizes="100vw" className="absolute inset-0" />
       </div>
     );
@@ -135,7 +137,7 @@ function HeroGrid({ images, layout }: { images: string[]; layout: HeroLayout }) 
 
   if (layout === "two-col") {
     return (
-      <div className="grid grid-cols-2 h-[75vh]">
+      <div className="grid grid-cols-2 h-[calc(100vh-100px)]">
         <ImgCell src={a} sizes="50vw" />
         <ImgCell src={b} sizes="50vw" />
       </div>
@@ -144,7 +146,7 @@ function HeroGrid({ images, layout }: { images: string[]; layout: HeroLayout }) 
 
   if (layout === "four-grid") {
     return (
-      <div className="grid grid-cols-2 grid-rows-2 h-[75vh]">
+      <div className="grid grid-cols-2 grid-rows-2 h-[calc(100vh-100px)]">
         <ImgCell src={a} sizes="50vw" />
         <ImgCell src={b} sizes="50vw" />
         <ImgCell src={c} sizes="50vw" />
@@ -155,7 +157,7 @@ function HeroGrid({ images, layout }: { images: string[]; layout: HeroLayout }) 
 
   if (layout === "large-right") {
     return (
-      <div className="grid grid-cols-2 h-[75vh]">
+      <div className="grid grid-cols-2 h-[calc(100vh-100px)]">
         <div className="grid grid-rows-2">
           <ImgCell src={a} sizes="50vw" />
           <ImgCell src={b} sizes="50vw" />
@@ -167,7 +169,7 @@ function HeroGrid({ images, layout }: { images: string[]; layout: HeroLayout }) 
 
   if (layout === "large-left-two-right") {
     return (
-      <div className="grid grid-cols-2 h-[75vh]">
+      <div className="grid grid-cols-2 h-[calc(100vh-100px)]">
         <ImgCell src={a} sizes="50vw" />
         <div className="grid grid-rows-2">
           <ImgCell src={b} sizes="50vw" />
@@ -178,7 +180,7 @@ function HeroGrid({ images, layout }: { images: string[]; layout: HeroLayout }) 
   }
 
   return (
-    <div className="grid grid-cols-2 h-[75vh]">
+    <div className="grid grid-cols-2 h-[calc(100vh-100px)]">
       <ImgCell src={a} sizes="50vw" />
       <div className="grid grid-rows-2">
         <ImgCell src={b} sizes="50vw" />
