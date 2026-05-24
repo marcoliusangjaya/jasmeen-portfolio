@@ -8,7 +8,7 @@ const links = [
 
 export default function Nav() {
   return (
-    <header className="sticky top-0 z-50 bg-[#F0F1ED] border-b-[1.5px] border-[#D0CBC2]">
+    <header className="sticky top-0 z-50 bg-transparent">
       <nav className="flex items-center justify-between px-[120px] py-5">
         <Link
           href="/"
