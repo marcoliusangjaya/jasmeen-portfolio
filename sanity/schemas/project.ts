@@ -5,7 +5,6 @@ import {
   ContentLayoutPicker,
 } from "../components/LayoutPicker";
 import { HeroPreviewInput } from "../components/HeroPreviewInput";
-import { ContentSectionInput } from "../components/ContentSectionInput";
 
 export default defineType({
   name: "project",
@@ -120,6 +119,9 @@ export default defineType({
                 list: [
                   { value: "three-large-top", title: "Large Top (3 images)" },
                   { value: "three-large-bottom", title: "Large Bottom (3 images)" },
+                  { value: "five-grid", title: "5 Grid (5 images)" },
+                  { value: "large-top-6", title: "Large Top (6 images)" },
+                  { value: "large-bottom-6", title: "Large Bottom (6 images)" },
                   { value: "two-stacked", title: "Two Stacked (2 images)" },
                   { value: "single", title: "Full Width (1 image)" },
                 ],
@@ -167,6 +169,9 @@ export default defineType({
               const labels: Record<string, string> = {
                 "three-large-top": "Large Top (3)",
                 "three-large-bottom": "Large Bottom (3)",
+                "five-grid": "5 Grid",
+                "large-top-6": "Large Top (6)",
+                "large-bottom-6": "Large Bottom (6)",
                 "two-stacked": "Two Stacked",
                 single: "Full Width",
               };

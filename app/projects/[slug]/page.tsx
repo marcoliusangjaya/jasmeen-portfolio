@@ -18,7 +18,7 @@ type HeroLayout =
   | "single";
 
 type Section = {
-  layout?: "three-large-top" | "three-large-bottom" | "two-stacked" | "single";
+  layout?: "three-large-top" | "three-large-bottom" | "five-grid" | "large-top-6" | "large-bottom-6" | "two-stacked" | "single";
   items?: { image?: string; label?: string }[];
 };
 

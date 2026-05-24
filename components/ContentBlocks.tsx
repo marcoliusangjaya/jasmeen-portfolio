@@ -6,7 +6,7 @@ import Image from "next/image";
 type BentoItem = { image?: string; label?: string };
 
 type Section = {
-  layout?: "three-large-top" | "three-large-bottom" | "two-stacked" | "single";
+  layout?: "three-large-top" | "three-large-bottom" | "five-grid" | "large-top-6" | "large-bottom-6" | "two-stacked" | "single";
   items?: BentoItem[];
 };
 
@@ -33,18 +33,18 @@ function Cell({
   const src = item?.image;
   const label = item?.label;
   return (
-    <div className={`flex flex-col ${className}`}>
+    <div className={`relative ${className}`}>
       <div
         className={`relative overflow-hidden ${imgClass} ${src ? "cursor-zoom-in" : ""}`}
         onClick={() => src && onOpen(src)}
       >
         {src && <Image src={src} alt={label ?? ""} fill className="object-cover" sizes={sizes} />}
+        {label && (
+          <div className="absolute top-3 left-3 z-10 pointer-events-none">
+            <span className="font-satoshi text-xs tracking-wide text-white drop-shadow-[0_1px_2px_rgba(0,0,0,0.6)] bg-black/30 px-2 py-0.5 rounded-sm">{label}</span>
+          </div>
+        )}
       </div>
-      {label && (
-        <div className={`px-3 py-2 border-t-[1.5px] border-[#1A1A18] shrink-0`}>
-          <span className="font-satoshi text-xs tracking-wide text-[#1A1A18]/60">{label}</span>
-        </div>
-      )}
     </div>
   );
 }
@@ -83,6 +83,57 @@ function BentoSection({
             <Cell item={items[1]} sizes="50vw" imgClass="aspect-square" className="border-l-[1.5px] border-[#1A1A18]" onOpen={onOpen} />
           </div>
           <Cell item={items[2]} sizes="100vw" imgClass="aspect-[16/9]" onOpen={onOpen} />
+        </div>
+      );
+
+    case "five-grid":
+      return (
+        <div className={outer}>
+          <div className="grid grid-cols-2 border-b-[1.5px] border-[#1A1A18]">
+            <Cell item={items[0]} sizes="50vw" imgClass="aspect-square" onOpen={onOpen} />
+            <Cell item={items[1]} sizes="50vw" imgClass="aspect-square" className="border-l-[1.5px] border-[#1A1A18]" onOpen={onOpen} />
+          </div>
+          <div className="grid grid-cols-3">
+            <Cell item={items[2]} sizes="33vw" imgClass="aspect-square" onOpen={onOpen} />
+            <Cell item={items[3]} sizes="33vw" imgClass="aspect-square" className="border-l-[1.5px] border-[#1A1A18]" onOpen={onOpen} />
+            <Cell item={items[4]} sizes="33vw" imgClass="aspect-square" className="border-l-[1.5px] border-[#1A1A18]" onOpen={onOpen} />
+          </div>
+        </div>
+      );
+
+    case "large-top-6":
+      return (
+        <div className={outer}>
+          <Cell item={items[0]} sizes="100vw" imgClass="aspect-[16/9]" onOpen={onOpen} />
+          <div className="grid grid-cols-2 border-t-[1.5px] border-[#1A1A18]">
+            <Cell item={items[1]} sizes="50vw" imgClass="aspect-square" onOpen={onOpen} />
+            <div className="grid grid-rows-2 border-l-[1.5px] border-[#1A1A18]">
+              <Cell item={items[2]} sizes="25vw" imgClass="aspect-square" onOpen={onOpen} />
+              <Cell item={items[3]} sizes="25vw" imgClass="aspect-square" className="border-t-[1.5px] border-[#1A1A18]" onOpen={onOpen} />
+            </div>
+          </div>
+          <div className="grid grid-cols-2 border-t-[1.5px] border-[#1A1A18]">
+            <Cell item={items[4]} sizes="25vw" imgClass="aspect-square" onOpen={onOpen} />
+            <Cell item={items[5]} sizes="25vw" imgClass="aspect-square" className="border-l-[1.5px] border-[#1A1A18]" onOpen={onOpen} />
+          </div>
+        </div>
+      );
+
+    case "large-bottom-6":
+      return (
+        <div className={outer}>
+          <div className="grid grid-cols-2">
+            <Cell item={items[0]} sizes="25vw" imgClass="aspect-square" onOpen={onOpen} />
+            <div className="grid grid-rows-2 border-l-[1.5px] border-[#1A1A18]">
+              <Cell item={items[1]} sizes="25vw" imgClass="aspect-square" onOpen={onOpen} />
+              <Cell item={items[2]} sizes="25vw" imgClass="aspect-square" className="border-t-[1.5px] border-[#1A1A18]" onOpen={onOpen} />
+            </div>
+          </div>
+          <div className="grid grid-cols-2 border-t-[1.5px] border-[#1A1A18]">
+            <Cell item={items[3]} sizes="25vw" imgClass="aspect-square" onOpen={onOpen} />
+            <Cell item={items[4]} sizes="25vw" imgClass="aspect-square" className="border-l-[1.5px] border-[#1A1A18]" onOpen={onOpen} />
+          </div>
+          <Cell item={items[5]} sizes="100vw" imgClass="aspect-[16/9]" className="border-t-[1.5px] border-[#1A1A18]" onOpen={onOpen} />
         </div>
       );
 

@@ -117,6 +117,53 @@ const CONTENT_OPTIONS = [
     ),
   },
   {
+    value: "five-grid",
+    title: "5 Grid",
+    sub: "2 equal top · 3 equal bottom",
+    count: "5 images",
+    preview: () => (
+      <svg viewBox="0 0 60 52" width={60} height={52} xmlns="http://www.w3.org/2000/svg">
+        <rect x={0.5}  y={0.5}  width={29} height={25} {...rs} />
+        <rect x={30.5} y={0.5}  width={29} height={25} {...rs} />
+        <rect x={0.5}  y={26.5} width={19} height={25} {...rs} />
+        <rect x={20.5} y={26.5} width={19} height={25} {...rs} />
+        <rect x={40.5} y={26.5} width={19} height={25} {...rs} />
+      </svg>
+    ),
+  },
+  {
+    value: "large-top-6",
+    title: "Large Top",
+    sub: "1 large · 1 medium + 4 small below",
+    count: "6 images",
+    preview: () => (
+      <svg viewBox="0 0 60 52" width={60} height={52} xmlns="http://www.w3.org/2000/svg">
+        <rect x={0.5}  y={0.5}  width={59} height={23} {...rs} />
+        <rect x={0.5}  y={24.5} width={29} height={27} {...rs} />
+        <rect x={30.5} y={24.5} width={14} height={13} {...rs} />
+        <rect x={45.5} y={24.5} width={14} height={13} {...rs} />
+        <rect x={30.5} y={38.5} width={14} height={13} {...rs} />
+        <rect x={45.5} y={38.5} width={14} height={13} {...rs} />
+      </svg>
+    ),
+  },
+  {
+    value: "large-bottom-6",
+    title: "Large Bottom",
+    sub: "4 small + 1 medium above · 1 large below",
+    count: "6 images",
+    preview: () => (
+      <svg viewBox="0 0 60 52" width={60} height={52} xmlns="http://www.w3.org/2000/svg">
+        <rect x={0.5}  y={0.5}  width={14} height={13} {...rs} />
+        <rect x={15.5} y={0.5}  width={14} height={13} {...rs} />
+        <rect x={0.5}  y={14.5} width={14} height={13} {...rs} />
+        <rect x={15.5} y={14.5} width={14} height={13} {...rs} />
+        <rect x={30.5} y={0.5}  width={29} height={27} {...rs} />
+        <rect x={0.5}  y={28.5} width={59} height={23} {...rs} />
+      </svg>
+    ),
+  },
+  {
     value: "two-stacked",
     title: "Two Stacked",
     sub: "2 full-width rows",
