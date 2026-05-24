@@ -8,7 +8,7 @@ export type Project = {
   _id: string;
   title: string;
   slug: string;
-  category: string;
+  categories: string[];
   location?: string;
   coverImage?: string;
   coverVideo?: string;
@@ -18,7 +18,7 @@ export default function ProjectGrid({ projects }: { projects: Project[] }) {
   const [active, setActive] = useState<string | null>(null);
 
   const filters = Array.from(
-    new Set(projects.map((p) => p.category).filter(Boolean))
+    new Set(projects.flatMap((p) => p.categories ?? []).filter(Boolean))
   );
 
   function toggle(filter: string) {
@@ -51,7 +51,7 @@ export default function ProjectGrid({ projects }: { projects: Project[] }) {
         {projects.map((project, index) => {
           const col = index % 4;
           const row = Math.floor(index / 4);
-          const dimmed = active !== null && project.category !== active;
+          const dimmed = active !== null && !(project.categories ?? []).includes(active);
           return (
             <Link
               key={project._id}
@@ -66,7 +66,7 @@ export default function ProjectGrid({ projects }: { projects: Project[] }) {
                 {/* Meta row */}
                 <div className="flex items-start justify-between px-3 pt-3 pb-1 gap-1 shrink-0">
                   <span className="font-satoshi text-[10px] tracking-widest uppercase text-[#1A1A18]/60 leading-tight">
-                    {project.category}
+                    {(project.categories ?? []).join(" · ")}
                   </span>
                   {project.location && (
                     <span className="font-satoshi text-[10px] text-[#1A1A18]/40 text-right shrink-0">

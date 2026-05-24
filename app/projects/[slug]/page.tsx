@@ -19,8 +19,12 @@ type HeroLayout =
 
 type Section = {
   caption?: string;
+  layout?: "large-top-6" | "large-bottom-6" | "large-top-4" | "large-bottom-4" | "five-grid" | "three-col" | "two-col" | "single";
   images?: string[];
 };
+
+type MockupImage = { url: string; width?: number; height?: number };
+type MockupRow = { images?: MockupImage[] };
 
 type ProjectDetail = Project & {
   date?: string;
@@ -29,7 +33,7 @@ type ProjectDetail = Project & {
   heroLayout?: HeroLayout;
   heroImages?: string[];
   sections?: Section[];
-  mockups?: string[];
+  mockupRows?: MockupRow[];
   otherWork?: Project[];
 };
 
@@ -63,10 +67,17 @@ export default async function ProjectPage({
         <section className="px-[120px] pt-12 pb-16 border-b-[1.5px] border-border">
           <div className="flex items-start justify-between gap-8 mb-6">
             <div className="flex flex-col gap-3 max-w-2xl">
-              {/* Category pill */}
-              <span className="font-satoshi text-xs tracking-widest uppercase px-4 py-1.5 border-[1.5px] border-[#1A1A18] rounded-full self-start">
-                {project.category}
-              </span>
+              {/* Category pills */}
+              <div className="flex flex-wrap gap-2">
+                {(project.categories ?? []).map((cat) => (
+                  <span
+                    key={cat}
+                    className="font-satoshi text-xs tracking-widest uppercase px-4 py-1.5 border-[1.5px] border-[#1A1A18] rounded-full"
+                  >
+                    {cat}
+                  </span>
+                ))}
+              </div>
               <h1 className="font-cabinet text-4xl md:text-5xl font-medium leading-tight">
                 {project.title}
               </h1>
@@ -96,7 +107,7 @@ export default async function ProjectPage({
         {/* Content blocks */}
         <ContentBlocks
           sections={project.sections ?? []}
-          mockups={project.mockups ?? []}
+          mockupRows={project.mockupRows ?? []}
         />
 
         {/* Other Work */}
@@ -166,7 +177,6 @@ function HeroGrid({ images, layout }: { images: string[]; layout: HeroLayout }) 
     );
   }
 
-  // classic: large left · top right · 2 small bottom right
   return (
     <div className="grid grid-cols-2 h-[75vh]">
       <ImgCell src={a} sizes="50vw" />
@@ -202,7 +212,7 @@ function OtherWork({ projects }: { projects: Project[] }) {
               <div className="transition-transform duration-300 ease-out group-hover:scale-[1.02] origin-center h-full flex flex-col">
                 <div className="flex items-start justify-between px-3 pt-3 pb-1 gap-1 shrink-0">
                   <span className="font-satoshi text-[9px] tracking-widest uppercase text-[#1A1A18]/60 leading-tight">
-                    {p.category}
+                    {(p.categories ?? []).join(" · ")}
                   </span>
                   {p.location && (
                     <span className="font-satoshi text-[9px] text-[#1A1A18]/40 text-right shrink-0">

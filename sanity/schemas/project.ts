@@ -27,13 +27,13 @@ export default defineType({
       validation: (r) => r.required(),
     }),
     defineField({
-      name: "category",
-      title: "Category",
-      description:
-        "Type any category — it will automatically appear as a filter on the site",
-      type: "string",
-      placeholder: "e.g. Branding, Events/Experiential, Creative Technology…",
-      validation: (r) => r.required(),
+      name: "categories",
+      title: "Categories",
+      description: "Add one or more categories — each will appear as a filter on the site",
+      type: "array",
+      of: [{ type: "string" }],
+      options: { layout: "tags" },
+      validation: (r) => r.required().min(1),
     }),
     defineField({
       name: "location",
@@ -57,14 +57,14 @@ export default defineType({
     defineField({
       name: "coverVideo",
       title: "Thumbnail Video",
-      description: "Optional — upload a video or GIF to replace the thumbnail image. Autoplays on loop.",
+      description: "Optional — upload a video to replace the thumbnail image. Autoplays on loop.",
       type: "file",
       options: { accept: "video/mp4,video/webm,video/ogg" },
     }),
     defineField({
       name: "subheading",
       title: "Subheading",
-      description: "Short punchy line shown below the project title (e.g. 'How to build brand character')",
+      description: "Short punchy line shown below the project title",
       type: "string",
     }),
     defineField({
@@ -103,7 +103,7 @@ export default defineType({
     defineField({
       name: "sections",
       title: "Content Sections",
-      description: "Add as many sections as you like. Each section has an optional caption and images — layout adapts automatically to the number of images.",
+      description: "Each section has an optional caption and a bento grid layout. Layout adapts to the number of images.",
       type: "array",
       of: [
         {
@@ -118,51 +118,16 @@ export default defineType({
               placeholder: "e.g. Logo Development, Color System, Cup Design…",
             }),
             defineField({
-              name: "images",
-              title: "Images",
-              type: "array",
-              of: [{ type: "image", options: { hotspot: true } }],
-            }),
-          ],
-          preview: {
-            select: { title: "caption", media: "images.0" },
-            prepare({ title, media }: Record<string, any>) {
-              return { title: title ?? "Untitled section", media };
-            },
-          },
-        },
-      ],
-    }),
-    defineField({
-      name: "mockups",
-      title: "Product Mockups",
-      description: "Full-width images shown after the content sections — great for branding projects",
-      type: "array",
-      of: [{ type: "image", options: { hotspot: true } }],
-    }),
-    // Legacy — hidden to preserve old data
-    defineField({
-      name: "contentSections",
-      title: "Content Sections (legacy)",
-      hidden: true,
-      type: "array",
-      of: [
-        {
-          type: "object",
-          name: "contentSection",
-          title: "Content Section",
-          fields: [
-            defineField({
               name: "layout",
               title: "Layout",
               type: "string",
               initialValue: "two-col",
               options: {
                 list: [
-                  { value: "large-top-6", title: "Large Top (6)" },
-                  { value: "large-bottom-6", title: "Large Bottom (6)" },
-                  { value: "large-top-4", title: "Large Top (4)" },
-                  { value: "large-bottom-4", title: "Large Bottom (4)" },
+                  { value: "large-top-6", title: "Large Top (6 images)" },
+                  { value: "large-bottom-6", title: "Large Bottom (6 images)" },
+                  { value: "large-top-4", title: "Large Top (4 images)" },
+                  { value: "large-bottom-4", title: "Large Bottom (4 images)" },
                   { value: "five-grid", title: "5 Grid" },
                   { value: "three-col", title: "Three Column" },
                   { value: "two-col", title: "Two Column" },
@@ -183,8 +148,8 @@ export default defineType({
           ],
           components: { input: ContentSectionInput },
           preview: {
-            select: { layout: "layout", media: "images.0" },
-            prepare({ layout, media }: Record<string, any>) {
+            select: { title: "caption", layout: "layout", media: "images.0" },
+            prepare({ title, layout, media }: Record<string, any>) {
               const labels: Record<string, string> = {
                 "large-top-6": "Large Top (6)",
                 "large-bottom-6": "Large Bottom (6)",
@@ -195,13 +160,69 @@ export default defineType({
                 "two-col": "Two Column",
                 single: "Full Width",
               };
-              return { title: labels[layout] ?? layout, media };
+              return { title: title ?? labels[layout] ?? layout, media };
             },
           },
         },
       ],
     }),
-    // Legacy field — hidden, keeps existing data from causing Studio warnings
+    defineField({
+      name: "mockupRows",
+      title: "Product Mockups",
+      description: "Each row can hold 1–3 images. Images render at their natural aspect ratio.",
+      type: "array",
+      of: [
+        {
+          type: "object",
+          name: "mockupRow",
+          title: "Row",
+          fields: [
+            defineField({
+              name: "images",
+              title: "Images (1–3 per row)",
+              type: "array",
+              of: [{ type: "image", options: { hotspot: true } }],
+              validation: (r) => r.max(3),
+            }),
+          ],
+          preview: {
+            select: { media: "images.0" },
+            prepare({ media }: Record<string, any>) {
+              return { title: "Mockup row", media };
+            },
+          },
+        },
+      ],
+    }),
+    // Legacy fields — hidden to preserve old data
+    defineField({
+      name: "mockups",
+      title: "Mockups (legacy)",
+      hidden: true,
+      type: "array",
+      of: [{ type: "image", options: { hotspot: true } }],
+    }),
+    defineField({
+      name: "contentSections",
+      title: "Content Sections (legacy)",
+      hidden: true,
+      type: "array",
+      of: [
+        {
+          type: "object",
+          name: "contentSection",
+          fields: [
+            defineField({ name: "layout", title: "Layout", type: "string" }),
+            defineField({
+              name: "images",
+              title: "Images",
+              type: "array",
+              of: [{ type: "image", options: { hotspot: true } }],
+            }),
+          ],
+        },
+      ],
+    }),
     defineField({
       name: "contentBlocks",
       title: "Content Blocks (legacy)",
@@ -219,17 +240,12 @@ export default defineType({
         },
       ],
     }),
+    // Legacy single-category field
     defineField({
-      name: "sectionLabel",
-      title: "Section Label",
+      name: "category",
+      title: "Category (legacy)",
       type: "string",
-      placeholder: "e.g. Dieline Support",
-    }),
-    defineField({
-      name: "sectionDescription",
-      title: "Section Description",
-      type: "text",
-      rows: 4,
+      hidden: true,
     }),
     defineField({
       name: "otherWork",

@@ -5,7 +5,7 @@ export const projectsQuery = groq`
     _id,
     title,
     "slug": slug.current,
-    category,
+    "categories": coalesce(categories, array::compact([category])),
     location,
     date,
     "coverImage": thumbnailImage.asset->url,
@@ -18,7 +18,7 @@ export const projectBySlugQuery = groq`
     _id,
     title,
     "slug": slug.current,
-    category,
+    "categories": coalesce(categories, array::compact([category])),
     location,
     date,
     subheading,
@@ -29,14 +29,21 @@ export const projectBySlugQuery = groq`
     "heroImages": heroImages[].asset->url,
     "sections": sections[] {
       caption,
+      layout,
       "images": images[].asset->url
     },
-    "mockups": mockups[].asset->url,
+    "mockupRows": mockupRows[] {
+      "images": images[] {
+        "url": asset->url,
+        "width": asset->metadata.dimensions.width,
+        "height": asset->metadata.dimensions.height
+      }
+    },
     "otherWork": otherWork[]-> {
       _id,
       title,
       "slug": slug.current,
-      category,
+      "categories": coalesce(categories, array::compact([category])),
       location,
       "coverImage": thumbnailImage.asset->url,
       "coverVideo": coverVideo.asset->url
