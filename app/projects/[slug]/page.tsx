@@ -65,7 +65,7 @@ export default async function ProjectPage({
         </div>
 
         {/* Title block */}
-        <section className="px-[120px] pt-12 pb-16 border-b-[1.5px] border-border">
+        <section className="px-[120px] pt-12 pb-16">
           <div className="flex items-start justify-between gap-8 mb-6">
             <div className="flex flex-col gap-3 max-w-2xl">
               {/* Category pills */}
@@ -196,7 +196,7 @@ function HeroGrid({ images, layout }: { images: string[]; layout: HeroLayout }) 
 
 function OtherWork({ projects }: { projects: Project[] }) {
   return (
-    <section className="px-[120px] py-20 border-t-[1.5px] border-border">
+    <section className="px-[120px] py-20">
       <h2 className="font-cabinet text-2xl font-medium mb-12 text-center">
         Other Work
       </h2>

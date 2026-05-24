@@ -65,7 +65,7 @@ function BentoSection({
   onOpen: (src: string) => void;
 }) {
   const items = section.items ?? [];
-  const outer = isFirst ? "" : "mt-10";
+  const outer = `${B}${isFirst ? "" : " border-t-0"}`;
 
   switch (section.layout) {
     case "three-large-top":
