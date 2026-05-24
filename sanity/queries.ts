@@ -28,9 +28,11 @@ export const projectBySlugQuery = groq`
     heroLayout,
     "heroImages": heroImages[].asset->url,
     "sections": sections[] {
-      caption,
       layout,
-      "images": images[].asset->url
+      "items": items[] {
+        "image": image.asset->url,
+        label
+      }
     },
     "mockupRows": mockupRows[] {
       "images": images[] {

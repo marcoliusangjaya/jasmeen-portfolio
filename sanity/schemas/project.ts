@@ -103,7 +103,7 @@ export default defineType({
     defineField({
       name: "sections",
       title: "Content Sections",
-      description: "Each section has an optional caption and a bento grid layout. Layout adapts to the number of images.",
+      description: "Each section is a bento grid. Choose a layout, then add images — each image can have a label shown inside its cell.",
       type: "array",
       of: [
         {
@@ -112,55 +112,65 @@ export default defineType({
           title: "Section",
           fields: [
             defineField({
-              name: "caption",
-              title: "Caption / Section Title",
-              type: "string",
-              placeholder: "e.g. Logo Development, Color System, Cup Design…",
-            }),
-            defineField({
               name: "layout",
               title: "Layout",
               type: "string",
-              initialValue: "two-col",
+              initialValue: "three-large-top",
               options: {
                 list: [
-                  { value: "large-top-6", title: "Large Top (6 images)" },
-                  { value: "large-bottom-6", title: "Large Bottom (6 images)" },
-                  { value: "large-top-4", title: "Large Top (4 images)" },
-                  { value: "large-bottom-4", title: "Large Bottom (4 images)" },
-                  { value: "five-grid", title: "5 Grid" },
-                  { value: "three-col", title: "Three Column" },
-                  { value: "two-col", title: "Two Column" },
-                  { value: "single", title: "Full Width" },
+                  { value: "three-large-top", title: "Large Top (3 images)" },
+                  { value: "three-large-bottom", title: "Large Bottom (3 images)" },
+                  { value: "two-stacked", title: "Two Stacked (2 images)" },
+                  { value: "single", title: "Full Width (1 image)" },
                 ],
               },
               validation: (r) => r.required(),
               components: { input: ContentLayoutPicker },
             }),
             defineField({
-              name: "images",
+              name: "items",
               title: "Images",
-              description:
-                "large-top-6 / large-bottom-6: 6 · large-top-4 / large-bottom-4: 4 · five-grid: 5 · three-col: 3 · two-col: 2 · single: 1",
+              description: "Add images in order. Each image can have a label displayed inside its cell.",
               type: "array",
-              of: [{ type: "image", options: { hotspot: true } }],
+              of: [
+                {
+                  type: "object",
+                  name: "bentoItem",
+                  title: "Image",
+                  fields: [
+                    defineField({
+                      name: "image",
+                      title: "Image",
+                      type: "image",
+                      options: { hotspot: true },
+                    }),
+                    defineField({
+                      name: "label",
+                      title: "Label",
+                      type: "string",
+                      placeholder: "e.g. Packaging Design, Cup Design…",
+                    }),
+                  ],
+                  preview: {
+                    select: { title: "label", media: "image" },
+                    prepare({ title, media }: Record<string, any>) {
+                      return { title: title ?? "Unlabelled", media };
+                    },
+                  },
+                },
+              ],
             }),
           ],
-          components: { input: ContentSectionInput },
           preview: {
-            select: { title: "caption", layout: "layout", media: "images.0" },
-            prepare({ title, layout, media }: Record<string, any>) {
+            select: { layout: "layout", media: "items.0.image" },
+            prepare({ layout, media }: Record<string, any>) {
               const labels: Record<string, string> = {
-                "large-top-6": "Large Top (6)",
-                "large-bottom-6": "Large Bottom (6)",
-                "large-top-4": "Large Top (4)",
-                "large-bottom-4": "Large Bottom (4)",
-                "five-grid": "5 Grid",
-                "three-col": "Three Column",
-                "two-col": "Two Column",
+                "three-large-top": "Large Top (3)",
+                "three-large-bottom": "Large Bottom (3)",
+                "two-stacked": "Two Stacked",
                 single: "Full Width",
               };
-              return { title: title ?? labels[layout] ?? layout, media };
+              return { title: labels[layout] ?? layout, media };
             },
           },
         },
@@ -195,6 +205,8 @@ export default defineType({
       ],
     }),
     // Legacy fields — hidden to preserve old data
+    defineField({ name: "sectionLabel", title: "Section Label (legacy)", type: "string", hidden: true }),
+    defineField({ name: "sectionDescription", title: "Section Description (legacy)", type: "text", hidden: true }),
     defineField({
       name: "mockups",
       title: "Mockups (legacy)",

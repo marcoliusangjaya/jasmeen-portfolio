@@ -91,102 +91,40 @@ const HERO_OPTIONS = [
 
 const CONTENT_OPTIONS = [
   {
-    value: "large-top-6",
+    value: "three-large-top",
     title: "Large Top",
-    sub: "1 large · 1 medium + 4 small below",
-    count: "6 images",
-    preview: () => (
-      <svg viewBox="0 0 60 52" width={60} height={52} xmlns="http://www.w3.org/2000/svg">
-        <rect x={0.5}  y={0.5}  width={59} height={23} {...rs} />
-        <rect x={0.5}  y={24.5} width={29} height={27} {...rs} />
-        <rect x={30.5} y={24.5} width={14} height={13} {...rs} />
-        <rect x={45.5} y={24.5} width={14} height={13} {...rs} />
-        <rect x={30.5} y={38.5} width={14} height={13} {...rs} />
-        <rect x={45.5} y={38.5} width={14} height={13} {...rs} />
-      </svg>
-    ),
-  },
-  {
-    value: "large-bottom-6",
-    title: "Large Bottom",
-    sub: "4 small + 1 medium above · 1 large below",
-    count: "6 images",
-    preview: () => (
-      <svg viewBox="0 0 60 52" width={60} height={52} xmlns="http://www.w3.org/2000/svg">
-        <rect x={0.5}  y={0.5}  width={14} height={13} {...rs} />
-        <rect x={15.5} y={0.5}  width={14} height={13} {...rs} />
-        <rect x={0.5}  y={14.5} width={14} height={13} {...rs} />
-        <rect x={15.5} y={14.5} width={14} height={13} {...rs} />
-        <rect x={30.5} y={0.5}  width={29} height={27} {...rs} />
-        <rect x={0.5}  y={28.5} width={59} height={23} {...rs} />
-      </svg>
-    ),
-  },
-  {
-    value: "large-top-4",
-    title: "Large Top",
-    sub: "1 large · 1 medium + 2 stacked below",
-    count: "4 images",
-    preview: () => (
-      <svg viewBox="0 0 60 52" width={60} height={52} xmlns="http://www.w3.org/2000/svg">
-        <rect x={0.5}  y={0.5}  width={59} height={23} {...rs} />
-        <rect x={0.5}  y={24.5} width={29} height={27} {...rs} />
-        <rect x={30.5} y={24.5} width={29} height={13} {...rs} />
-        <rect x={30.5} y={38.5} width={29} height={13} {...rs} />
-      </svg>
-    ),
-  },
-  {
-    value: "large-bottom-4",
-    title: "Large Bottom",
-    sub: "2 stacked + 1 medium above · 1 large below",
-    count: "4 images",
-    preview: () => (
-      <svg viewBox="0 0 60 52" width={60} height={52} xmlns="http://www.w3.org/2000/svg">
-        <rect x={0.5}  y={0.5}  width={29} height={13} {...rs} />
-        <rect x={0.5}  y={14.5} width={29} height={13} {...rs} />
-        <rect x={30.5} y={0.5}  width={29} height={27} {...rs} />
-        <rect x={0.5}  y={28.5} width={59} height={23} {...rs} />
-      </svg>
-    ),
-  },
-  {
-    value: "five-grid",
-    title: "5 Grid",
-    sub: "2 equal top · 3 equal bottom",
-    count: "5 images",
-    preview: () => (
-      <svg viewBox="0 0 60 52" width={60} height={52} xmlns="http://www.w3.org/2000/svg">
-        <rect x={0.5}  y={0.5}  width={29} height={25} {...rs} />
-        <rect x={30.5} y={0.5}  width={29} height={25} {...rs} />
-        <rect x={0.5}  y={26.5} width={19} height={25} {...rs} />
-        <rect x={20.5} y={26.5} width={19} height={25} {...rs} />
-        <rect x={40.5} y={26.5} width={19} height={25} {...rs} />
-      </svg>
-    ),
-  },
-  {
-    value: "three-col",
-    title: "Three Column",
-    sub: "3 equal columns",
+    sub: "1 large top · 2 medium bottom",
     count: "3 images",
     preview: () => (
       <svg viewBox="0 0 60 52" width={60} height={52} xmlns="http://www.w3.org/2000/svg">
-        <rect x={0.5}  y={0.5} width={19} height={51} {...rs} />
-        <rect x={20.5} y={0.5} width={19} height={51} {...rs} />
-        <rect x={40.5} y={0.5} width={19} height={51} {...rs} />
+        <rect x={0.5}  y={0.5}  width={59} height={28} {...rs} />
+        <rect x={0.5}  y={29.5} width={29} height={22} {...rs} />
+        <rect x={30.5} y={29.5} width={29} height={22} {...rs} />
       </svg>
     ),
   },
   {
-    value: "two-col",
-    title: "Two Column",
-    sub: "2 equal columns",
+    value: "three-large-bottom",
+    title: "Large Bottom",
+    sub: "2 medium top · 1 large bottom",
+    count: "3 images",
+    preview: () => (
+      <svg viewBox="0 0 60 52" width={60} height={52} xmlns="http://www.w3.org/2000/svg">
+        <rect x={0.5}  y={0.5}  width={29} height={22} {...rs} />
+        <rect x={30.5} y={0.5}  width={29} height={22} {...rs} />
+        <rect x={0.5}  y={23.5} width={59} height={28} {...rs} />
+      </svg>
+    ),
+  },
+  {
+    value: "two-stacked",
+    title: "Two Stacked",
+    sub: "2 full-width rows",
     count: "2 images",
     preview: () => (
       <svg viewBox="0 0 60 52" width={60} height={52} xmlns="http://www.w3.org/2000/svg">
-        <rect x={0.5}  y={0.5} width={29} height={51} {...rs} />
-        <rect x={30.5} y={0.5} width={29} height={51} {...rs} />
+        <rect x={0.5} y={0.5}  width={59} height={25} {...rs} />
+        <rect x={0.5} y={26.5} width={59} height={25} {...rs} />
       </svg>
     ),
   },
@@ -284,4 +222,4 @@ function createPicker(options: LayoutOption[], columns: number) {
 }
 
 export const HeroLayoutPicker = createPicker(HERO_OPTIONS, 3);
-export const ContentLayoutPicker = createPicker(CONTENT_OPTIONS, 4);
+export const ContentLayoutPicker = createPicker(CONTENT_OPTIONS, 2);

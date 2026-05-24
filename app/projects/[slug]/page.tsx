@@ -18,9 +18,8 @@ type HeroLayout =
   | "single";
 
 type Section = {
-  caption?: string;
-  layout?: "large-top-6" | "large-bottom-6" | "large-top-4" | "large-bottom-4" | "five-grid" | "three-col" | "two-col" | "single";
-  images?: string[];
+  layout?: "three-large-top" | "three-large-bottom" | "two-stacked" | "single";
+  items?: { image?: string; label?: string }[];
 };
 
 type MockupImage = { url: string; width?: number; height?: number };
