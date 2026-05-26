@@ -7,7 +7,7 @@ import Footer from "@/components/Footer";
 import ContentBlocks from "@/components/ContentBlocks";
 import type { Project } from "@/components/ProjectGrid";
 
-export const revalidate = 60;
+export const revalidate = 0;
 
 type HeroLayout =
   | "classic"
@@ -99,9 +99,11 @@ export default async function ProjectPage({
           </div>
 
           {project.description && (
-            <p className="font-satoshi text-sm leading-relaxed text-text/70 max-w-xl">
-              {project.description}
-            </p>
+            <div className="font-satoshi text-sm leading-relaxed text-text/70 max-w-2xl space-y-4">
+              {project.description.split("\n\n").filter(Boolean).map((para, i) => (
+                <p key={i}>{para}</p>
+              ))}
+            </div>
           )}
         </section>
 
@@ -273,9 +275,9 @@ function ImgCell({
   className?: string;
 }) {
   return (
-    <div className={`relative overflow-hidden bg-border/10 ${className}`}>
+    <div className={`relative overflow-hidden bg-[#F0F1ED] ${className}`}>
       {src && (
-        <Image src={src} alt={alt} fill className="object-cover" sizes={sizes} />
+        <Image src={src} alt={alt} fill className="object-contain" sizes={sizes} />
       )}
     </div>
   );
