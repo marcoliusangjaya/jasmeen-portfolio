@@ -130,9 +130,7 @@ function HeroGrid({ images, layout }: { images: string[]; layout: HeroLayout }) 
 
   if (layout === "single" || images.length <= 1) {
     return (
-      <div className="relative w-full h-[calc(100vh-100px)]">
-        <ImgCell src={a} sizes="100vw" className="absolute inset-0" />
-      </div>
+      <ImgCell src={a} sizes="100vw" className="w-full h-[calc(100vh-100px)]" />
     );
   }
 
