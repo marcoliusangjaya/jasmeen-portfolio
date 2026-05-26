@@ -26,7 +26,11 @@ export const projectBySlugQuery = groq`
     "coverImage": thumbnailImage.asset->url,
     "coverVideo": coverVideo.asset->url,
     heroLayout,
-    "heroImages": heroImages[].asset->url,
+    "heroImages": heroImages[] {
+      "url": asset->url,
+      "width": asset->metadata.dimensions.width,
+      "height": asset->metadata.dimensions.height
+    },
     "sections": sections[] {
       layout,
       "items": items[] {

@@ -25,12 +25,14 @@ type Section = {
 type MockupImage = { url: string; width?: number; height?: number };
 type MockupRow = { images?: MockupImage[] };
 
+type HeroImage = { url: string; width?: number; height?: number };
+
 type ProjectDetail = Project & {
   date?: string;
   subheading?: string;
   description?: string;
   heroLayout?: HeroLayout;
-  heroImages?: string[];
+  heroImages?: HeroImage[];
   sections?: Section[];
   mockupRows?: MockupRow[];
   otherWork?: Project[];
@@ -52,9 +54,9 @@ export default async function ProjectPage({
 
   if (!project) notFound();
 
-  const heroImages = project.heroImages?.length
+  const heroImages: HeroImage[] = project.heroImages?.length
     ? project.heroImages
-    : ([project.coverImage].filter(Boolean) as string[]);
+    : project.coverImage ? [{ url: project.coverImage }] : [];
 
   return (
     <>
@@ -125,67 +127,82 @@ export default async function ProjectPage({
 
 /* ─── Hero layouts ─────────────────────────────────────────────────────────── */
 
-function HeroGrid({ images, layout }: { images: string[]; layout: HeroLayout }) {
+function HeroGrid({ images, layout }: { images: HeroImage[]; layout: HeroLayout }) {
   const [a, b, c, d] = images;
 
+  // Single image: natural width × height, no fixed container height
   if (layout === "single" || images.length <= 1) {
+    if (!a) return null;
     return (
-      <ImgCell src={a} sizes="100vw" className="w-full h-[calc(100vh-100px)]" />
+      <div className="w-full overflow-hidden">
+        <Image
+          src={a.url}
+          alt=""
+          width={a.width ?? 1600}
+          height={a.height ?? 900}
+          style={{ width: "100%", height: "auto", display: "block" }}
+          sizes="100vw"
+        />
+      </div>
     );
   }
 
+  // Multi-image: derive container aspect ratio from first image
+  const ar = a?.width && a?.height ? `${a.width} / ${a.height}` : "16 / 9";
+
   if (layout === "two-col") {
     return (
-      <div className="grid grid-cols-2 h-[calc(100vh-100px)]">
-        <ImgCell src={a} sizes="50vw" />
-        <ImgCell src={b} sizes="50vw" />
+      <div className="grid grid-cols-2" style={{ aspectRatio: ar }}>
+        <ImgCell src={a?.url} sizes="50vw" />
+        <ImgCell src={b?.url} sizes="50vw" />
       </div>
     );
   }
 
   if (layout === "four-grid") {
     return (
-      <div className="grid grid-cols-2 grid-rows-2 h-[calc(100vh-100px)]">
-        <ImgCell src={a} sizes="50vw" />
-        <ImgCell src={b} sizes="50vw" />
-        <ImgCell src={c} sizes="50vw" />
-        <ImgCell src={d} sizes="50vw" />
+      <div className="grid grid-cols-2 grid-rows-2" style={{ aspectRatio: ar }}>
+        <ImgCell src={a?.url} sizes="50vw" />
+        <ImgCell src={b?.url} sizes="50vw" />
+        <ImgCell src={c?.url} sizes="50vw" />
+        <ImgCell src={d?.url} sizes="50vw" />
       </div>
     );
   }
 
   if (layout === "large-right") {
     return (
-      <div className="grid grid-cols-2 h-[calc(100vh-100px)]">
+      <div className="grid grid-cols-2" style={{ aspectRatio: ar }}>
         <div className="grid grid-rows-2">
-          <ImgCell src={a} sizes="50vw" />
-          <ImgCell src={b} sizes="50vw" />
+          <ImgCell src={a?.url} sizes="50vw" />
+          <ImgCell src={b?.url} sizes="50vw" />
         </div>
-        <ImgCell src={c} sizes="50vw" />
+        <ImgCell src={c?.url} sizes="50vw" />
       </div>
     );
   }
 
   if (layout === "large-left-two-right") {
     return (
-      <div className="grid grid-cols-2 h-[calc(100vh-100px)]">
-        <ImgCell src={a} sizes="50vw" />
+      <div className="grid grid-cols-2" style={{ aspectRatio: ar }}>
+        <ImgCell src={a?.url} sizes="50vw" />
         <div className="grid grid-rows-2">
-          <ImgCell src={b} sizes="50vw" />
-          <ImgCell src={c} sizes="50vw" />
+          <ImgCell src={b?.url} sizes="50vw" />
+          <ImgCell src={c?.url} sizes="50vw" />
         </div>
       </div>
     );
   }
 
+  // classic
   return (
-    <div className="grid grid-cols-2 h-[calc(100vh-100px)]">
-      <ImgCell src={a} sizes="50vw" />
+    <div className="grid grid-cols-2" style={{ aspectRatio: ar }}>
+      <ImgCell src={a?.url} sizes="50vw" />
       <div className="grid grid-rows-2">
-        <ImgCell src={b} sizes="50vw" />
+        <ImgCell src={b?.url} sizes="50vw" />
         <div className="grid grid-cols-2">
-          <ImgCell src={c} sizes="25vw" />
-          <ImgCell src={d} sizes="25vw" />
+          <ImgCell src={c?.url} sizes="25vw" />
+          <ImgCell src={d?.url} sizes="25vw" />
         </div>
       </div>
     </div>
