@@ -172,6 +172,21 @@ function MockupRows({ rows, onOpen }: { rows: MockupRow[]; onOpen: (src: string)
         const imgs = (row.images ?? []).filter((img) => img.url);
         if (imgs.length === 0) return null;
         const n = Math.min(imgs.length, 3) as 1 | 2 | 3;
+        if (n === 1) {
+          return (
+            <div key={i} className="cursor-zoom-in" onClick={() => onOpen(imgs[0].url)}>
+              <Image
+                src={imgs[0].url}
+                alt=""
+                width={imgs[0].width ?? 1200}
+                height={imgs[0].height ?? 800}
+                style={{ width: "100%", height: "auto", display: "block" }}
+                sizes="100vw"
+              />
+            </div>
+          );
+        }
+
         return (
           <div key={i} className={`grid ${colsClass[n]} gap-2`}>
             {imgs.map((img, j) => (
@@ -181,7 +196,7 @@ function MockupRows({ rows, onOpen }: { rows: MockupRow[]; onOpen: (src: string)
                   alt=""
                   fill
                   className="object-cover"
-                  sizes={n === 1 ? "100vw" : n === 2 ? "50vw" : "33vw"}
+                  sizes={n === 2 ? "50vw" : "33vw"}
                 />
               </div>
             ))}
