@@ -187,15 +187,24 @@ function MockupRows({ rows, onOpen }: { rows: MockupRow[]; onOpen: (src: string)
           );
         }
 
+        // Tallest image in the row drives the cell height — no cropping
+        const maxRatio = Math.max(
+          ...imgs.map((img) => (img.height && img.width ? img.height / img.width : 0.75))
+        );
         return (
           <div key={i} className={`grid ${colsClass[n]} gap-2`}>
             {imgs.map((img, j) => (
-              <div key={j} className="relative aspect-[4/3] overflow-hidden cursor-zoom-in" onClick={() => onOpen(img.url)}>
+              <div
+                key={j}
+                className="relative overflow-hidden cursor-zoom-in bg-[#F0F1ED]"
+                style={{ aspectRatio: `1 / ${maxRatio}` }}
+                onClick={() => onOpen(img.url)}
+              >
                 <Image
                   src={img.url}
                   alt=""
                   fill
-                  className="object-cover"
+                  className="object-contain"
                   sizes={n === 2 ? "50vw" : "33vw"}
                 />
               </div>
