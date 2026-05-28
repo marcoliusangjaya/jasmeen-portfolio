@@ -53,15 +53,19 @@ export default function ProjectGrid({ projects }: { projects: Project[] }) {
           const col = index % 4;
           const row = Math.floor(index / 4);
           const dimmed = active !== null && !(project.categories ?? []).includes(active);
+          // Active cards keep all 4 borders + z-10 so they render over adjacent dimmed edges.
+          // Dimmed cards use the original l-0/t-0 trick (own only bottom+right).
+          const suppressLeft = col > 0 && (!active || dimmed);
+          const suppressTop  = row > 0 && (!active || dimmed);
           return (
             <Link
               key={project._id}
               href={`/projects/${project.slug}`}
               className={`group relative bg-[#F0F1ED] aspect-square flex flex-col overflow-hidden
                 border-[1.5px] border-[#1A1A18] transition-opacity duration-300
-                ${col > 0 ? "-ml-[1.5px]" : ""}
-                ${row > 0 ? "-mt-[1.5px]" : ""}
-                ${dimmed ? "opacity-25 z-0" : "opacity-100 z-10"}`}
+                ${suppressLeft ? "border-l-0" : ""}
+                ${suppressTop  ? "border-t-0" : ""}
+                ${dimmed ? "opacity-25 z-0" : active ? "z-10" : ""}`}
             >
               <div className="h-full flex flex-col">
                 {/* Meta row */}
