@@ -5,6 +5,7 @@ import {
   ContentLayoutPicker,
 } from "../components/LayoutPicker";
 import { HeroPreviewInput } from "../components/HeroPreviewInput";
+import { CategoryInput } from "../components/CategoryInput";
 
 export default defineType({
   name: "project",
@@ -28,11 +29,12 @@ export default defineType({
     defineField({
       name: "categories",
       title: "Categories",
-      description: "Add one or more categories — each will appear as a filter on the site",
+      description: "Click existing categories to add, or type new ones below",
       type: "array",
       of: [{ type: "string" }],
       options: { layout: "tags" },
       validation: (r) => r.required().min(1),
+      components: { input: CategoryInput },
     }),
     defineField({
       name: "location",
@@ -67,6 +69,12 @@ export default defineType({
       type: "string",
     }),
     defineField({
+      name: "description",
+      title: "Description",
+      type: "text",
+      rows: 6,
+    }),
+    defineField({
       name: "heroLayout",
       title: "Hero Layout",
       description: "How the hero images are arranged at the top of the project page",
@@ -92,12 +100,6 @@ export default defineType({
       of: [{ type: "image", options: { hotspot: true } }],
       validation: (r) => r.max(4),
       components: { input: HeroPreviewInput },
-    }),
-    defineField({
-      name: "description",
-      title: "Description",
-      type: "text",
-      rows: 6,
     }),
     defineField({
       name: "sections",
