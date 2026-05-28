@@ -47,20 +47,15 @@ export default function ProjectGrid({ projects }: { projects: Project[] }) {
         ))}
       </div>
 
-      {/* Grid */}
-      <div className="grid grid-cols-4">
-        {projects.map((project, index) => {
-          const col = index % 4;
-          const row = Math.floor(index / 4);
+      {/* Grid — gap trick so borders don't dim with filtered cards */}
+      <div className="grid grid-cols-4 bg-[#1A1A18] gap-[1.5px] border-[1.5px] border-[#1A1A18]">
+        {projects.map((project) => {
           const dimmed = active !== null && !(project.categories ?? []).includes(active);
           return (
             <Link
               key={project._id}
               href={`/projects/${project.slug}`}
               className={`group bg-[#F0F1ED] aspect-square flex flex-col overflow-hidden transition-opacity duration-300
-                border-[1.5px] border-[#1A1A18]
-                ${col > 0 ? "border-l-0" : ""}
-                ${row > 0 ? "border-t-0" : ""}
                 ${dimmed ? "opacity-25" : "opacity-100"}`}
             >
               <div className="transition-transform duration-300 ease-out group-hover:scale-[1.02] origin-center h-full flex flex-col">
