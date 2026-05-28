@@ -56,9 +56,9 @@ export default function ProjectGrid({ projects }: { projects: Project[] }) {
               key={project._id}
               href={`/projects/${project.slug}`}
               className={`group bg-[#F0F1ED] aspect-square flex flex-col overflow-hidden transition-opacity duration-300
-                ${dimmed ? "opacity-25" : "opacity-100"}`}
+                ${dimmed ? "opacity-10" : "opacity-100"}`}
             >
-              <div className="transition-transform duration-300 ease-out group-hover:scale-[1.02] origin-center h-full flex flex-col">
+              <div className="h-full flex flex-col">
                 {/* Meta row */}
                 <div className="flex items-start justify-between px-3 pt-3 pb-1 gap-1 shrink-0">
                   <span className="font-satoshi text-[10px] tracking-widest uppercase text-[#1A1A18]/60 leading-tight">
@@ -99,7 +99,7 @@ export default function ProjectGrid({ projects }: { projects: Project[] }) {
 
                 {/* Title */}
                 <div className="px-3 pb-3 shrink-0">
-                  <h3 className="font-cabinet text-[15px] font-medium leading-snug line-clamp-2">
+                  <h3 className="font-cabinet text-[15px] font-medium leading-snug line-clamp-2 transition-colors duration-200 text-[#1A1A18] group-hover:text-[#1A1A18]/40">
                     {project.title}
                   </h3>
                 </div>
