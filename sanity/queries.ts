@@ -9,7 +9,8 @@ export const projectsQuery = groq`
     location,
     date,
     "coverImage": thumbnailImage.asset->url,
-    "coverVideo": coverVideo.asset->url
+    "coverVideo": coverVideo.asset->url,
+    thumbnailSize
   }
 `;
 

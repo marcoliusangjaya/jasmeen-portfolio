@@ -12,6 +12,7 @@ export type Project = {
   location?: string;
   coverImage?: string;
   coverVideo?: string;
+  thumbnailSize?: "small" | "medium" | "large" | "full";
 };
 
 export default function ProjectGrid({ projects }: { projects: Project[] }) {
@@ -77,7 +78,7 @@ export default function ProjectGrid({ projects }: { projects: Project[] }) {
 
                 {/* Thumbnail */}
                 <div className="flex-1 flex items-center justify-center min-h-0 p-3">
-                  <div className="relative w-1/2 aspect-square">
+                  <div className={`relative aspect-square ${{ small: "w-1/3", medium: "w-1/2", large: "w-[70%]", full: "w-[90%]" }[project.thumbnailSize ?? "medium"]}`}>
                     {project.coverVideo ? (
                       <video
                         src={project.coverVideo}

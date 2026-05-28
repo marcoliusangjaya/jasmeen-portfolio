@@ -56,6 +56,22 @@ export default defineType({
       options: { hotspot: true },
     }),
     defineField({
+      name: "thumbnailSize",
+      title: "Thumbnail Size",
+      description: "How large the image appears within the card",
+      type: "string",
+      initialValue: "medium",
+      options: {
+        list: [
+          { value: "small", title: "Small (33%)" },
+          { value: "medium", title: "Medium (50%)" },
+          { value: "large", title: "Large (70%)" },
+          { value: "full", title: "Full (90%)" },
+        ],
+        layout: "radio",
+      },
+    }),
+    defineField({
       name: "coverVideo",
       title: "Thumbnail Video",
       description: "Optional — upload a video to replace the thumbnail image. Autoplays on loop.",
