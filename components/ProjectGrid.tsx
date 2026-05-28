@@ -48,15 +48,19 @@ export default function ProjectGrid({ projects }: { projects: Project[] }) {
       </div>
 
       {/* Grid */}
-      <div className="border-[1.5px] border-[#1A1A18]">
-        <div className="grid grid-cols-4 gap-[1.5px] bg-[#1A1A18]">
-        {projects.map((project) => {
+      <div className="grid grid-cols-4">
+        {projects.map((project, index) => {
+          const col = index % 4;
+          const row = Math.floor(index / 4);
           const dimmed = active !== null && !(project.categories ?? []).includes(active);
           return (
             <Link
               key={project._id}
               href={`/projects/${project.slug}`}
-              className="group relative bg-[#F0F1ED] aspect-square flex flex-col overflow-hidden"
+              className={`group relative bg-[#F0F1ED] aspect-square flex flex-col overflow-hidden
+                border-[1.5px] border-[#1A1A18]
+                ${col > 0 ? "border-l-0" : ""}
+                ${row > 0 ? "border-t-0" : ""}`}
             >
               {dimmed && (
                 <div className="absolute inset-0 bg-white/75 z-20 pointer-events-none transition-opacity duration-300" />
@@ -110,7 +114,6 @@ export default function ProjectGrid({ projects }: { projects: Project[] }) {
             </Link>
           );
         })}
-        </div>
       </div>
     </section>
   );
