@@ -58,10 +58,10 @@ export default function ProjectGrid({ projects }: { projects: Project[] }) {
               key={project._id}
               href={`/projects/${project.slug}`}
               className={`group relative bg-[#F0F1ED] aspect-square flex flex-col overflow-hidden
-                border-[1.5px] transition-colors duration-300
+                border-[1.5px] border-[#1A1A18] transition-opacity duration-300
                 ${col > 0 ? "-ml-[1.5px]" : ""}
                 ${row > 0 ? "-mt-[1.5px]" : ""}
-                ${dimmed ? "border-[#E0DCD5] z-0" : "border-[#1A1A18] z-10"}`}
+                ${dimmed ? "opacity-25 z-0" : "opacity-100 z-10"}`}
             >
               <div className="h-full flex flex-col">
                 {/* Meta row */}
