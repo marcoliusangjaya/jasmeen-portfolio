@@ -58,7 +58,8 @@ export default function ProjectGrid({ projects }: { projects: Project[] }) {
               key={project._id}
               href={`/projects/${project.slug}`}
               className={`group relative bg-[#F0F1ED] aspect-square flex flex-col overflow-hidden
-                border-[1.5px] border-[#1A1A18]
+                border-[1.5px] transition-colors duration-300
+                ${dimmed ? "border-[#1A1A18]/20" : "border-[#1A1A18]"}
                 ${col > 0 ? "border-l-0" : ""}
                 ${row > 0 ? "border-t-0" : ""}`}
             >
