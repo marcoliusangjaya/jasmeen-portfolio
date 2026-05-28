@@ -12,7 +12,7 @@ export default function Nav() {
       <nav className="flex items-center justify-between px-[120px] py-5">
         <Link
           href="/"
-          className="font-cabinet text-lg font-medium tracking-widest uppercase"
+          className="font-cabinet text-2xl font-medium tracking-widest uppercase"
         >
           Jasmeen Shaqueita
         </Link>
