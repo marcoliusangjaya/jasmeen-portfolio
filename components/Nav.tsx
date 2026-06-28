@@ -1,3 +1,6 @@
+"use client";
+
+import { useEffect, useState } from "react";
 import Link from "next/link";
 
 const links = [
@@ -7,8 +10,20 @@ const links = [
 ];
 
 export default function Nav() {
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 10);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
   return (
-    <header className="sticky top-0 z-50 bg-transparent">
+    <header
+      className={`sticky top-0 z-50 transition-colors duration-300 ${
+        scrolled ? "bg-[#F0F1ED]" : "bg-transparent"
+      }`}
+    >
       <nav className="flex items-center justify-between px-[120px] py-5">
         <Link
           href="/"
