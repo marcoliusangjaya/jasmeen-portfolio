@@ -53,15 +53,16 @@ export default function ProjectGrid({ projects }: { projects: Project[] }) {
           const col = index % 4;
           const row = Math.floor(index / 4);
           const dimmed = active !== null && !(project.categories ?? []).includes(active);
+          const highlighted = active !== null && !dimmed;
           return (
             <Link
               key={project._id}
               href={`/projects/${project.slug}`}
               className={`group relative bg-[#F0F1ED] aspect-square flex flex-col overflow-hidden
                 border-[1.5px] border-[#1A1A18] transition-opacity duration-300
-                ${col > 0 ? "-ml-[1.5px]" : ""}
-                ${row > 0 ? "-mt-[1.5px]" : ""}
-                ${dimmed ? "opacity-25 z-0" : active ? "z-10" : "z-0"}`}
+                ${col > 0 && !highlighted ? "border-l-0" : ""}
+                ${row > 0 && !highlighted ? "border-t-0" : ""}
+                ${dimmed ? "opacity-25 z-0" : highlighted ? "z-10" : "z-0"}`}
             >
               <div className="h-full flex flex-col">
                 {/* Meta row */}
