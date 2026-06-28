@@ -54,14 +54,25 @@ export default function ProjectGrid({ projects }: { projects: Project[] }) {
           const row = Math.floor(index / 4);
           const dimmed = active !== null && !(project.categories ?? []).includes(active);
           const highlighted = active !== null && !dimmed;
+
+          // Only show left/top border on a highlighted card if the neighbour is NOT also highlighted.
+          // This prevents double-weight borders between two adjacent active cards.
+          const leftNeighbour  = col > 0 ? projects[index - 1] : null;
+          const topNeighbour   = row > 0 ? projects[index - 4] : null;
+          const leftHighlighted  = !!leftNeighbour  && active !== null && !!(leftNeighbour.categories  ?? []).includes(active);
+          const topHighlighted   = !!topNeighbour   && active !== null && !!(topNeighbour.categories   ?? []).includes(active);
+
+          const suppressLeft = col > 0 && (!highlighted || leftHighlighted);
+          const suppressTop  = row > 0 && (!highlighted || topHighlighted);
+
           return (
             <Link
               key={project._id}
               href={`/projects/${project.slug}`}
               className={`group relative bg-[#F0F1ED] aspect-square flex flex-col overflow-hidden
                 border-[1.5px] border-[#1A1A18] transition-opacity duration-300
-                ${col > 0 && !highlighted ? "border-l-0" : ""}
-                ${row > 0 && !highlighted ? "border-t-0" : ""}
+                ${suppressLeft ? "border-l-0" : ""}
+                ${suppressTop  ? "border-t-0" : ""}
                 ${dimmed ? "opacity-25 z-0" : highlighted ? "z-10" : "z-0"}`}
             >
               <div className="h-full flex flex-col">
