@@ -22,8 +22,8 @@ type Section = {
   items?: { image?: string; label?: string }[];
 };
 
-type MockupImage = { url: string; width?: number; height?: number };
-type MockupRow = { images?: MockupImage[] };
+type MockupItem = { url?: string; width?: number; height?: number; videoUrl?: string };
+type MockupRow = { items?: MockupItem[] };
 
 type HeroImage = { url: string; width?: number; height?: number };
 

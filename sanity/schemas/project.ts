@@ -202,7 +202,7 @@ export default defineType({
     defineField({
       name: "mockupRows",
       title: "Product Mockups",
-      description: "Each row can hold 1–3 images. Images render at their natural aspect ratio.",
+      description: "Each row can hold 1–3 items (images or videos). Items render at their natural aspect ratio.",
       type: "array",
       of: [
         {
@@ -211,15 +211,38 @@ export default defineType({
           title: "Row",
           fields: [
             defineField({
-              name: "images",
-              title: "Images (1–3 per row)",
+              name: "items",
+              title: "Items (1–3 per row)",
+              description: "Add images or videos. Mix freely.",
               type: "array",
-              of: [{ type: "image", options: { hotspot: true } }],
+              of: [
+                {
+                  type: "object",
+                  name: "mockupItem",
+                  title: "Item",
+                  fields: [
+                    defineField({ name: "image", title: "Image", type: "image", options: { hotspot: true } }),
+                    defineField({
+                      name: "video",
+                      title: "Video",
+                      description: "Upload a video instead of an image (mp4/webm).",
+                      type: "file",
+                      options: { accept: "video/mp4,video/webm,video/ogg" },
+                    }),
+                  ],
+                  preview: {
+                    select: { media: "image" },
+                    prepare({ media }: Record<string, any>) {
+                      return { title: "Mockup item", media };
+                    },
+                  },
+                },
+              ],
               validation: (r) => r.max(3),
             }),
           ],
           preview: {
-            select: { media: "images.0" },
+            select: { media: "items.0.image" },
             prepare({ media }: Record<string, any>) {
               return { title: "Mockup row", media };
             },

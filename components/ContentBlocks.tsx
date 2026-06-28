@@ -10,8 +10,8 @@ type Section = {
   items?: BentoItem[];
 };
 
-type MockupImage = { url: string; width?: number; height?: number };
-type MockupRow = { images?: MockupImage[] };
+type MockupItem = { url?: string; width?: number; height?: number; videoUrl?: string };
+type MockupRow = { items?: MockupItem[] };
 
 const B = "border-[1.5px] border-[#1A1A18]";
 
@@ -169,44 +169,41 @@ function MockupRows({ rows, onOpen }: { rows: MockupRow[]; onOpen: (src: string)
   return (
     <div className="px-[120px] flex flex-col gap-2 mt-16">
       {rows.map((row, i) => {
-        const imgs = (row.images ?? []).filter((img) => img.url);
-        if (imgs.length === 0) return null;
-        const n = Math.min(imgs.length, 3) as 1 | 2 | 3;
+        const items = (row.items ?? []).filter((it) => it.videoUrl || it.url);
+        if (items.length === 0) return null;
+        const n = Math.min(items.length, 3) as 1 | 2 | 3;
+
         if (n === 1) {
+          const it = items[0];
           return (
-            <div key={i} className="cursor-zoom-in" onClick={() => onOpen(imgs[0].url)}>
-              <Image
-                src={imgs[0].url}
-                alt=""
-                width={imgs[0].width ?? 1200}
-                height={imgs[0].height ?? 800}
-                style={{ width: "100%", height: "auto", display: "block" }}
-                sizes="100vw"
-              />
+            <div key={i} className={it.videoUrl ? "" : "cursor-zoom-in"} onClick={it.url && !it.videoUrl ? () => onOpen(it.url!) : undefined}>
+              {it.videoUrl ? (
+                <video src={it.videoUrl} autoPlay muted loop playsInline style={{ width: "100%", height: "auto", display: "block" }} />
+              ) : (
+                <Image src={it.url!} alt="" width={it.width ?? 1200} height={it.height ?? 800} style={{ width: "100%", height: "auto", display: "block" }} sizes="100vw" />
+              )}
             </div>
           );
         }
 
-        // Tallest image in the row drives the cell height — no cropping
+        // Tallest item drives the cell height — no cropping
         const maxRatio = Math.max(
-          ...imgs.map((img) => (img.height && img.width ? img.height / img.width : 0.75))
+          ...items.map((it) => (it.height && it.width ? it.height / it.width : 0.75))
         );
         return (
           <div key={i} className={`grid ${colsClass[n]} gap-2`}>
-            {imgs.map((img, j) => (
+            {items.map((it, j) => (
               <div
                 key={j}
-                className="relative overflow-hidden cursor-zoom-in bg-[#F0F1ED]"
+                className={`relative overflow-hidden bg-[#F0F1ED] ${it.videoUrl ? "" : "cursor-zoom-in"}`}
                 style={{ aspectRatio: `1 / ${maxRatio}` }}
-                onClick={() => onOpen(img.url)}
+                onClick={it.url && !it.videoUrl ? () => onOpen(it.url!) : undefined}
               >
-                <Image
-                  src={img.url}
-                  alt=""
-                  fill
-                  className="object-contain"
-                  sizes={n === 2 ? "50vw" : "33vw"}
-                />
+                {it.videoUrl ? (
+                  <video src={it.videoUrl} autoPlay muted loop playsInline className="absolute inset-0 w-full h-full object-contain" />
+                ) : (
+                  <Image src={it.url!} alt="" fill className="object-contain" sizes={n === 2 ? "50vw" : "33vw"} />
+                )}
               </div>
             ))}
           </div>
