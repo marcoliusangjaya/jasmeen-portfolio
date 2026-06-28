@@ -135,7 +135,7 @@ function HeroGrid({ images, layout }: { images: HeroImage[]; layout: HeroLayout 
 
   if (layout === "single" || images.length <= 1) {
     return (
-      <div className={`w-full ${H}`}>
+      <div className={`grid grid-rows-1 w-full ${H}`}>
         <ImgCell src={a.url} sizes="100vw" />
       </div>
     );
@@ -143,7 +143,7 @@ function HeroGrid({ images, layout }: { images: HeroImage[]; layout: HeroLayout 
 
   if (layout === "two-col") {
     return (
-      <div className={`grid grid-cols-2 ${H}`}>
+      <div className={`grid grid-cols-2 grid-rows-1 ${H}`}>
         <ImgCell src={a?.url} sizes="50vw" />
         <ImgCell src={b?.url} sizes="50vw" />
       </div>
@@ -163,7 +163,7 @@ function HeroGrid({ images, layout }: { images: HeroImage[]; layout: HeroLayout 
 
   if (layout === "large-right") {
     return (
-      <div className={`grid grid-cols-2 ${H}`}>
+      <div className={`grid grid-cols-2 grid-rows-1 ${H}`}>
         <div className="grid grid-rows-2">
           <ImgCell src={a?.url} sizes="50vw" />
           <ImgCell src={b?.url} sizes="50vw" />
@@ -175,7 +175,7 @@ function HeroGrid({ images, layout }: { images: HeroImage[]; layout: HeroLayout 
 
   if (layout === "large-left-two-right") {
     return (
-      <div className={`grid grid-cols-2 ${H}`}>
+      <div className={`grid grid-cols-2 grid-rows-1 ${H}`}>
         <ImgCell src={a?.url} sizes="50vw" />
         <div className="grid grid-rows-2">
           <ImgCell src={b?.url} sizes="50vw" />
@@ -187,11 +187,11 @@ function HeroGrid({ images, layout }: { images: HeroImage[]; layout: HeroLayout 
 
   // classic
   return (
-    <div className={`grid grid-cols-2 ${H}`}>
+    <div className={`grid grid-cols-2 grid-rows-1 ${H}`}>
       <ImgCell src={a?.url} sizes="50vw" />
       <div className="grid grid-rows-2">
         <ImgCell src={b?.url} sizes="50vw" />
-        <div className="grid grid-cols-2">
+        <div className="grid grid-cols-2 grid-rows-1">
           <ImgCell src={c?.url} sizes="25vw" />
           <ImgCell src={d?.url} sizes="25vw" />
         </div>
