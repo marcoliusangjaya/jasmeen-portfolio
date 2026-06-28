@@ -57,11 +57,11 @@ export default function ProjectGrid({ projects }: { projects: Project[] }) {
             <Link
               key={project._id}
               href={`/projects/${project.slug}`}
-              className={`group bg-[#F0F1ED] aspect-square flex flex-col overflow-hidden transition-opacity duration-300
-                border-[1.5px] border-[#1A1A18]
-                ${col > 0 ? "border-l-0" : ""}
-                ${row > 0 ? "border-t-0" : ""}
-                ${dimmed ? "opacity-25" : "opacity-100"}`}
+              className={`group relative bg-[#F0F1ED] aspect-square flex flex-col overflow-hidden
+                border-[1.5px] border-[#1A1A18] transition-opacity duration-300
+                ${col > 0 ? "-ml-[1.5px]" : ""}
+                ${row > 0 ? "-mt-[1.5px]" : ""}
+                ${dimmed ? "opacity-25 z-0" : active ? "z-10" : "z-0"}`}
             >
               <div className="h-full flex flex-col">
                 {/* Meta row */}
