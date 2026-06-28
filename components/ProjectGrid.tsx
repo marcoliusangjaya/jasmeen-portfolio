@@ -55,15 +55,26 @@ export default function ProjectGrid({ projects }: { projects: Project[] }) {
           const dimmed = active !== null && !(project.categories ?? []).includes(active);
           const highlighted = active !== null && !dimmed;
 
-          // Only show left/top border on a highlighted card if the neighbour is NOT also highlighted.
-          // This prevents double-weight borders between two adjacent active cards.
-          const leftNeighbour  = col > 0 ? projects[index - 1] : null;
-          const topNeighbour   = row > 0 ? projects[index - 4] : null;
-          const leftHighlighted  = !!leftNeighbour  && active !== null && !!(leftNeighbour.categories  ?? []).includes(active);
-          const topHighlighted   = !!topNeighbour   && active !== null && !!(topNeighbour.categories   ?? []).includes(active);
+          const leftNeighbour   = col > 0 ? projects[index - 1] : null;
+          const topNeighbour    = row > 0 ? projects[index - 4] : null;
+          const rightNeighbour  = col < 3 ? projects[index + 1] : null;
+          const bottomNeighbour = projects[index + 4] ?? null;
 
-          const suppressLeft = col > 0 && (!highlighted || leftHighlighted);
-          const suppressTop  = row > 0 && (!highlighted || topHighlighted);
+          const isHL = (p: typeof projects[0] | null | undefined) =>
+            !!p && active !== null && !!(p.categories ?? []).includes(active);
+
+          const leftHL   = isHL(leftNeighbour);
+          const topHL    = isHL(topNeighbour);
+          const rightHL  = isHL(rightNeighbour);
+          const bottomHL = isHL(bottomNeighbour);
+
+          // Active card: show its own left/top only when neighbour isn't also active
+          const suppressLeft   = col > 0 && (!highlighted || leftHL);
+          const suppressTop    = row > 0 && (!highlighted || topHL);
+          // Dimmed card: suppress right/bottom when the neighbour is active
+          // (the active card owns that line at z-10, dimmed border would ghost beneath it)
+          const suppressRight  = dimmed && rightHL;
+          const suppressBottom = dimmed && bottomHL;
 
           return (
             <Link
@@ -71,8 +82,10 @@ export default function ProjectGrid({ projects }: { projects: Project[] }) {
               href={`/projects/${project.slug}`}
               className={`group relative bg-[#F0F1ED] aspect-square flex flex-col overflow-hidden
                 border-[1.5px] border-[#1A1A18] transition-opacity duration-300
-                ${suppressLeft ? "border-l-0" : ""}
-                ${suppressTop  ? "border-t-0" : ""}
+                ${suppressLeft   ? "border-l-0" : ""}
+                ${suppressTop    ? "border-t-0" : ""}
+                ${suppressRight  ? "border-r-0" : ""}
+                ${suppressBottom ? "border-b-0" : ""}
                 ${dimmed ? "opacity-25 z-0" : highlighted ? "z-10" : "z-0"}`}
             >
               <div className="h-full flex flex-col">
