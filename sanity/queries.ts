@@ -40,12 +40,19 @@ export const projectBySlugQuery = groq`
       }
     },
     "mockupRows": mockupRows[] {
-      "items": items[] {
-        "url": image.asset->url,
-        "width": image.asset->metadata.dimensions.width,
-        "height": image.asset->metadata.dimensions.height,
-        "videoUrl": video.asset->url
-      }
+      "items": select(
+        defined(items) => items[] {
+          "url": image.asset->url,
+          "width": image.asset->metadata.dimensions.width,
+          "height": image.asset->metadata.dimensions.height,
+          "videoUrl": video.asset->url
+        },
+        images[] {
+          "url": asset->url,
+          "width": asset->metadata.dimensions.width,
+          "height": asset->metadata.dimensions.height
+        }
+      )
     },
     "otherWork": otherWork[]-> {
       _id,
