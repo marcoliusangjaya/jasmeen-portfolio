@@ -10,7 +10,7 @@ export default async function Footer() {
 
   return (
     <footer
-      className="py-14 flex justify-center"
+      className="py-14 px-[120px] flex justify-end"
       style={{ backgroundColor: "var(--color-footer)" }}
     >
       <div className="w-full max-w-xs">
