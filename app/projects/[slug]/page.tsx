@@ -129,30 +129,21 @@ export default async function ProjectPage({
 
 function HeroGrid({ images, layout }: { images: HeroImage[]; layout: HeroLayout }) {
   const [a, b, c, d] = images;
+  if (!a) return null;
 
-  // Single image: natural width × height, no fixed container height
+  const H = "h-[70vh]";
+
   if (layout === "single" || images.length <= 1) {
-    if (!a) return null;
     return (
-      <div className="w-full overflow-hidden">
-        <Image
-          src={a.url}
-          alt=""
-          width={a.width ?? 1600}
-          height={a.height ?? 900}
-          style={{ width: "100%", height: "auto", display: "block" }}
-          sizes="100vw"
-        />
+      <div className={`w-full ${H}`}>
+        <ImgCell src={a.url} sizes="100vw" />
       </div>
     );
   }
 
-  // Multi-image: derive container aspect ratio from first image
-  const ar = a?.width && a?.height ? `${a.width} / ${a.height}` : "16 / 9";
-
   if (layout === "two-col") {
     return (
-      <div className="grid grid-cols-2" style={{ aspectRatio: ar }}>
+      <div className={`grid grid-cols-2 ${H}`}>
         <ImgCell src={a?.url} sizes="50vw" />
         <ImgCell src={b?.url} sizes="50vw" />
       </div>
@@ -161,7 +152,7 @@ function HeroGrid({ images, layout }: { images: HeroImage[]; layout: HeroLayout 
 
   if (layout === "four-grid") {
     return (
-      <div className="grid grid-cols-2 grid-rows-2" style={{ aspectRatio: ar }}>
+      <div className={`grid grid-cols-2 grid-rows-2 ${H}`}>
         <ImgCell src={a?.url} sizes="50vw" />
         <ImgCell src={b?.url} sizes="50vw" />
         <ImgCell src={c?.url} sizes="50vw" />
@@ -172,7 +163,7 @@ function HeroGrid({ images, layout }: { images: HeroImage[]; layout: HeroLayout 
 
   if (layout === "large-right") {
     return (
-      <div className="grid grid-cols-2" style={{ aspectRatio: ar }}>
+      <div className={`grid grid-cols-2 ${H}`}>
         <div className="grid grid-rows-2">
           <ImgCell src={a?.url} sizes="50vw" />
           <ImgCell src={b?.url} sizes="50vw" />
@@ -184,7 +175,7 @@ function HeroGrid({ images, layout }: { images: HeroImage[]; layout: HeroLayout 
 
   if (layout === "large-left-two-right") {
     return (
-      <div className="grid grid-cols-2" style={{ aspectRatio: ar }}>
+      <div className={`grid grid-cols-2 ${H}`}>
         <ImgCell src={a?.url} sizes="50vw" />
         <div className="grid grid-rows-2">
           <ImgCell src={b?.url} sizes="50vw" />
@@ -196,7 +187,7 @@ function HeroGrid({ images, layout }: { images: HeroImage[]; layout: HeroLayout 
 
   // classic
   return (
-    <div className="grid grid-cols-2" style={{ aspectRatio: ar }}>
+    <div className={`grid grid-cols-2 ${H}`}>
       <ImgCell src={a?.url} sizes="50vw" />
       <div className="grid grid-rows-2">
         <ImgCell src={b?.url} sizes="50vw" />
