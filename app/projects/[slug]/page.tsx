@@ -131,7 +131,7 @@ function HeroGrid({ images, layout }: { images: HeroImage[]; layout: HeroLayout 
   const [a, b, c, d] = images;
   if (!a) return null;
 
-  const H = "h-[70vh]";
+  const H = "h-[100vh]";
 
   if (layout === "single" || images.length <= 1) {
     return (
