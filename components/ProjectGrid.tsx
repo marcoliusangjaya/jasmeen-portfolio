@@ -55,37 +55,29 @@ export default function ProjectGrid({ projects }: { projects: Project[] }) {
           const dimmed = active !== null && !(project.categories ?? []).includes(active);
           const highlighted = active !== null && !dimmed;
 
-          const leftNeighbour   = col > 0 ? projects[index - 1] : null;
-          const topNeighbour    = row > 0 ? projects[index - 4] : null;
-          const rightNeighbour  = col < 3 ? projects[index + 1] : null;
-          const bottomNeighbour = projects[index + 4] ?? null;
+          const leftNeighbour = col > 0 ? projects[index - 1] : null;
+          const topNeighbour  = row > 0 ? projects[index - 4] : null;
 
           const isHL = (p: typeof projects[0] | null | undefined) =>
             !!p && active !== null && !!(p.categories ?? []).includes(active);
 
-          const leftHL   = isHL(leftNeighbour);
-          const topHL    = isHL(topNeighbour);
-          const rightHL  = isHL(rightNeighbour);
-          const bottomHL = isHL(bottomNeighbour);
-
-          // Active card: show its own left/top only when neighbour isn't also active
-          const suppressLeft   = col > 0 && (!highlighted || leftHL);
-          const suppressTop    = row > 0 && (!highlighted || topHL);
-          // Dimmed card: suppress right/bottom when the neighbour is active
-          // (the active card owns that line at z-10, dimmed border would ghost beneath it)
-          const suppressRight  = dimmed && rightHL;
-          const suppressBottom = dimmed && bottomHL;
+          // Box-shadow simulates the missing left/top "borders" on active cards
+          // without touching real borders — so layout never shifts.
+          // Skip the shadow side when the neighbour is also active (their right/bottom real border covers it).
+          const shadowParts: string[] = [];
+          if (highlighted && col > 0 && !isHL(leftNeighbour)) shadowParts.push("-1.5px 0 0 0 #1A1A18");
+          if (highlighted && row > 0 && !isHL(topNeighbour))  shadowParts.push("0 -1.5px 0 0 #1A1A18");
+          const boxShadow = shadowParts.join(", ") || undefined;
 
           return (
             <Link
               key={project._id}
               href={`/projects/${project.slug}`}
+              style={boxShadow ? { boxShadow } : undefined}
               className={`group relative bg-[#F0F1ED] aspect-square flex flex-col overflow-hidden
                 border-[1.5px] border-[#1A1A18] transition-opacity duration-300
-                ${suppressLeft   ? "border-l-0" : ""}
-                ${suppressTop    ? "border-t-0" : ""}
-                ${suppressRight  ? "border-r-0" : ""}
-                ${suppressBottom ? "border-b-0" : ""}
+                ${col > 0 ? "border-l-0" : ""}
+                ${row > 0 ? "border-t-0" : ""}
                 ${dimmed ? "opacity-25 z-0" : highlighted ? "z-10" : "z-0"}`}
             >
               <div className="h-full flex flex-col">
