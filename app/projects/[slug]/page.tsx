@@ -61,10 +61,8 @@ export default async function ProjectPage({
   return (
     <>
       <main>
-        {/* Hero — full bleed, bleeds behind transparent nav */}
-        <div className="-mt-[68px]">
-          <HeroGrid images={heroImages} layout={project.heroLayout ?? "single"} />
-        </div>
+        {/* Hero — sits below the nav */}
+        <HeroGrid images={heroImages} layout={project.heroLayout ?? "single"} />
 
         {/* Title block */}
         <section className="px-[120px] pt-12 pb-16">
