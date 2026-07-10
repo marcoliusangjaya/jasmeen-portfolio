@@ -165,7 +165,7 @@ function MockupRows({ rows, onOpen }: { rows: MockupRow[]; onOpen: (src: string)
   if (rows.length === 0) return null;
 
   return (
-    <div className="flex flex-col gap-2 mt-16">
+    <div className="flex flex-col gap-3 mt-16">
       {rows.map((row, i) => {
         const items = (row.items ?? []).filter((it) => it.videoUrl || it.url);
         if (items.length === 0) return null;
@@ -192,7 +192,7 @@ function MockupRows({ rows, onOpen }: { rows: MockupRow[]; onOpen: (src: string)
         const sumRatios = ratios.reduce((a, b) => a + b, 0);
 
         return (
-          <div key={i} className="flex gap-2" style={{ aspectRatio: `${sumRatios} / 1` }}>
+          <div key={i} className="flex gap-3" style={{ aspectRatio: `${sumRatios} / 1` }}>
             {items.slice(0, n).map((it, j) => (
               <div
                 key={j}
