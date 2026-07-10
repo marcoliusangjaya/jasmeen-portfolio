@@ -165,7 +165,7 @@ function MockupRows({ rows, onOpen }: { rows: MockupRow[]; onOpen: (src: string)
   if (rows.length === 0) return null;
 
   return (
-    <div className="px-[120px] flex flex-col gap-2 mt-16">
+    <div className="flex flex-col gap-2 mt-16">
       {rows.map((row, i) => {
         const items = (row.items ?? []).filter((it) => it.videoUrl || it.url);
         if (items.length === 0) return null;
