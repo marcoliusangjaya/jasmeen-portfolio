@@ -164,14 +164,12 @@ function BentoSection({
 function MockupRows({ rows, onOpen }: { rows: MockupRow[]; onOpen: (src: string) => void }) {
   if (rows.length === 0) return null;
 
-  const colsClass: Record<number, string> = { 1: "grid-cols-1", 2: "grid-cols-2", 3: "grid-cols-3" };
-
   return (
     <div className="px-[120px] flex flex-col gap-2 mt-16">
       {rows.map((row, i) => {
         const items = (row.items ?? []).filter((it) => it.videoUrl || it.url);
         if (items.length === 0) return null;
-        const n = Math.min(items.length, 3) as 1 | 2 | 3;
+        const n = Math.min(items.length, 3);
 
         if (n === 1) {
           const it = items[0];
@@ -186,23 +184,26 @@ function MockupRows({ rows, onOpen }: { rows: MockupRow[]; onOpen: (src: string)
           );
         }
 
-        // Tallest item drives the cell height — no cropping
-        const maxRatio = Math.max(
-          ...items.map((it) => (it.height && it.width ? it.height / it.width : 0.75))
+        // Each cell's flex = its w/h ratio → all cells share the same height.
+        // Container aspect-ratio = sum of ratios so it sizes itself from its width.
+        const ratios = items.slice(0, n).map((it) =>
+          it.width && it.height ? it.width / it.height : 16 / 9
         );
+        const sumRatios = ratios.reduce((a, b) => a + b, 0);
+
         return (
-          <div key={i} className={`grid ${colsClass[n]} gap-2`}>
-            {items.map((it, j) => (
+          <div key={i} className="flex gap-2" style={{ aspectRatio: `${sumRatios} / 1` }}>
+            {items.slice(0, n).map((it, j) => (
               <div
                 key={j}
                 className={`relative overflow-hidden bg-[#F0F1ED] ${it.videoUrl ? "" : "cursor-zoom-in"}`}
-                style={{ aspectRatio: `1 / ${maxRatio}` }}
+                style={{ flex: ratios[j] }}
                 onClick={it.url && !it.videoUrl ? () => onOpen(it.url!) : undefined}
               >
                 {it.videoUrl ? (
-                  <video src={it.videoUrl} autoPlay muted loop playsInline className="absolute inset-0 w-full h-full object-contain" />
+                  <video src={it.videoUrl} autoPlay muted loop playsInline className="absolute inset-0 w-full h-full object-cover" />
                 ) : (
-                  <Image src={it.url!} alt="" fill className="object-contain" sizes={n === 2 ? "50vw" : "33vw"} />
+                  <Image src={it.url!} alt="" fill className="object-cover" sizes={n === 2 ? "50vw" : "33vw"} />
                 )}
               </div>
             ))}
