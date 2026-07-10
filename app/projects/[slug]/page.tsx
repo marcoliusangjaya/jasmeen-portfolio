@@ -131,7 +131,7 @@ function HeroGrid({ images, layout }: { images: HeroImage[]; layout: HeroLayout 
   const [a, b, c, d] = images;
   if (!a) return null;
 
-  const H = "h-[100vh]";
+  const H = "h-[80vh]";
 
   if (layout === "single" || images.length <= 1) {
     return (
@@ -283,7 +283,7 @@ function ImgCell({
   return (
     <div className={`relative overflow-hidden bg-[#F0F1ED] ${className}`}>
       {src && (
-        <Image src={src} alt={alt} fill className="object-contain" sizes={sizes} />
+        <Image src={src} alt={alt} fill className="object-cover" sizes={sizes} />
       )}
     </div>
   );
