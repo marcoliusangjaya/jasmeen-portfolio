@@ -86,6 +86,21 @@ export const aboutQuery = groq`
   }
 `;
 
+export const siteSettingsQuery = groq`
+  *[_type == "siteSettings"][0] {
+    headerBackground,
+    headerText,
+    backgroundColor,
+    gridOutline,
+    gridText,
+    filteredBlockColor,
+    filterOutline,
+    filterText,
+    footerBackground,
+    footerText
+  }
+`;
+
 export const footerQuery = groq`
   *[_type == "about"][0] {
     socialLinks[] {

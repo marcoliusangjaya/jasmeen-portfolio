@@ -31,8 +31,8 @@ export default function Nav() {
   return (
     <header
       className={`${isHome ? "fixed inset-x-0" : "sticky"} top-0 z-50 transition-colors duration-300 ${
-        scrolled ? "bg-[#F0F1ED]" : "bg-transparent"
-      } ${overHero ? "text-accent-text" : "text-text"}`}
+        scrolled ? "bg-headerBg" : "bg-transparent"
+      } ${overHero ? "text-accent-text" : "text-headerText"}`}
     >
       <nav className="flex items-center justify-between px-[120px] py-5">
         <Link

@@ -34,6 +34,18 @@
   /* Placeholder accent for homepage hero + filter-dim experiment — swap this one value to retheme */
   --color-accent: #2E1A47;
   --color-accent-text: #F0F1ED;
+
+  /* Studio-editable tokens (Site Colors doc) — these are fallbacks;
+     app/layout.tsx overrides them inline once fetched from Sanity. */
+  --color-header-bg: #F0F1ED;
+  --color-header-text: #1A1A18;
+  --color-grid-outline: #1A1A18;
+  --color-grid-text: 26 26 24;
+  --color-filtered-block: #2E1A47;
+  --color-filter-outline: #1A1A18;
+  --color-filter-text: #1A1A18;
+  --color-footer-bg: #4A4945;
+  --color-footer-text: 255 255 255;
 }
 
 @layer base {

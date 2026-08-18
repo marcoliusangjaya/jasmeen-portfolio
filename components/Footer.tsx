@@ -9,23 +9,20 @@ export default async function Footer() {
   const links: SocialLink[] = data?.socialLinks ?? [];
 
   return (
-    <footer
-      className="py-14 px-[120px] flex justify-end"
-      style={{ backgroundColor: "var(--color-footer)" }}
-    >
+    <footer className="py-14 px-[120px] flex justify-end bg-footerBg">
       <div className="w-full max-w-xs">
-        <h2 className="font-cabinet text-xl text-white mb-6">Reach Out</h2>
+        <h2 className="font-cabinet text-xl text-footerText mb-6">Reach Out</h2>
 
         {/* Email input — pill shaped */}
-        <form className="flex items-center rounded-full border border-white/25 overflow-hidden mb-5">
+        <form className="flex items-center rounded-full border border-footerText/25 overflow-hidden mb-5">
           <input
             type="email"
             placeholder="Enter Your Email..."
-            className="flex-1 bg-transparent font-satoshi text-sm text-white/70 placeholder:text-white/35 px-5 py-3 outline-none"
+            className="flex-1 bg-transparent font-satoshi text-sm text-footerText/70 placeholder:text-footerText/35 px-5 py-3 outline-none"
           />
           <button
             type="submit"
-            className="font-satoshi text-sm text-white/70 px-5 py-3 hover:text-white transition-colors shrink-0"
+            className="font-satoshi text-sm text-footerText/70 px-5 py-3 hover:text-footerText transition-colors shrink-0"
           >
             OK
           </button>
@@ -40,7 +37,7 @@ export default async function Footer() {
                 href={link.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="font-satoshi text-sm text-white/60 hover:text-white transition-colors w-fit"
+                className="font-satoshi text-sm text-footerText/60 hover:text-footerText transition-colors w-fit"
               >
                 {link.platform}
               </a>
@@ -51,13 +48,13 @@ export default async function Footer() {
                 href="https://instagram.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="font-satoshi text-sm text-white/60 hover:text-white transition-colors w-fit"
+                className="font-satoshi text-sm text-footerText/60 hover:text-footerText transition-colors w-fit"
               >
                 Instagram
               </a>
               <a
                 href="#"
-                className="font-satoshi text-sm text-white/60 hover:text-white transition-colors w-fit"
+                className="font-satoshi text-sm text-footerText/60 hover:text-footerText transition-colors w-fit"
               >
                 Kuno + Kini
               </a>

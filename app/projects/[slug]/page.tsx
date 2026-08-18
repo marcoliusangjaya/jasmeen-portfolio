@@ -133,17 +133,17 @@ function OtherWork({ projects }: { projects: Project[] }) {
             <Link
               key={p._id}
               href={`/projects/${p.slug}`}
-              className={`group bg-[#F0F1ED] aspect-square flex flex-col overflow-hidden transition-opacity duration-300
-                border-[1.5px] border-[#1A1A18]
+              className={`group bg-bg aspect-square flex flex-col overflow-hidden transition-opacity duration-300
+                border-[1.5px] border-gridOutline
                 ${index > 0 ? "border-l-0" : ""}`}
             >
               <div className="transition-transform duration-300 ease-out group-hover:scale-[1.02] origin-center h-full flex flex-col">
                 <div className="flex items-start justify-between px-3 pt-3 pb-1 gap-1 shrink-0">
-                  <span className="font-satoshi text-[9px] tracking-widest uppercase text-[#1A1A18]/60 leading-tight">
+                  <span className="font-satoshi text-[9px] tracking-widest uppercase text-gridText/60 leading-tight">
                     {(p.categories ?? []).join(" · ")}
                   </span>
                   {p.location && (
-                    <span className="font-satoshi text-[9px] text-[#1A1A18]/40 text-right shrink-0">
+                    <span className="font-satoshi text-[9px] text-gridText/40 text-right shrink-0">
                       {p.location}
                     </span>
                   )}

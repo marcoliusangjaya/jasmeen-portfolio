@@ -43,8 +43,8 @@ export default function ProjectGrid({ projects }: { projects: Project[] }) {
             onClick={() => toggle(f)}
             className={`font-satoshi text-xs tracking-wide px-5 py-2 rounded-full border-[1.5px] transition-colors duration-200 ${
               active === f
-                ? "bg-[#1A1A18] text-[#F0F1ED] border-[#1A1A18]"
-                : "bg-transparent text-[#1A1A18] border-[#1A1A18] hover:bg-[#888] hover:text-white hover:border-[#888]"
+                ? "bg-filterText text-bg border-filterOutline"
+                : "bg-transparent text-filterText border-filterOutline hover:bg-[#888] hover:text-white hover:border-[#888]"
             }`}
           >
             {f}
@@ -70,8 +70,8 @@ export default function ProjectGrid({ projects }: { projects: Project[] }) {
           // without touching real borders — so layout never shifts.
           // Skip the shadow side when the neighbour is also active (their right/bottom real border covers it).
           const shadowParts: string[] = [];
-          if (highlighted && col > 0 && !isHL(leftNeighbour)) shadowParts.push("-1.5px 0 0 0 #1A1A18");
-          if (highlighted && row > 0 && !isHL(topNeighbour))  shadowParts.push("0 -1.5px 0 0 #1A1A18");
+          if (highlighted && col > 0 && !isHL(leftNeighbour)) shadowParts.push("-1.5px 0 0 0 var(--color-grid-outline)");
+          if (highlighted && row > 0 && !isHL(topNeighbour))  shadowParts.push("0 -1.5px 0 0 var(--color-grid-outline)");
           const boxShadow = shadowParts.join(", ") || undefined;
 
           return (
@@ -79,23 +79,23 @@ export default function ProjectGrid({ projects }: { projects: Project[] }) {
               key={project._id}
               href={`/projects/${project.slug}`}
               style={boxShadow ? { boxShadow } : undefined}
-              className={`group relative bg-[#F0F1ED] aspect-square flex flex-col overflow-hidden
-                border-[1.5px] border-[#1A1A18] transition-opacity duration-300
+              className={`group relative bg-bg aspect-square flex flex-col overflow-hidden
+                border-[1.5px] border-gridOutline transition-opacity duration-300
                 ${col > 0 ? "border-l-0" : ""}
                 ${row > 0 ? "border-t-0" : ""}
                 ${dimmed && DIM_STYLE === "fade" ? "opacity-25 z-0" : highlighted ? "z-10" : "z-0"}`}
             >
               {dimmed && DIM_STYLE === "solid" && (
-                <div className="absolute inset-0 bg-accent z-20" />
+                <div className="absolute inset-0 bg-filteredBlock z-20" />
               )}
               <div className="h-full flex flex-col">
                 {/* Meta row */}
                 <div className="flex items-start justify-between px-3 pt-3 pb-1 gap-1 shrink-0">
-                  <span className="font-satoshi text-[10px] tracking-widest uppercase text-[#1A1A18]/60 leading-tight">
+                  <span className="font-satoshi text-[10px] tracking-widest uppercase text-gridText/60 leading-tight">
                     {(project.categories ?? []).join(" · ")}
                   </span>
                   {project.location && (
-                    <span className="font-satoshi text-[10px] text-[#1A1A18]/40 text-right shrink-0">
+                    <span className="font-satoshi text-[10px] text-gridText/40 text-right shrink-0">
                       {project.location}
                     </span>
                   )}
@@ -129,7 +129,7 @@ export default function ProjectGrid({ projects }: { projects: Project[] }) {
 
                 {/* Title */}
                 <div className="px-3 pb-3 shrink-0">
-                  <h3 className="font-cabinet text-[15px] font-medium leading-snug line-clamp-2 transition-colors duration-200 text-[#1A1A18] group-hover:text-[#1A1A18]/40">
+                  <h3 className="font-cabinet text-[15px] font-medium leading-snug line-clamp-2 transition-colors duration-200 text-gridText group-hover:text-gridText/40">
                     {project.title}
                   </h3>
                 </div>
