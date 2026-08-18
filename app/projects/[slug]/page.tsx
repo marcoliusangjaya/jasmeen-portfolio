@@ -9,14 +9,6 @@ import type { Project } from "@/components/ProjectGrid";
 
 export const revalidate = 0;
 
-type HeroLayout =
-  | "classic"
-  | "four-grid"
-  | "large-right"
-  | "large-left-two-right"
-  | "two-col"
-  | "single";
-
 type Section = {
   layout?: "three-large-top" | "three-large-bottom" | "five-grid" | "large-top-6" | "large-bottom-6" | "two-stacked" | "single";
   items?: { image?: string; label?: string }[];
@@ -25,15 +17,11 @@ type Section = {
 type MockupItem = { url?: string; width?: number; height?: number; videoUrl?: string };
 type MockupRow = { items?: MockupItem[] };
 
-type HeroImage = { url: string; width?: number; height?: number };
-
 type ProjectDetail = Project & {
   date?: string;
   tools?: string[];
   subheading?: string;
   description?: string;
-  heroLayout?: HeroLayout;
-  heroImages?: HeroImage[];
   sections?: Section[];
   mockupRows?: MockupRow[];
   otherWork?: Project[];
@@ -55,16 +43,9 @@ export default async function ProjectPage({
 
   if (!project) notFound();
 
-  const heroImages: HeroImage[] = project.heroImages?.length
-    ? project.heroImages
-    : project.coverImage ? [{ url: project.coverImage }] : [];
-
   return (
     <>
       <main>
-        {/* Hero — sits below the nav */}
-        <HeroGrid images={heroImages} layout={project.heroLayout ?? "single"} />
-
         {/* Title block */}
         <section className="px-[120px] pt-12 pb-16">
           <div className="flex items-start justify-between gap-8 mb-6">
@@ -138,81 +119,6 @@ export default async function ProjectPage({
   );
 }
 
-/* ─── Hero layouts ─────────────────────────────────────────────────────────── */
-
-function HeroGrid({ images, layout }: { images: HeroImage[]; layout: HeroLayout }) {
-  const [a, b, c, d] = images;
-  if (!a) return null;
-
-  const H = "h-[80vh]";
-
-  if (layout === "single" || images.length <= 1) {
-    return (
-      <div className={`grid grid-rows-1 w-full ${H}`}>
-        <ImgCell src={a.url} sizes="100vw" />
-      </div>
-    );
-  }
-
-  if (layout === "two-col") {
-    return (
-      <div className={`grid grid-cols-2 grid-rows-1 ${H}`}>
-        <ImgCell src={a?.url} sizes="50vw" />
-        <ImgCell src={b?.url} sizes="50vw" />
-      </div>
-    );
-  }
-
-  if (layout === "four-grid") {
-    return (
-      <div className={`grid grid-cols-2 grid-rows-2 ${H}`}>
-        <ImgCell src={a?.url} sizes="50vw" />
-        <ImgCell src={b?.url} sizes="50vw" />
-        <ImgCell src={c?.url} sizes="50vw" />
-        <ImgCell src={d?.url} sizes="50vw" />
-      </div>
-    );
-  }
-
-  if (layout === "large-right") {
-    return (
-      <div className={`grid grid-cols-2 grid-rows-1 ${H}`}>
-        <div className="grid grid-rows-2">
-          <ImgCell src={a?.url} sizes="50vw" />
-          <ImgCell src={b?.url} sizes="50vw" />
-        </div>
-        <ImgCell src={c?.url} sizes="50vw" />
-      </div>
-    );
-  }
-
-  if (layout === "large-left-two-right") {
-    return (
-      <div className={`grid grid-cols-2 grid-rows-1 ${H}`}>
-        <ImgCell src={a?.url} sizes="50vw" />
-        <div className="grid grid-rows-2">
-          <ImgCell src={b?.url} sizes="50vw" />
-          <ImgCell src={c?.url} sizes="50vw" />
-        </div>
-      </div>
-    );
-  }
-
-  // classic
-  return (
-    <div className={`grid grid-cols-2 grid-rows-1 ${H}`}>
-      <ImgCell src={a?.url} sizes="50vw" />
-      <div className="grid grid-rows-2">
-        <ImgCell src={b?.url} sizes="50vw" />
-        <div className="grid grid-cols-2 grid-rows-1">
-          <ImgCell src={c?.url} sizes="25vw" />
-          <ImgCell src={d?.url} sizes="25vw" />
-        </div>
-      </div>
-    </div>
-  );
-}
-
 /* ─── Other Work ────────────────────────────────────────────────────────────── */
 
 function OtherWork({ projects }: { projects: Project[] }) {
@@ -277,27 +183,5 @@ function OtherWork({ projects }: { projects: Project[] }) {
         </div>
       </div>
     </section>
-  );
-}
-
-/* ─── Shared image cell (hero only) ─────────────────────────────────────────── */
-
-function ImgCell({
-  src,
-  alt = "",
-  sizes,
-  className = "",
-}: {
-  src?: string;
-  alt?: string;
-  sizes: string;
-  className?: string;
-}) {
-  return (
-    <div className={`relative overflow-hidden bg-[#F0F1ED] ${className}`}>
-      {src && (
-        <Image src={src} alt={alt} fill className="object-cover" sizes={sizes} />
-      )}
-    </div>
   );
 }
