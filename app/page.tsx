@@ -29,8 +29,6 @@ function Hero() {
         Multidisciplinary creative working across brand identity, experience
         design, and creative technology.
       </p>
-      {/* Marks where the hero ends — Nav watches this to know when to appear */}
-      <div id="hero-end" />
     </section>
   );
 }
