@@ -13,6 +13,8 @@ const config: Config = {
         text: "var(--color-text)",
         footer: "var(--color-footer)",
         border: "var(--color-border)",
+        accent: "var(--color-accent)",
+        "accent-text": "var(--color-accent-text)",
       },
       fontFamily: {
         cabinet: ['"Cabinet Grotesk"', "sans-serif"],

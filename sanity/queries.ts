@@ -22,6 +22,7 @@ export const projectBySlugQuery = groq`
     "categories": coalesce(categories, array::compact([category])),
     location,
     date,
+    tools,
     subheading,
     description,
     "coverImage": thumbnailImage.asset->url,

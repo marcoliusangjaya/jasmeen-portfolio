@@ -21,38 +21,16 @@ export default async function Home() {
 
 function Hero() {
   return (
-    <section className="px-[120px] pt-32 pb-24">
-      <div className="grid grid-cols-[2fr_1fr] gap-16">
-        <p className="font-satoshi text-base leading-relaxed text-text text-justify">
-          Multidisciplinary creative working across brand identity, experience
-          design, and creative technology. With a background spanning film,
-          branding, and marketing strategy, I work across the full arc of a
-          project; from identity systems to the interactive moment people
-          remember.
-        </p>
-
-        <div className="flex flex-col gap-8 md:pt-1">
-          <Credential
-            degree="BFA Film & Television"
-            school="Savannah College of Arts and Design"
-          />
-          <Credential
-            degree="MSc Marketing & Creativity"
-            school="ESCP Business School"
-          />
-        </div>
-      </div>
+    <section className="min-h-[80vh] flex flex-col items-center justify-center gap-6 px-[120px] text-center bg-accent">
+      <h1 className="font-cabinet text-6xl md:text-8xl font-medium tracking-widest uppercase text-accent-text">
+        Jasmeen Shaqueita
+      </h1>
+      <p className="font-satoshi text-base md:text-lg text-white/70 max-w-xl">
+        Multidisciplinary creative working across brand identity, experience
+        design, and creative technology.
+      </p>
+      {/* Marks where the hero ends — Nav watches this to know when to appear */}
+      <div id="hero-end" />
     </section>
-  );
-}
-
-function Credential({ degree, school }: { degree: string; school: string }) {
-  return (
-    <div className="flex flex-col gap-1">
-      <span className="font-satoshi text-base text-text">{degree}</span>
-      <span className="font-satoshi text-xs tracking-widest uppercase text-text/60">
-        {school}
-      </span>
-    </div>
   );
 }

@@ -15,6 +15,11 @@ export type Project = {
   thumbnailSize?: "small" | "medium" | "large" | "full";
 };
 
+// Experiment: how non-matching cards read when a filter is active.
+// "fade" is the original look; "solid" blocks them out with the accent color.
+// Flip this one value to revert.
+const DIM_STYLE: "fade" | "solid" = "solid";
+
 export default function ProjectGrid({ projects }: { projects: Project[] }) {
   const [active, setActive] = useState<string | null>(null);
 
@@ -78,8 +83,11 @@ export default function ProjectGrid({ projects }: { projects: Project[] }) {
                 border-[1.5px] border-[#1A1A18] transition-opacity duration-300
                 ${col > 0 ? "border-l-0" : ""}
                 ${row > 0 ? "border-t-0" : ""}
-                ${dimmed ? "opacity-25 z-0" : highlighted ? "z-10" : "z-0"}`}
+                ${dimmed && DIM_STYLE === "fade" ? "opacity-25 z-0" : highlighted ? "z-10" : "z-0"}`}
             >
+              {dimmed && DIM_STYLE === "solid" && (
+                <div className="absolute inset-0 bg-accent z-20" />
+              )}
               <div className="h-full flex flex-col">
                 {/* Meta row */}
                 <div className="flex items-start justify-between px-3 pt-3 pb-1 gap-1 shrink-0">

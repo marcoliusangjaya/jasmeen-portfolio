@@ -29,6 +29,7 @@ type HeroImage = { url: string; width?: number; height?: number };
 
 type ProjectDetail = Project & {
   date?: string;
+  tools?: string[];
   subheading?: string;
   description?: string;
   heroLayout?: HeroLayout;
@@ -67,9 +68,9 @@ export default async function ProjectPage({
         {/* Title block */}
         <section className="px-[120px] pt-12 pb-16">
           <div className="flex items-start justify-between gap-8 mb-6">
-            <div className="flex flex-col gap-3 max-w-2xl">
+            <div className="flex flex-col max-w-2xl">
               {/* Category pills */}
-              <div className="flex flex-wrap gap-2">
+              <div className="flex flex-wrap gap-2 mb-10">
                 {(project.categories ?? []).map((cat) => (
                   <span
                     key={cat}
@@ -79,14 +80,16 @@ export default async function ProjectPage({
                   </span>
                 ))}
               </div>
-              <h1 className="font-cabinet text-4xl md:text-5xl font-medium leading-tight">
-                {project.title}
-              </h1>
-              {project.subheading && (
-                <p className="font-satoshi text-lg text-text/60 leading-snug">
-                  {project.subheading}
-                </p>
-              )}
+              <div className="flex flex-col gap-3">
+                <h1 className="font-cabinet text-4xl md:text-5xl font-medium leading-tight">
+                  {project.title}
+                </h1>
+                {project.subheading && (
+                  <p className="font-satoshi text-lg text-text/60 leading-snug">
+                    {project.subheading}
+                  </p>
+                )}
+              </div>
             </div>
             <div className="text-right shrink-0 pt-1">
               {project.location && (
@@ -94,6 +97,18 @@ export default async function ProjectPage({
               )}
               {project.date && (
                 <p className="font-satoshi text-sm text-text/40 mt-0.5">{project.date}</p>
+              )}
+              {project.tools && project.tools.length > 0 && (
+                <div className="flex flex-wrap justify-end gap-1.5 mt-3 max-w-[220px]">
+                  {project.tools.map((tool) => (
+                    <span
+                      key={tool}
+                      className="font-satoshi text-[10px] tracking-wide uppercase text-text/50 border border-text/20 rounded-full px-2.5 py-1"
+                    >
+                      {tool}
+                    </span>
+                  ))}
+                </div>
               )}
             </div>
           </div>

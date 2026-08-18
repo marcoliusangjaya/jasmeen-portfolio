@@ -31,6 +31,9 @@
   --color-text: #1A1A18;
   --color-footer: #4A4945;
   --color-border: #D0CBC2;
+  /* Placeholder accent for homepage hero + filter-dim experiment — swap this one value to retheme */
+  --color-accent: #2E1A47;
+  --color-accent-text: #F0F1ED;
 }
 
 @layer base {

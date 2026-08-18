@@ -49,6 +49,14 @@ export default defineType({
       placeholder: "e.g. March 2026",
     }),
     defineField({
+      name: "tools",
+      title: "Tools",
+      description: "Tools used on this project, shown below location/date",
+      type: "array",
+      of: [{ type: "string" }],
+      options: { layout: "tags" },
+    }),
+    defineField({
       name: "thumbnailImage",
       title: "Thumbnail Image",
       description: "Shown on the project grid card",
