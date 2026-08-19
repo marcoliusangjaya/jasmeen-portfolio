@@ -22,7 +22,7 @@ export default async function Home() {
 function Hero() {
   return (
     <section className="min-h-[80vh] flex flex-col items-center justify-center gap-6 px-[120px] text-center bg-accent">
-      <h1 className="font-cabinet text-6xl md:text-8xl font-medium tracking-widest uppercase text-accent-text">
+      <h1 className="font-cabinet text-6xl md:text-8xl font-medium tracking-widest text-accent-text">
         Jasmeen Shaqueita
       </h1>
       <p className="font-satoshi text-base md:text-lg text-white/70 max-w-xl">

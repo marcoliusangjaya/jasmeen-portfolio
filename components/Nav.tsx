@@ -34,14 +34,7 @@ export default function Nav() {
         scrolled ? "bg-headerBg" : "bg-transparent"
       } ${overHero ? "text-accent-text" : "text-headerText"}`}
     >
-      <nav className="flex items-center justify-between px-[120px] py-5">
-        <Link
-          href="/"
-          className="font-cabinet text-2xl font-medium tracking-widest uppercase"
-        >
-          Jasmeen Shaqueita
-        </Link>
-
+      <nav className="flex items-center justify-end px-[120px] py-5">
         <ul className="flex items-center gap-8">
           {links.map(({ label, href }) => (
             <li key={label}>

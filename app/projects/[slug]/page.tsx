@@ -10,7 +10,21 @@ import type { Project } from "@/components/ProjectGrid";
 export const revalidate = 0;
 
 type Section = {
-  layout?: "three-large-top" | "three-large-bottom" | "five-grid" | "large-top-6" | "large-bottom-6" | "two-stacked" | "single";
+  layout?:
+    | "single"
+    | "two-stacked"
+    | "two-side-by-side"
+    | "three-large-top"
+    | "three-large-bottom"
+    | "three-side-by-side"
+    | "three-stacked"
+    | "four-grid-2x2"
+    | "four-top3-bottom1"
+    | "four-top1-bottom3"
+    | "five-grid"
+    | "five-top3-bottom2"
+    | "large-top-6"
+    | "large-bottom-6";
   items?: { image?: string; label?: string }[];
 };
 

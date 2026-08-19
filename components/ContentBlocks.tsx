@@ -6,7 +6,21 @@ import Image from "next/image";
 type BentoItem = { image?: string; label?: string };
 
 type Section = {
-  layout?: "three-large-top" | "three-large-bottom" | "five-grid" | "large-top-6" | "large-bottom-6" | "two-stacked" | "single";
+  layout?:
+    | "single"
+    | "two-stacked"
+    | "two-side-by-side"
+    | "three-large-top"
+    | "three-large-bottom"
+    | "three-side-by-side"
+    | "three-stacked"
+    | "four-grid-2x2"
+    | "four-top3-bottom1"
+    | "four-top1-bottom3"
+    | "five-grid"
+    | "five-top3-bottom2"
+    | "large-top-6"
+    | "large-bottom-6";
   items?: BentoItem[];
 };
 
@@ -146,6 +160,85 @@ function BentoSection({
         <div className={outer}>
           <Cell item={items[0]} sizes="100vw" imgClass="aspect-[16/9]" onOpen={onOpen} />
           <Cell item={items[1]} sizes="100vw" imgClass="aspect-[16/9]" className="border-t-[1.5px] border-[#1A1A18]" onOpen={onOpen} />
+        </div>
+      );
+
+    case "two-side-by-side":
+      return (
+        <div className={`${outer} grid grid-cols-2`}>
+          <Cell item={items[0]} sizes="50vw" imgClass="aspect-[3/4]" onOpen={onOpen} />
+          <Cell item={items[1]} sizes="50vw" imgClass="aspect-[3/4]" className="border-l-[1.5px] border-[#1A1A18]" onOpen={onOpen} />
+        </div>
+      );
+
+    case "three-side-by-side":
+      return (
+        <div className={`${outer} grid grid-cols-3`}>
+          <Cell item={items[0]} sizes="33vw" imgClass="aspect-[3/4]" onOpen={onOpen} />
+          <Cell item={items[1]} sizes="33vw" imgClass="aspect-[3/4]" className="border-l-[1.5px] border-[#1A1A18]" onOpen={onOpen} />
+          <Cell item={items[2]} sizes="33vw" imgClass="aspect-[3/4]" className="border-l-[1.5px] border-[#1A1A18]" onOpen={onOpen} />
+        </div>
+      );
+
+    case "three-stacked":
+      return (
+        <div className={outer}>
+          <Cell item={items[0]} sizes="100vw" imgClass="aspect-[16/9]" onOpen={onOpen} />
+          <Cell item={items[1]} sizes="100vw" imgClass="aspect-[16/9]" className="border-t-[1.5px] border-[#1A1A18]" onOpen={onOpen} />
+          <Cell item={items[2]} sizes="100vw" imgClass="aspect-[16/9]" className="border-t-[1.5px] border-[#1A1A18]" onOpen={onOpen} />
+        </div>
+      );
+
+    case "four-grid-2x2":
+      return (
+        <div className={outer}>
+          <div className="grid grid-cols-2 border-b-[1.5px] border-[#1A1A18]">
+            <Cell item={items[0]} sizes="50vw" imgClass="aspect-square" onOpen={onOpen} />
+            <Cell item={items[1]} sizes="50vw" imgClass="aspect-square" className="border-l-[1.5px] border-[#1A1A18]" onOpen={onOpen} />
+          </div>
+          <div className="grid grid-cols-2">
+            <Cell item={items[2]} sizes="50vw" imgClass="aspect-square" onOpen={onOpen} />
+            <Cell item={items[3]} sizes="50vw" imgClass="aspect-square" className="border-l-[1.5px] border-[#1A1A18]" onOpen={onOpen} />
+          </div>
+        </div>
+      );
+
+    case "four-top3-bottom1":
+      return (
+        <div className={outer}>
+          <div className="grid grid-cols-3 border-b-[1.5px] border-[#1A1A18]">
+            <Cell item={items[0]} sizes="33vw" imgClass="aspect-square" onOpen={onOpen} />
+            <Cell item={items[1]} sizes="33vw" imgClass="aspect-square" className="border-l-[1.5px] border-[#1A1A18]" onOpen={onOpen} />
+            <Cell item={items[2]} sizes="33vw" imgClass="aspect-square" className="border-l-[1.5px] border-[#1A1A18]" onOpen={onOpen} />
+          </div>
+          <Cell item={items[3]} sizes="100vw" imgClass="aspect-[16/9]" onOpen={onOpen} />
+        </div>
+      );
+
+    case "four-top1-bottom3":
+      return (
+        <div className={outer}>
+          <Cell item={items[0]} sizes="100vw" imgClass="aspect-[16/9]" onOpen={onOpen} />
+          <div className="grid grid-cols-3 border-t-[1.5px] border-[#1A1A18]">
+            <Cell item={items[1]} sizes="33vw" imgClass="aspect-square" onOpen={onOpen} />
+            <Cell item={items[2]} sizes="33vw" imgClass="aspect-square" className="border-l-[1.5px] border-[#1A1A18]" onOpen={onOpen} />
+            <Cell item={items[3]} sizes="33vw" imgClass="aspect-square" className="border-l-[1.5px] border-[#1A1A18]" onOpen={onOpen} />
+          </div>
+        </div>
+      );
+
+    case "five-top3-bottom2":
+      return (
+        <div className={outer}>
+          <div className="grid grid-cols-3 border-b-[1.5px] border-[#1A1A18]">
+            <Cell item={items[0]} sizes="33vw" imgClass="aspect-square" onOpen={onOpen} />
+            <Cell item={items[1]} sizes="33vw" imgClass="aspect-square" className="border-l-[1.5px] border-[#1A1A18]" onOpen={onOpen} />
+            <Cell item={items[2]} sizes="33vw" imgClass="aspect-square" className="border-l-[1.5px] border-[#1A1A18]" onOpen={onOpen} />
+          </div>
+          <div className="grid grid-cols-2">
+            <Cell item={items[3]} sizes="50vw" imgClass="aspect-square" onOpen={onOpen} />
+            <Cell item={items[4]} sizes="50vw" imgClass="aspect-square" className="border-l-[1.5px] border-[#1A1A18]" onOpen={onOpen} />
+          </div>
         </div>
       );
 
