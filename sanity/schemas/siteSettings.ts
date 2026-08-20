@@ -30,7 +30,8 @@ export default defineType({
     colorField("headerBackground", "Header Background", "#F0F1ED", "header"),
     colorField("headerText", "Header Text", "#1A1A18", "header"),
 
-    colorField("backgroundColor", "Page Background", "#F0F1ED", "background"),
+    colorField("heroBackground", "Homepage Hero Background (top half)", "#2E1A47", "background"),
+    colorField("backgroundColor", "Page Background (bottom half)", "#F0F1ED", "background"),
 
     colorField("gridOutline", "Grid Outline", "#1A1A18", "grid"),
     colorField("gridText", "Grid Text", "#1A1A18", "grid"),

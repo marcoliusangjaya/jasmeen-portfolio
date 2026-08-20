@@ -15,6 +15,7 @@ export const revalidate = 60;
 type SiteSettings = {
   headerBackground?: string;
   headerText?: string;
+  heroBackground?: string;
   backgroundColor?: string;
   gridOutline?: string;
   gridText?: string;
@@ -28,6 +29,7 @@ type SiteSettings = {
 const DEFAULTS: Required<SiteSettings> = {
   headerBackground: "#F0F1ED",
   headerText: "#1A1A18",
+  heroBackground: "#2E1A47",
   backgroundColor: "#F0F1ED",
   gridOutline: "#1A1A18",
   gridText: "#1A1A18",
@@ -63,6 +65,7 @@ export default async function RootLayout({
   const c: Required<SiteSettings> = {
     headerBackground: sanitizeHex(settings.headerBackground, DEFAULTS.headerBackground),
     headerText: sanitizeHex(settings.headerText, DEFAULTS.headerText),
+    heroBackground: sanitizeHex(settings.heroBackground, DEFAULTS.heroBackground),
     backgroundColor: sanitizeHex(settings.backgroundColor, DEFAULTS.backgroundColor),
     gridOutline: sanitizeHex(settings.gridOutline, DEFAULTS.gridOutline),
     gridText: sanitizeHex(settings.gridText, DEFAULTS.gridText),
@@ -77,6 +80,7 @@ export default async function RootLayout({
   // globals.css, so this reliably overrides them regardless of load order.
   const themeStyle = {
     ["--color-bg" as string]: c.backgroundColor,
+    ["--color-accent" as string]: c.heroBackground,
     ["--color-header-bg" as string]: c.headerBackground,
     ["--color-header-text" as string]: c.headerText,
     ["--color-grid-outline" as string]: c.gridOutline,
