@@ -23,16 +23,17 @@ export default function Nav() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  // On the homepage the nav overlays the purple hero (so the hero can still
-  // bleed to the very top) with light text; elsewhere it's the original
-  // in-flow sticky nav with dark text.
+  // Only the homepage hero needs a transparent overlay (so it can bleed to
+  // the very top) with hero-contrast text. Every other page — and the
+  // homepage once scrolled past the hero — uses the opaque header
+  // background/text pair, since there's no image behind the nav to reveal.
   const overHero = isHome && !scrolled;
 
   return (
     <header
       className={`${isHome ? "fixed inset-x-0" : "sticky"} top-0 z-50 transition-colors duration-300 ${
-        scrolled ? "bg-headerBg" : "bg-transparent"
-      } ${overHero ? "text-accent-text" : "text-headerText"}`}
+        overHero ? "bg-transparent text-accent-text" : "bg-headerBg text-headerText"
+      }`}
     >
       <nav className="flex items-center justify-end px-[120px] py-5">
         <ul className="flex items-center gap-8">
