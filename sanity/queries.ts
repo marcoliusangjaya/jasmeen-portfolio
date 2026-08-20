@@ -78,7 +78,25 @@ export const aboutQuery = groq`
     },
     skills,
     email,
-    resumeUrl,
+    socialLinks[] {
+      platform,
+      url
+    }
+  }
+`;
+
+export const resumeQuery = groq`
+  *[_type == "about"][0] {
+    "resumeFile": resumeFile.asset-> {
+      url,
+      originalFilename
+    }
+  }
+`;
+
+export const contactQuery = groq`
+  *[_type == "about"][0] {
+    email,
     socialLinks[] {
       platform,
       url
