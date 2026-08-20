@@ -16,12 +16,17 @@ type SiteSettings = {
   headerBackground?: string;
   headerText?: string;
   heroBackground?: string;
+  heroText?: string;
   backgroundColor?: string;
   gridOutline?: string;
   gridText?: string;
   filteredBlockColor?: string;
   filterOutline?: string;
   filterText?: string;
+  filterHoverBackground?: string;
+  filterHoverText?: string;
+  filterSelectedBackground?: string;
+  filterSelectedText?: string;
   footerBackground?: string;
   footerText?: string;
 };
@@ -30,12 +35,17 @@ const DEFAULTS: Required<SiteSettings> = {
   headerBackground: "#F0F1ED",
   headerText: "#1A1A18",
   heroBackground: "#2E1A47",
+  heroText: "#F0F1ED",
   backgroundColor: "#F0F1ED",
   gridOutline: "#1A1A18",
   gridText: "#1A1A18",
   filteredBlockColor: "#2E1A47",
   filterOutline: "#1A1A18",
   filterText: "#1A1A18",
+  filterHoverBackground: "#888888",
+  filterHoverText: "#FFFFFF",
+  filterSelectedBackground: "#1A1A18",
+  filterSelectedText: "#F0F1ED",
   footerBackground: "#4A4945",
   footerText: "#FFFFFF",
 };
@@ -66,12 +76,17 @@ export default async function RootLayout({
     headerBackground: sanitizeHex(settings.headerBackground, DEFAULTS.headerBackground),
     headerText: sanitizeHex(settings.headerText, DEFAULTS.headerText),
     heroBackground: sanitizeHex(settings.heroBackground, DEFAULTS.heroBackground),
+    heroText: sanitizeHex(settings.heroText, DEFAULTS.heroText),
     backgroundColor: sanitizeHex(settings.backgroundColor, DEFAULTS.backgroundColor),
     gridOutline: sanitizeHex(settings.gridOutline, DEFAULTS.gridOutline),
     gridText: sanitizeHex(settings.gridText, DEFAULTS.gridText),
     filteredBlockColor: sanitizeHex(settings.filteredBlockColor, DEFAULTS.filteredBlockColor),
     filterOutline: sanitizeHex(settings.filterOutline, DEFAULTS.filterOutline),
     filterText: sanitizeHex(settings.filterText, DEFAULTS.filterText),
+    filterHoverBackground: sanitizeHex(settings.filterHoverBackground, DEFAULTS.filterHoverBackground),
+    filterHoverText: sanitizeHex(settings.filterHoverText, DEFAULTS.filterHoverText),
+    filterSelectedBackground: sanitizeHex(settings.filterSelectedBackground, DEFAULTS.filterSelectedBackground),
+    filterSelectedText: sanitizeHex(settings.filterSelectedText, DEFAULTS.filterSelectedText),
     footerBackground: sanitizeHex(settings.footerBackground, DEFAULTS.footerBackground),
     footerText: sanitizeHex(settings.footerText, DEFAULTS.footerText),
   };
@@ -81,6 +96,7 @@ export default async function RootLayout({
   const themeStyle = {
     ["--color-bg" as string]: c.backgroundColor,
     ["--color-accent" as string]: c.heroBackground,
+    ["--color-accent-text" as string]: hexToChannels(c.heroText),
     ["--color-header-bg" as string]: c.headerBackground,
     ["--color-header-text" as string]: c.headerText,
     ["--color-grid-outline" as string]: c.gridOutline,
@@ -88,6 +104,10 @@ export default async function RootLayout({
     ["--color-filtered-block" as string]: c.filteredBlockColor,
     ["--color-filter-outline" as string]: c.filterOutline,
     ["--color-filter-text" as string]: c.filterText,
+    ["--color-filter-hover-bg" as string]: c.filterHoverBackground,
+    ["--color-filter-hover-text" as string]: c.filterHoverText,
+    ["--color-filter-selected-bg" as string]: c.filterSelectedBackground,
+    ["--color-filter-selected-text" as string]: c.filterSelectedText,
     ["--color-footer-bg" as string]: c.footerBackground,
     ["--color-footer-text" as string]: hexToChannels(c.footerText),
   } as React.CSSProperties;

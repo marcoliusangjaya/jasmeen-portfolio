@@ -109,12 +109,17 @@ export const siteSettingsQuery = groq`
     headerBackground,
     headerText,
     heroBackground,
+    heroText,
     backgroundColor,
     gridOutline,
     gridText,
     filteredBlockColor,
     filterOutline,
     filterText,
+    filterHoverBackground,
+    filterHoverText,
+    filterSelectedBackground,
+    filterSelectedText,
     footerBackground,
     footerText
   }

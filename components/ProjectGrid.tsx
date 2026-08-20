@@ -43,8 +43,8 @@ export default function ProjectGrid({ projects }: { projects: Project[] }) {
             onClick={() => toggle(f)}
             className={`font-satoshi text-xs tracking-wide px-5 py-2 rounded-full border-[1.5px] transition-colors duration-200 ${
               active === f
-                ? "bg-filterText text-bg border-filterOutline"
-                : "bg-transparent text-filterText border-filterOutline hover:bg-[#888] hover:text-white hover:border-[#888]"
+                ? "bg-filterSelectedBg text-filterSelectedText border-filterOutline"
+                : "bg-transparent text-filterText border-filterOutline hover:bg-filterHoverBg hover:text-filterHoverText hover:border-filterHoverBg"
             }`}
           >
             {f}

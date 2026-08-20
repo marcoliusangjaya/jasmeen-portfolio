@@ -25,7 +25,7 @@ function Hero() {
       <h1 className="font-cabinet text-6xl md:text-8xl font-medium tracking-widest text-accent-text">
         Jasmeen Shaqueita
       </h1>
-      <p className="font-satoshi text-base md:text-lg text-white/70 max-w-xl">
+      <p className="font-satoshi text-base md:text-lg text-accent-text/70 max-w-xl">
         Multidisciplinary creative working across brand identity, experience
         design, and creative technology.
       </p>
