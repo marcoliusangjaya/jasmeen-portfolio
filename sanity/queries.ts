@@ -25,6 +25,10 @@ export const projectBySlugQuery = groq`
     tools,
     subheading,
     description,
+    relatedLinks[] {
+      label,
+      url
+    },
     "coverImage": thumbnailImage.asset->url,
     "coverVideo": coverVideo.asset->url,
     heroLayout,

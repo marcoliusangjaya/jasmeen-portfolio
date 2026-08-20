@@ -31,11 +31,14 @@ type Section = {
 type MockupItem = { url?: string; width?: number; height?: number; videoUrl?: string };
 type MockupRow = { items?: MockupItem[] };
 
+type RelatedLink = { label: string; url: string };
+
 type ProjectDetail = Project & {
   date?: string;
   tools?: string[];
   subheading?: string;
   description?: string;
+  relatedLinks?: RelatedLink[];
   sections?: Section[];
   mockupRows?: MockupRow[];
   otherWork?: Project[];
@@ -112,6 +115,22 @@ export default async function ProjectPage({
             <div className="font-satoshi text-sm leading-relaxed text-text/70 max-w-2xl space-y-4">
               {project.description.split("\n\n").filter(Boolean).map((para, i) => (
                 <p key={i}>{para}</p>
+              ))}
+            </div>
+          )}
+
+          {project.relatedLinks && project.relatedLinks.length > 0 && (
+            <div className="flex flex-wrap gap-3 mt-8">
+              {project.relatedLinks.map((link, i) => (
+                <a
+                  key={i}
+                  href={link.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="font-satoshi text-xs tracking-wide px-5 py-2 rounded-full border-[1.5px] border-filterOutline text-filterText hover:bg-filterHoverBg hover:text-filterHoverText hover:border-filterHoverBg transition-colors duration-200"
+                >
+                  {link.label}
+                </a>
               ))}
             </div>
           )}

@@ -99,6 +99,37 @@ export default defineType({
       rows: 6,
     }),
     defineField({
+      name: "relatedLinks",
+      title: "Related Links",
+      description: "Shown as pills between the description and the content sections — link out to Instagram, GitHub, a live site, etc.",
+      type: "array",
+      of: [
+        {
+          type: "object",
+          name: "relatedLink",
+          title: "Link",
+          fields: [
+            defineField({
+              name: "label",
+              title: "Label",
+              type: "string",
+              placeholder: "e.g. Instagram, GitHub, Live Site",
+              validation: (r) => r.required(),
+            }),
+            defineField({
+              name: "url",
+              title: "URL",
+              type: "url",
+              validation: (r) => r.required(),
+            }),
+          ],
+          preview: {
+            select: { title: "label", subtitle: "url" },
+          },
+        },
+      ],
+    }),
+    defineField({
       name: "heroLayout",
       title: "Hero Layout",
       description: "How the hero images are arranged at the top of the project page",
