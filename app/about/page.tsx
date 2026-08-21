@@ -6,7 +6,7 @@ import Footer from "@/components/Footer";
 
 export const revalidate = 60;
 
-type Credential = { degree: string; school: string };
+type Credential = { degree: string; school: string; year?: string };
 type AboutData = {
   name?: string;
   bio?: string;
@@ -74,10 +74,12 @@ export default async function AboutPage() {
                   {
                     degree: "BFA Film & Television",
                     school: "Savannah College of Arts and Design",
+                    year: "2018–2022",
                   },
                   {
                     degree: "MSc Marketing & Creativity",
                     school: "ESCP Business School",
+                    year: "2023",
                   },
                 ]
             ).map((c, i) => (
@@ -86,6 +88,11 @@ export default async function AboutPage() {
                 <span className="font-satoshi text-base leading-relaxed tracking-widest uppercase text-text/60">
                   {c.school}
                 </span>
+                {c.year && (
+                  <span className="font-satoshi text-sm leading-relaxed text-text/40">
+                    {c.year}
+                  </span>
+                )}
               </div>
             ))}
           </div>

@@ -34,9 +34,18 @@ export default defineType({
           fields: [
             defineField({ name: "degree", title: "Degree", type: "string" }),
             defineField({ name: "school", title: "School", type: "string" }),
+            defineField({
+              name: "year",
+              title: "Year",
+              type: "string",
+              placeholder: "e.g. 2022 or 2018–2022",
+            }),
           ],
           preview: {
-            select: { title: "degree", subtitle: "school" },
+            select: { title: "degree", subtitle: "school", year: "year" },
+            prepare({ title, subtitle, year }: Record<string, any>) {
+              return { title, subtitle: year ? `${subtitle} · ${year}` : subtitle };
+            },
           },
         },
       ],

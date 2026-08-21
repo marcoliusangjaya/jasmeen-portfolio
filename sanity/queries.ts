@@ -78,7 +78,8 @@ export const aboutQuery = groq`
     "polaroidPhoto": polaroidPhoto.asset->url,
     credentials[] {
       degree,
-      school
+      school,
+      year
     },
     skills,
     email,

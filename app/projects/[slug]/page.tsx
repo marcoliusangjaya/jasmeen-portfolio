@@ -120,18 +120,23 @@ export default async function ProjectPage({
           )}
 
           {project.relatedLinks && project.relatedLinks.length > 0 && (
-            <div className="flex flex-wrap gap-3 mt-8">
-              {project.relatedLinks.map((link, i) => (
-                <a
-                  key={i}
-                  href={link.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="font-satoshi text-xs tracking-wide px-5 py-2 rounded-full border-[1.5px] border-filterOutline text-filterText hover:bg-filterHoverBg hover:text-filterHoverText hover:border-filterHoverBg transition-colors duration-200"
-                >
-                  {link.label}
-                </a>
-              ))}
+            <div className="mt-8">
+              <h3 className="font-satoshi text-xs tracking-widest uppercase text-text/40 mb-3">
+                Related Links
+              </h3>
+              <div className="flex flex-wrap gap-3">
+                {project.relatedLinks.map((link, i) => (
+                  <a
+                    key={i}
+                    href={link.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="font-satoshi text-xs tracking-wide px-5 py-2 rounded-full border-[1.5px] border-filterOutline bg-filterSelectedBg text-filterSelectedText hover:bg-filterHoverBg hover:text-filterHoverText hover:border-filterHoverBg transition-colors duration-200"
+                  >
+                    {link.label}
+                  </a>
+                ))}
+              </div>
             </div>
           )}
         </section>
