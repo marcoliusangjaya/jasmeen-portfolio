@@ -131,7 +131,7 @@ export default async function ProjectPage({
                     href={link.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="font-satoshi text-xs tracking-wide px-5 py-2 rounded-full border-[1.5px] border-filterOutline bg-filterSelectedBg text-filterSelectedText hover:bg-filterHoverBg hover:text-filterHoverText hover:border-filterHoverBg transition-colors duration-200"
+                    className="font-satoshi text-xs tracking-wide px-5 py-2 rounded-full border-[1.5px] border-filterOutline bg-filterSelectedBg text-filterSelectedText hover:bg-white hover:text-filterText transition-colors duration-200"
                   >
                     {link.label}
                   </a>
@@ -175,7 +175,7 @@ function OtherWork({ projects }: { projects: Project[] }) {
                 border-[1.5px] border-gridOutline
                 ${index > 0 ? "border-l-0" : ""}`}
             >
-              <div className="transition-transform duration-300 ease-out group-hover:scale-[1.02] origin-center h-full flex flex-col">
+              <div className="h-full flex flex-col">
                 <div className="flex items-start justify-between px-3 pt-3 pb-1 gap-1 shrink-0">
                   <span className="font-satoshi text-[9px] tracking-widest uppercase text-gridText/60 leading-tight">
                     {(p.categories ?? []).join(" · ")}
@@ -211,7 +211,7 @@ function OtherWork({ projects }: { projects: Project[] }) {
                   </div>
                 </div>
                 <div className="px-3 pb-3 shrink-0">
-                  <h3 className="font-cabinet text-sm font-medium leading-snug line-clamp-2">
+                  <h3 className="font-cabinet text-sm font-medium leading-snug line-clamp-2 transition-colors duration-200 text-gridText group-hover:text-gridText/40">
                     {p.title}
                   </h3>
                 </div>

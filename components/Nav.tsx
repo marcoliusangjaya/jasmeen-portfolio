@@ -40,7 +40,7 @@ export default function Nav({ logo }: { logo: HeaderLogo | null }) {
           : "bg-headerBg border-headerBorder text-headerText"
       }`}
     >
-      <nav className="flex items-center justify-between px-[120px] py-5">
+      <nav className="flex items-center justify-between px-[120px] py-2.5">
         <Link href="/" className="shrink-0">
           {logo?.url && (
             <Image
@@ -63,7 +63,7 @@ export default function Nav({ logo }: { logo: HeaderLogo | null }) {
             <li key={label}>
               <Link
                 href={href}
-                className="font-satoshi text-sm relative after:absolute after:left-0 after:-bottom-0.5 after:h-px after:w-0 after:bg-current after:transition-all after:duration-300 hover:after:w-full"
+                className="font-satoshi text-base relative after:absolute after:left-0 after:-bottom-0.5 after:h-px after:w-0 after:bg-current after:transition-all after:duration-300 hover:after:w-full"
               >
                 {label}
               </Link>

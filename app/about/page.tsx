@@ -37,7 +37,7 @@ export default async function AboutPage() {
         <section className="pt-24 pb-20 grid grid-cols-2 gap-16 items-start">
           {/* Polaroid — frame sizes itself to the photo's own aspect ratio, no cropping */}
           <div className="flex justify-start">
-            <div className="bg-white p-4 pb-10 shadow-xl rotate-[-2deg] w-72 shrink-0">
+            <div className="bg-white p-4 pb-10 shadow-xl rotate-[-2deg] w-96 shrink-0">
               <div
                 className="relative w-full overflow-hidden bg-border/20"
                 style={{
@@ -53,7 +53,7 @@ export default async function AboutPage() {
                     alt={about.name ?? "Jasmeen"}
                     fill
                     className="object-cover"
-                    sizes="288px"
+                    sizes="384px"
                     priority
                   />
                 ) : (
