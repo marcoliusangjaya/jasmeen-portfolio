@@ -1,10 +1,10 @@
-import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { client } from "@/sanity/client";
 import { projectBySlugQuery, projectsQuery } from "@/sanity/queries";
 import Footer from "@/components/Footer";
 import ContentBlocks from "@/components/ContentBlocks";
+import { SmartFillImage } from "@/components/SmartImage";
 import type { Project } from "@/components/ProjectGrid";
 
 export const revalidate = 0;
@@ -198,11 +198,10 @@ function OtherWork({ projects }: { projects: Project[] }) {
                         className="absolute inset-0 w-full h-full object-contain"
                       />
                     ) : p.coverImage ? (
-                      <Image
+                      <SmartFillImage
                         src={p.coverImage}
                         alt={p.title}
-                        fill
-                        className="object-contain"
+                        objectFit="contain"
                         sizes="25vw"
                       />
                     ) : (

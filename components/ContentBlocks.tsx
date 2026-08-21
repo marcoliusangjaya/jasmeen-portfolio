@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import Image from "next/image";
+import { SmartFillImage, SmartNaturalImage } from "./SmartImage";
 
 type BentoItem = { image?: string; videoUrl?: string; label?: string };
 
@@ -67,7 +67,7 @@ function Cell({
         ) : (
           src && (
             <div className="absolute inset-[14%]">
-              <Image src={src} alt={label ?? ""} fill className="object-contain" sizes={sizes} />
+              <SmartFillImage src={src} alt={label ?? ""} objectFit="contain" sizes={sizes} />
             </div>
           )
         )}
@@ -285,7 +285,7 @@ function MockupRows({ rows, onOpen }: { rows: MockupRow[]; onOpen: (src: string)
               {it.videoUrl ? (
                 <video src={it.videoUrl} autoPlay muted loop playsInline style={{ width: "100%", height: "auto", display: "block" }} />
               ) : (
-                <Image src={it.url!} alt="" width={it.width ?? 1200} height={it.height ?? 800} style={{ width: "100%", height: "auto", display: "block" }} sizes="100vw" />
+                <SmartNaturalImage src={it.url!} alt="" width={it.width ?? 1200} height={it.height ?? 800} sizes="100vw" />
               )}
             </div>
           );
@@ -310,7 +310,7 @@ function MockupRows({ rows, onOpen }: { rows: MockupRow[]; onOpen: (src: string)
                 {it.videoUrl ? (
                   <video src={it.videoUrl} autoPlay muted loop playsInline className="absolute inset-0 w-full h-full object-cover" />
                 ) : (
-                  <Image src={it.url!} alt="" fill className="object-cover" sizes={n === 2 ? "50vw" : "33vw"} />
+                  <SmartFillImage src={it.url!} alt="" objectFit="cover" sizes={n === 2 ? "50vw" : "33vw"} />
                 )}
               </div>
             ))}
@@ -334,7 +334,7 @@ function Lightbox({ src, onClose }: { src: string; onClose: () => void }) {
     <div className="fixed inset-0 z-[100] bg-black/90 flex items-center justify-center" onClick={onClose}>
       <button className="absolute top-5 right-6 text-white/70 hover:text-white text-3xl leading-none font-light" onClick={onClose} aria-label="Close">×</button>
       <div className="relative max-w-[90vw] max-h-[90vh] w-full h-full" onClick={(e) => e.stopPropagation()}>
-        <Image src={src} alt="" fill className="object-contain" sizes="90vw" priority />
+        <SmartFillImage src={src} alt="" objectFit="contain" sizes="90vw" priority />
       </div>
     </div>
   );

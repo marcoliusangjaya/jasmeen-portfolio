@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
+import { isGif } from "./SmartImage";
 
 const links = [
   { label: "Home", href: "/" },
@@ -42,20 +43,29 @@ export default function Nav({ logo }: { logo: HeaderLogo | null }) {
     >
       <nav className="flex items-center justify-between px-[120px] py-2.5">
         <Link href="/" className="shrink-0">
-          {logo?.url && (
-            <Image
-              src={logo.url}
-              alt="Logo"
-              width={logo.width ?? 160}
-              height={logo.height ?? 48}
-              className="h-14 w-auto"
-              // The uploaded logo is expected to be a plain black mark on a
-              // transparent background — inverting it gives white for free
-              // over the dark hero, with no separate light-mode asset needed.
-              style={{ filter: overHero ? "invert(1)" : "none" }}
-              priority
-            />
-          )}
+          {logo?.url &&
+            (isGif(logo.url) ? (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img
+                src={logo.url}
+                alt="Logo"
+                className="h-14 w-auto"
+                style={{ filter: overHero ? "invert(1)" : "none" }}
+              />
+            ) : (
+              <Image
+                src={logo.url}
+                alt="Logo"
+                width={logo.width ?? 160}
+                height={logo.height ?? 48}
+                className="h-14 w-auto"
+                // The uploaded logo is expected to be a plain black mark on a
+                // transparent background — inverting it gives white for free
+                // over the dark hero, with no separate light-mode asset needed.
+                style={{ filter: overHero ? "invert(1)" : "none" }}
+                priority
+              />
+            ))}
         </Link>
 
         <ul className="flex items-center gap-8">

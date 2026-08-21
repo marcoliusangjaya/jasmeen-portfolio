@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import Image from "next/image";
+import { SmartFillImage } from "./SmartImage";
 
 export type Project = {
   _id: string;
@@ -131,11 +131,10 @@ export default function ProjectGrid({ projects }: { projects: Project[] }) {
                         className="absolute inset-0 w-full h-full object-contain"
                       />
                     ) : project.coverImage ? (
-                      <Image
+                      <SmartFillImage
                         src={project.coverImage}
                         alt={project.title}
-                        fill
-                        className="object-contain"
+                        objectFit="contain"
                         sizes="12vw"
                       />
                     ) : (

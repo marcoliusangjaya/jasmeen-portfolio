@@ -1,8 +1,8 @@
-import Image from "next/image";
 import Link from "next/link";
 import { client } from "@/sanity/client";
 import { aboutQuery } from "@/sanity/queries";
 import Footer from "@/components/Footer";
+import { SmartFillImage } from "@/components/SmartImage";
 
 export const revalidate = 60;
 
@@ -48,11 +48,10 @@ export default async function AboutPage() {
                 }}
               >
                 {about.polaroidPhoto?.url ? (
-                  <Image
+                  <SmartFillImage
                     src={about.polaroidPhoto.url}
                     alt={about.name ?? "Jasmeen"}
-                    fill
-                    className="object-cover"
+                    objectFit="cover"
                     sizes="384px"
                     priority
                   />
