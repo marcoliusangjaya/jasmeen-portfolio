@@ -85,16 +85,21 @@ export default function ProjectGrid({ projects }: { projects: Project[] }) {
           if (highlighted && col > 0 && !isHL(leftNeighbour)) shadowParts.push("-1.5px 0 0 0 var(--color-grid-outline)");
           if (highlighted && row > 0 && !isHL(topNeighbour))  shadowParts.push("0 -1.5px 0 0 var(--color-grid-outline)");
           const boxShadow = shadowParts.join(", ") || undefined;
+          const unclickable = dimmed && DIM_STYLE === "solid";
 
           return (
             <Link
               key={project._id}
               href={`/projects/${project.slug}`}
               style={boxShadow ? { boxShadow } : undefined}
+              aria-disabled={unclickable || undefined}
+              tabIndex={unclickable ? -1 : undefined}
+              onClick={(e) => unclickable && e.preventDefault()}
               className={`group relative bg-bg aspect-square flex flex-col overflow-hidden
                 border-[1.5px] border-gridOutline transition-opacity duration-300
                 ${col > 0 ? "border-l-0" : ""}
                 ${row > 0 ? "border-t-0" : ""}
+                ${unclickable ? "pointer-events-none cursor-default" : ""}
                 ${dimmed && DIM_STYLE === "fade" ? "opacity-25 z-0" : highlighted ? "z-10" : "z-0"}`}
             >
               {dimmed && DIM_STYLE === "solid" && (
