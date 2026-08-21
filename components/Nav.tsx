@@ -48,7 +48,7 @@ export default function Nav({ logo }: { logo: HeaderLogo | null }) {
               alt="Logo"
               width={logo.width ?? 160}
               height={logo.height ?? 48}
-              className="h-9 w-auto"
+              className="h-14 w-auto"
               // The uploaded logo is expected to be a plain black mark on a
               // transparent background — inverting it gives white for free
               // over the dark hero, with no separate light-mode asset needed.
