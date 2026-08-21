@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 
-type BentoItem = { image?: string; label?: string };
+type BentoItem = { image?: string; videoUrl?: string; label?: string };
 
 type Section = {
   layout?:
@@ -45,6 +45,7 @@ function Cell({
   onOpen: (src: string) => void;
 }) {
   const src = item?.image;
+  const videoUrl = item?.videoUrl;
   const label = item?.label;
   return (
     <div className={`relative ${className}`}>
@@ -52,10 +53,23 @@ function Cell({
         className={`relative overflow-hidden ${imgClass} ${src ? "cursor-zoom-in" : ""}`}
         onClick={() => src && onOpen(src)}
       >
-        {src && (
+        {videoUrl ? (
           <div className="absolute inset-[14%]">
-            <Image src={src} alt={label ?? ""} fill className="object-contain" sizes={sizes} />
+            <video
+              src={videoUrl}
+              autoPlay
+              muted
+              loop
+              playsInline
+              className="absolute inset-0 w-full h-full object-contain"
+            />
           </div>
+        ) : (
+          src && (
+            <div className="absolute inset-[14%]">
+              <Image src={src} alt={label ?? ""} fill className="object-contain" sizes={sizes} />
+            </div>
+          )
         )}
         {label && (
           <div className="absolute top-3 left-3 z-10 pointer-events-none">

@@ -102,13 +102,6 @@ export default defineType({
     }),
     defineField({ name: "email", title: "Email", type: "string" }),
     defineField({
-      name: "resumeFile",
-      title: "Resume (PDF)",
-      description: "Upload your resume — shown on the Resume page with a view/expand and download option",
-      type: "file",
-      options: { accept: "application/pdf" },
-    }),
-    defineField({
       name: "socialLinks",
       title: "Social Links",
       description: "Shown in the footer and on the Contact page (e.g. Instagram, Kuno + Kini)",

@@ -41,6 +41,7 @@ export const projectBySlugQuery = groq`
       layout,
       "items": items[] {
         "image": image.asset->url,
+        "videoUrl": video.asset->url,
         label
       }
     },
@@ -104,11 +105,40 @@ export const heroTaglineQuery = groq`
   }
 `;
 
+const resumeEntryProjection = groq`
+  organization,
+  location,
+  role,
+  dates,
+  bullets,
+  "linkedProject": linkedProject-> { "slug": slug.current },
+  externalUrl
+`;
+
 export const resumeQuery = groq`
-  *[_type == "about"][0] {
+  *[_type == "resume"][0] {
+    name,
+    email,
+    portfolioUrl,
+    linkedinUrl,
     "resumeFile": resumeFile.asset-> {
       url,
       originalFilename
+    },
+    education[] {
+      institution,
+      location,
+      dates,
+      degree,
+      honors,
+      "linkedProject": linkedProject-> { "slug": slug.current },
+      externalUrl
+    },
+    experience[] { ${resumeEntryProjection} },
+    involvements[] { ${resumeEntryProjection} },
+    skillCategories[] {
+      category,
+      items
     }
   }
 `;

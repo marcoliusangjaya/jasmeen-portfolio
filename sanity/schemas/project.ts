@@ -207,8 +207,16 @@ export default defineType({
                     defineField({
                       name: "image",
                       title: "Image",
+                      description: "Photos and GIFs both work here",
                       type: "image",
                       options: { hotspot: true },
+                    }),
+                    defineField({
+                      name: "video",
+                      title: "Video",
+                      description: "Upload a video instead of an image (mp4/webm)",
+                      type: "file",
+                      options: { accept: "video/mp4,video/webm,video/ogg" },
                     }),
                     defineField({
                       name: "label",

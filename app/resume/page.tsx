@@ -1,34 +1,245 @@
+import Link from "next/link";
 import { client } from "@/sanity/client";
 import { resumeQuery } from "@/sanity/queries";
 import Footer from "@/components/Footer";
-import ResumeViewer from "@/components/ResumeViewer";
 
 export const revalidate = 60;
 
+type EntryLink = { linkedProject?: { slug: string } | null; externalUrl?: string };
+
+type EducationEntry = EntryLink & {
+  institution?: string;
+  location?: string;
+  dates?: string;
+  degree?: string;
+  honors?: string;
+};
+
+type ExperienceEntry = EntryLink & {
+  organization?: string;
+  location?: string;
+  role?: string;
+  dates?: string;
+  bullets?: string[];
+};
+
+type SkillCategory = { category: string; items?: string[] };
+
 type ResumeData = {
+  name?: string;
+  email?: string;
+  portfolioUrl?: string;
+  linkedinUrl?: string;
   resumeFile?: { url: string; originalFilename?: string };
+  education?: EducationEntry[];
+  experience?: ExperienceEntry[];
+  involvements?: ExperienceEntry[];
+  skillCategories?: SkillCategory[];
 };
 
 export default async function ResumePage() {
-  const data: ResumeData = (await client.fetch(resumeQuery)) ?? {};
-  const file = data.resumeFile;
+  const resume: ResumeData = (await client.fetch(resumeQuery)) ?? {};
+
+  const hasContent =
+    resume.name ||
+    (resume.education?.length ?? 0) > 0 ||
+    (resume.experience?.length ?? 0) > 0 ||
+    (resume.involvements?.length ?? 0) > 0 ||
+    (resume.skillCategories?.length ?? 0) > 0;
 
   return (
     <>
-      <main className="px-[120px] pt-32 pb-24 flex flex-col items-center text-center">
-        <h1 className="font-cabinet text-3xl md:text-4xl font-medium mb-12">
-          Resume
-        </h1>
+      <main className="px-[120px] pt-32 pb-24">
+        <div className="max-w-3xl mx-auto">
+          {hasContent ? (
+            <>
+              <Header resume={resume} />
 
-        {file?.url ? (
-          <ResumeViewer url={file.url} filename={file.originalFilename} />
-        ) : (
-          <p className="font-satoshi text-sm text-text/60">
-            Resume coming soon.
-          </p>
-        )}
+              {resume.education && resume.education.length > 0 && (
+                <Section title="Education">
+                  <div className="flex flex-col gap-8">
+                    {resume.education.map((e, i) => (
+                      <EducationRow key={i} entry={e} />
+                    ))}
+                  </div>
+                </Section>
+              )}
+
+              {resume.experience && resume.experience.length > 0 && (
+                <Section title="Professional Experience">
+                  <div className="flex flex-col gap-10">
+                    {resume.experience.map((e, i) => (
+                      <ExperienceRow key={i} entry={e} />
+                    ))}
+                  </div>
+                </Section>
+              )}
+
+              {resume.involvements && resume.involvements.length > 0 && (
+                <Section title="Involvements / Projects">
+                  <div className="flex flex-col gap-10">
+                    {resume.involvements.map((e, i) => (
+                      <ExperienceRow key={i} entry={e} />
+                    ))}
+                  </div>
+                </Section>
+              )}
+
+              {resume.skillCategories && resume.skillCategories.length > 0 && (
+                <Section title="Skills & Qualifications">
+                  <div className="flex flex-col gap-3">
+                    {resume.skillCategories.map((sc, i) => (
+                      <p key={i} className="font-satoshi text-sm leading-relaxed text-text/80">
+                        <span className="font-medium text-text">{sc.category}: </span>
+                        {(sc.items ?? []).join(", ")}
+                      </p>
+                    ))}
+                  </div>
+                </Section>
+              )}
+
+              {resume.resumeFile?.url && (
+                <div className="flex justify-center mt-16">
+                  <a
+                    href={resume.resumeFile.url}
+                    download={resume.resumeFile.originalFilename ?? "resume.pdf"}
+                    className="font-satoshi text-xs tracking-widest uppercase px-6 py-3 rounded-full border-[1.5px] border-text text-text hover:bg-text hover:text-bg transition-colors duration-200"
+                  >
+                    Download Resume
+                  </a>
+                </div>
+              )}
+            </>
+          ) : (
+            <p className="font-satoshi text-sm text-text/60 text-center">
+              Resume coming soon.
+            </p>
+          )}
+        </div>
       </main>
       <Footer />
     </>
+  );
+}
+
+function Header({ resume }: { resume: ResumeData }) {
+  const contactParts: { label: string; href: string }[] = [];
+  if (resume.email) contactParts.push({ label: resume.email, href: `mailto:${resume.email}` });
+  if (resume.portfolioUrl)
+    contactParts.push({ label: resume.portfolioUrl.replace(/^https?:\/\//, ""), href: resume.portfolioUrl });
+  if (resume.linkedinUrl)
+    contactParts.push({ label: resume.linkedinUrl.replace(/^https?:\/\//, ""), href: resume.linkedinUrl });
+
+  return (
+    <div className="mb-16">
+      {resume.name && (
+        <h1 className="font-cabinet text-3xl md:text-4xl font-medium mb-3">{resume.name}</h1>
+      )}
+      {contactParts.length > 0 && (
+        <p className="font-satoshi text-sm text-text/60">
+          {contactParts.map((c, i) => (
+            <span key={c.href}>
+              {i > 0 && " | "}
+              <a href={c.href} target="_blank" rel="noopener noreferrer" className="hover:text-text transition-colors">
+                {c.label}
+              </a>
+            </span>
+          ))}
+        </p>
+      )}
+    </div>
+  );
+}
+
+function Section({ title, children }: { title: string; children: React.ReactNode }) {
+  return (
+    <section className="mb-14">
+      <h2 className="font-cabinet text-xl font-medium tracking-wide uppercase pb-2 mb-6 border-b border-border">
+        {title}
+      </h2>
+      {children}
+    </section>
+  );
+}
+
+// Wraps children in a Link (linked project takes priority) or a plain <a>,
+// falling back to no link at all when neither is set.
+function EntryLink({ entry, children }: { entry: EntryLink; children: React.ReactNode }) {
+  if (entry.linkedProject?.slug) {
+    return (
+      <Link href={`/projects/${entry.linkedProject.slug}`} className="hover:text-text/60 transition-colors">
+        {children}
+      </Link>
+    );
+  }
+  if (entry.externalUrl) {
+    return (
+      <a
+        href={entry.externalUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="hover:text-text/60 transition-colors"
+      >
+        {children}
+      </a>
+    );
+  }
+  return <>{children}</>;
+}
+
+function EducationRow({ entry }: { entry: EducationEntry }) {
+  return (
+    <div>
+      <div className="flex items-baseline justify-between gap-4">
+        <EntryLink entry={entry}>
+          <span className="font-cabinet text-lg font-medium">{entry.institution}</span>
+        </EntryLink>
+        {entry.dates && (
+          <span className="font-satoshi text-sm text-text/40 shrink-0">{entry.dates}</span>
+        )}
+      </div>
+      {entry.location && (
+        <p className="font-satoshi text-sm text-text/50">{entry.location}</p>
+      )}
+      {(entry.degree || entry.honors) && (
+        <p className="font-satoshi text-sm text-text/80 mt-1">
+          {entry.degree}
+          {entry.degree && entry.honors && " | "}
+          {entry.honors}
+        </p>
+      )}
+    </div>
+  );
+}
+
+function ExperienceRow({ entry }: { entry: ExperienceEntry }) {
+  return (
+    <div>
+      <div className="flex items-baseline justify-between gap-4">
+        <EntryLink entry={entry}>
+          <span className="font-cabinet text-lg font-medium">{entry.organization}</span>
+        </EntryLink>
+        {entry.location && (
+          <span className="font-satoshi text-sm text-text/40 shrink-0">{entry.location}</span>
+        )}
+      </div>
+      <div className="flex items-baseline justify-between gap-4 mb-3">
+        {entry.role && (
+          <span className="font-satoshi text-sm italic text-text/70">{entry.role}</span>
+        )}
+        {entry.dates && (
+          <span className="font-satoshi text-sm text-text/40 shrink-0">{entry.dates}</span>
+        )}
+      </div>
+      {entry.bullets && entry.bullets.length > 0 && (
+        <ul className="list-disc list-outside pl-5 space-y-1.5">
+          {entry.bullets.map((b, i) => (
+            <li key={i} className="font-satoshi text-sm leading-relaxed text-text/80">
+              {b}
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
   );
 }
