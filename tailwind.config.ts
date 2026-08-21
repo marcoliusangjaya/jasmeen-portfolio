@@ -17,6 +17,7 @@ const config: Config = {
         "accent-text": "rgb(var(--color-accent-text) / <alpha-value>)",
         headerBg: "var(--color-header-bg)",
         headerText: "var(--color-header-text)",
+        headerBorder: "var(--color-header-border)",
         gridOutline: "var(--color-grid-outline)",
         gridText: "rgb(var(--color-grid-text) / <alpha-value>)",
         filteredBlock: "var(--color-filtered-block)",

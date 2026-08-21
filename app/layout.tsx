@@ -15,6 +15,7 @@ export const revalidate = 60;
 type SiteSettings = {
   headerBackground?: string;
   headerText?: string;
+  headerBorder?: string;
   heroBackground?: string;
   heroText?: string;
   backgroundColor?: string;
@@ -34,6 +35,7 @@ type SiteSettings = {
 const DEFAULTS: Required<SiteSettings> = {
   headerBackground: "#F0F1ED",
   headerText: "#1A1A18",
+  headerBorder: "#1A1A18",
   heroBackground: "#2E1A47",
   heroText: "#F0F1ED",
   backgroundColor: "#F0F1ED",
@@ -75,6 +77,7 @@ export default async function RootLayout({
   const c: Required<SiteSettings> = {
     headerBackground: sanitizeHex(settings.headerBackground, DEFAULTS.headerBackground),
     headerText: sanitizeHex(settings.headerText, DEFAULTS.headerText),
+    headerBorder: sanitizeHex(settings.headerBorder, DEFAULTS.headerBorder),
     heroBackground: sanitizeHex(settings.heroBackground, DEFAULTS.heroBackground),
     heroText: sanitizeHex(settings.heroText, DEFAULTS.heroText),
     backgroundColor: sanitizeHex(settings.backgroundColor, DEFAULTS.backgroundColor),
@@ -99,6 +102,7 @@ export default async function RootLayout({
     ["--color-accent-text" as string]: hexToChannels(c.heroText),
     ["--color-header-bg" as string]: c.headerBackground,
     ["--color-header-text" as string]: c.headerText,
+    ["--color-header-border" as string]: c.headerBorder,
     ["--color-grid-outline" as string]: c.gridOutline,
     ["--color-grid-text" as string]: hexToChannels(c.gridText),
     ["--color-filtered-block" as string]: c.filteredBlockColor,

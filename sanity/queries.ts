@@ -112,6 +112,7 @@ export const siteSettingsQuery = groq`
   *[_type == "siteSettings"][0] {
     headerBackground,
     headerText,
+    headerBorder,
     heroBackground,
     heroText,
     backgroundColor,

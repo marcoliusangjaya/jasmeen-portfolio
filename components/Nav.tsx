@@ -31,8 +31,10 @@ export default function Nav() {
 
   return (
     <header
-      className={`${isHome ? "fixed inset-x-0" : "sticky"} top-0 z-50 transition-colors duration-300 ${
-        overHero ? "bg-transparent text-accent-text" : "bg-headerBg text-headerText"
+      className={`${isHome ? "fixed inset-x-0" : "sticky"} top-0 z-50 border-b-[1.5px] transition-colors duration-300 ${
+        overHero
+          ? "bg-transparent border-transparent text-accent-text"
+          : "bg-headerBg border-headerBorder text-headerText"
       }`}
     >
       <nav className="flex items-center justify-end px-[120px] py-5">

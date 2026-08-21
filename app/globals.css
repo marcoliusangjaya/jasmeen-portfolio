@@ -39,6 +39,7 @@
      app/layout.tsx overrides them inline once fetched from Sanity. */
   --color-header-bg: #F0F1ED;
   --color-header-text: #1A1A18;
+  --color-header-border: #1A1A18;
   --color-grid-outline: #1A1A18;
   --color-grid-text: 26 26 24;
   --color-filtered-block: #2E1A47;

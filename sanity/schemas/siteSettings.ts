@@ -30,6 +30,7 @@ export default defineType({
   fields: [
     colorField("headerBackground", "Header Background", "#F0F1ED", "header"),
     colorField("headerText", "Header Text", "#1A1A18", "header"),
+    colorField("headerBorder", "Header Bottom Border", "#1A1A18", "header"),
 
     colorField("heroBackground", "Hero Background (top half)", "#2E1A47", "hero"),
     colorField("heroText", "Hero Text", "#F0F1ED", "hero"),
