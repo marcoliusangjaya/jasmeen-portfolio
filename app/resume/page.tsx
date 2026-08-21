@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { PortableText, type PortableTextComponents } from "@portabletext/react";
 import { client } from "@/sanity/client";
 import { resumeQuery } from "@/sanity/queries";
 import Footer from "@/components/Footer";
@@ -7,12 +8,16 @@ export const revalidate = 60;
 
 type EntryLink = { linkedProject?: { slug: string } | null; externalUrl?: string };
 
+// Portable Text blocks — each block is one bullet/line; inline "link" marks
+// can point at a project on the site or an external URL.
+type RichText = any[];
+
 type EducationEntry = EntryLink & {
   institution?: string;
   location?: string;
   dates?: string;
   degree?: string;
-  honors?: string;
+  honors?: RichText;
 };
 
 type ExperienceEntry = EntryLink & {
@@ -20,7 +25,7 @@ type ExperienceEntry = EntryLink & {
   location?: string;
   role?: string;
   dates?: string;
-  bullets?: string[];
+  bullets?: RichText;
 };
 
 type SkillCategory = { category: string; items?: string[] };
@@ -187,7 +192,45 @@ function EntryLink({ entry, children }: { entry: EntryLink; children: React.Reac
   return <>{children}</>;
 }
 
+// Renders an inline "link" mark from Portable Text (project ref takes
+// priority over an external URL) as an underlined link within running text.
+function InlineLinkMark({ value, children }: { value?: EntryLink; children: React.ReactNode }) {
+  const linkClass = "underline decoration-1 underline-offset-2 hover:text-text/50 transition-colors";
+  if (value?.linkedProject?.slug) {
+    return (
+      <Link href={`/projects/${value.linkedProject.slug}`} className={linkClass}>
+        {children}
+      </Link>
+    );
+  }
+  if (value?.externalUrl) {
+    return (
+      <a href={value.externalUrl} target="_blank" rel="noopener noreferrer" className={linkClass}>
+        {children}
+      </a>
+    );
+  }
+  return <>{children}</>;
+}
+
+// For "honors" — a single inline line, not a bulleted list.
+const inlineTextComponents: PortableTextComponents = {
+  block: { normal: ({ children }) => <>{children}</> },
+  marks: { link: InlineLinkMark },
+};
+
+// For "bullets" — each Portable Text block becomes one <li>.
+const bulletTextComponents: PortableTextComponents = {
+  block: {
+    normal: ({ children }) => (
+      <li className="font-satoshi text-sm leading-relaxed text-text/80">{children}</li>
+    ),
+  },
+  marks: { link: InlineLinkMark },
+};
+
 function EducationRow({ entry }: { entry: EducationEntry }) {
+  const hasHonors = entry.honors && entry.honors.length > 0;
   return (
     <div>
       <div className="flex items-baseline justify-between gap-4">
@@ -201,11 +244,11 @@ function EducationRow({ entry }: { entry: EducationEntry }) {
       {entry.location && (
         <p className="font-satoshi text-sm text-text/50">{entry.location}</p>
       )}
-      {(entry.degree || entry.honors) && (
+      {(entry.degree || hasHonors) && (
         <p className="font-satoshi text-sm text-text/80 mt-1">
           {entry.degree}
-          {entry.degree && entry.honors && " | "}
-          {entry.honors}
+          {entry.degree && hasHonors && " | "}
+          {hasHonors && <PortableText value={entry.honors} components={inlineTextComponents} />}
         </p>
       )}
     </div>
@@ -233,11 +276,7 @@ function ExperienceRow({ entry }: { entry: ExperienceEntry }) {
       </div>
       {entry.bullets && entry.bullets.length > 0 && (
         <ul className="list-disc list-outside pl-5 space-y-1.5">
-          {entry.bullets.map((b, i) => (
-            <li key={i} className="font-satoshi text-sm leading-relaxed text-text/80">
-              {b}
-            </li>
-          ))}
+          <PortableText value={entry.bullets} components={bulletTextComponents} />
         </ul>
       )}
     </div>

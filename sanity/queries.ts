@@ -105,12 +105,26 @@ export const heroTaglineQuery = groq`
   }
 `;
 
+// Resolves the "linkedProject" reference inside a rich-text field's inline
+// link marks (markDefs), leaving externalUrl-only marks untouched.
+const resolveMarkDefs = groq`
+  markDefs[] {
+    ...,
+    _type == "link" => {
+      "linkedProject": linkedProject-> { "slug": slug.current }
+    }
+  }
+`;
+
 const resumeEntryProjection = groq`
   organization,
   location,
   role,
   dates,
-  bullets,
+  bullets[] {
+    ...,
+    ${resolveMarkDefs}
+  },
   "linkedProject": linkedProject-> { "slug": slug.current },
   externalUrl
 `;
@@ -130,7 +144,10 @@ export const resumeQuery = groq`
       location,
       dates,
       degree,
-      honors,
+      honors[] {
+        ...,
+        ${resolveMarkDefs}
+      },
       "linkedProject": linkedProject-> { "slug": slug.current },
       externalUrl
     },

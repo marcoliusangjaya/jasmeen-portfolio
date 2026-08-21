@@ -20,6 +20,50 @@ function linkFields() {
   ];
 }
 
+// Rich-text field that supports selecting a phrase and turning it into a
+// link (to a project on the site, or any external URL) — used for prose
+// fields (honors, bullet points) where only part of the sentence links out,
+// not the whole line. `blockName` must be unique per field in the schema.
+function richTextField(name: string, title: string, blockName: string, description?: string) {
+  return defineField({
+    name,
+    title,
+    description,
+    type: "array",
+    of: [
+      {
+        type: "block",
+        name: blockName,
+        styles: [],
+        lists: [],
+        marks: {
+          decorators: [],
+          annotations: [
+            {
+              name: "link",
+              type: "object",
+              title: "Link",
+              fields: [
+                defineField({
+                  name: "linkedProject",
+                  title: "Link to Project",
+                  type: "reference",
+                  to: [{ type: "project" }],
+                }),
+                defineField({
+                  name: "externalUrl",
+                  title: "Or External URL",
+                  type: "url",
+                }),
+              ],
+            },
+          ],
+        },
+      },
+    ],
+  });
+}
+
 export default defineType({
   name: "resume",
   title: "Resume",
@@ -57,12 +101,12 @@ export default defineType({
               placeholder: "e.g. Expected 2027, Graduated July 2023",
             }),
             defineField({ name: "degree", title: "Degree", type: "string" }),
-            defineField({
-              name: "honors",
-              title: "Honors / Achievements",
-              type: "string",
-              placeholder: "e.g. Dean's List, Academic & Artistic Scholarship Recipient",
-            }),
+            richTextField(
+              "honors",
+              "Honors / Achievements",
+              "educationHonorsBlock",
+              "e.g. Dean's List, Academic & Artistic Scholarship Recipient — select text to link part of it"
+            ),
             ...linkFields(),
           ],
           preview: {
@@ -91,12 +135,12 @@ export default defineType({
               type: "string",
               placeholder: "e.g. July 2026 – Present",
             }),
-            defineField({
-              name: "bullets",
-              title: "Bullet Points",
-              type: "array",
-              of: [{ type: "text", rows: 2 }],
-            }),
+            richTextField(
+              "bullets",
+              "Bullet Points",
+              "experienceBulletBlock",
+              "Each paragraph becomes one bullet — select text within it to link part of it"
+            ),
             ...linkFields(),
           ],
           preview: {
@@ -125,12 +169,12 @@ export default defineType({
               type: "string",
               placeholder: "e.g. June 2026 – July 2026",
             }),
-            defineField({
-              name: "bullets",
-              title: "Bullet Points",
-              type: "array",
-              of: [{ type: "text", rows: 2 }],
-            }),
+            richTextField(
+              "bullets",
+              "Bullet Points",
+              "involvementBulletBlock",
+              "Each paragraph becomes one bullet — select text within it to link part of it"
+            ),
             ...linkFields(),
           ],
           preview: {
