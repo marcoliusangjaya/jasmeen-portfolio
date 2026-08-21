@@ -33,6 +33,18 @@ export default function ProjectGrid({ projects }: { projects: Project[] }) {
 
   if (projects.length === 0) return null;
 
+  // When a filter is active, matching projects move to the top (stable
+  // order preserved within each group); non-matching stay in place below,
+  // blacked out.
+  const displayProjects =
+    active === null
+      ? projects
+      : [...projects].sort((a, b) => {
+          const aMatch = (a.categories ?? []).includes(active) ? 0 : 1;
+          const bMatch = (b.categories ?? []).includes(active) ? 0 : 1;
+          return aMatch - bMatch;
+        });
+
   return (
     <section className="px-[120px] py-16">
       {/* Filters */}
@@ -54,16 +66,16 @@ export default function ProjectGrid({ projects }: { projects: Project[] }) {
 
       {/* Grid */}
       <div className="grid grid-cols-4">
-        {projects.map((project, index) => {
+        {displayProjects.map((project, index) => {
           const col = index % 4;
           const row = Math.floor(index / 4);
           const dimmed = active !== null && !(project.categories ?? []).includes(active);
           const highlighted = active !== null && !dimmed;
 
-          const leftNeighbour = col > 0 ? projects[index - 1] : null;
-          const topNeighbour  = row > 0 ? projects[index - 4] : null;
+          const leftNeighbour = col > 0 ? displayProjects[index - 1] : null;
+          const topNeighbour  = row > 0 ? displayProjects[index - 4] : null;
 
-          const isHL = (p: typeof projects[0] | null | undefined) =>
+          const isHL = (p: typeof displayProjects[0] | null | undefined) =>
             !!p && active !== null && !!(p.categories ?? []).includes(active);
 
           // Box-shadow simulates the missing left/top "borders" on active cards
