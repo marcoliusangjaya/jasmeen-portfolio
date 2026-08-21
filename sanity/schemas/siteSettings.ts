@@ -28,6 +28,16 @@ export default defineType({
     { name: "footer", title: "Footer" },
   ],
   fields: [
+    {
+      ...defineField({
+        name: "headerLogo",
+        title: "Header Logo",
+        description:
+          "Shown top-left of the header. Upload a plain black logo (transparent background) — it's shown white over the dark hero and switches to black once the header goes opaque.",
+        type: "image",
+      }),
+      fieldset: "header",
+    },
     colorField("headerBackground", "Header Background", "#F0F1ED", "header"),
     colorField("headerText", "Header Text", "#1A1A18", "header"),
     colorField("headerBorder", "Header Bottom Border", "#1A1A18", "header"),

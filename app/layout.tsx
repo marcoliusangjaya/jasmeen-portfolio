@@ -12,7 +12,9 @@ export const metadata: Metadata = {
 
 export const revalidate = 60;
 
-type SiteSettings = {
+type HeaderLogo = { url: string; width?: number; height?: number };
+
+type SiteColors = {
   headerBackground?: string;
   headerText?: string;
   headerBorder?: string;
@@ -32,7 +34,7 @@ type SiteSettings = {
   footerText?: string;
 };
 
-const DEFAULTS: Required<SiteSettings> = {
+const DEFAULTS: Required<SiteColors> = {
   headerBackground: "#F0F1ED",
   headerText: "#1A1A18",
   headerBorder: "#1A1A18",
@@ -73,8 +75,9 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const settings: SiteSettings = (await client.fetch(siteSettingsQuery)) ?? {};
-  const c: Required<SiteSettings> = {
+  const settings: SiteColors & { headerLogo?: HeaderLogo | null } =
+    (await client.fetch(siteSettingsQuery)) ?? {};
+  const c: Required<SiteColors> = {
     headerBackground: sanitizeHex(settings.headerBackground, DEFAULTS.headerBackground),
     headerText: sanitizeHex(settings.headerText, DEFAULTS.headerText),
     headerBorder: sanitizeHex(settings.headerBorder, DEFAULTS.headerBorder),
@@ -119,7 +122,7 @@ export default async function RootLayout({
   return (
     <html lang="en" style={themeStyle}>
       <body className="antialiased">
-        <Nav />
+        <Nav logo={settings.headerLogo ?? null} />
         <PageTransition>{children}</PageTransition>
       </body>
     </html>

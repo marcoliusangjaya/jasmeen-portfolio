@@ -18,6 +18,13 @@ export default defineType({
       rows: 5,
     }),
     defineField({
+      name: "heroTagline",
+      title: "Homepage Hero Tagline",
+      description: "Short 1–2 sentence line shown under the big title on the homepage",
+      type: "text",
+      rows: 2,
+    }),
+    defineField({
       name: "polaroidPhoto",
       title: "Polaroid Photo",
       description: "Shown on the About page with a white border + slight tilt",
@@ -45,6 +52,41 @@ export default defineType({
             select: { title: "degree", subtitle: "school", year: "year" },
             prepare({ title, subtitle, year }: Record<string, any>) {
               return { title, subtitle: year ? `${subtitle} · ${year}` : subtitle };
+            },
+          },
+        },
+      ],
+    }),
+    defineField({
+      name: "toolsByCategory",
+      title: "Tools",
+      description: "Shown next to Education Credentials on the About page, grouped by category — e.g. category \"Marketing\" with tools \"Google Trends, SEMrush\"",
+      type: "array",
+      of: [
+        {
+          type: "object",
+          name: "toolCategory",
+          title: "Category",
+          fields: [
+            defineField({
+              name: "category",
+              title: "Category",
+              type: "string",
+              placeholder: "e.g. Marketing, Design, Development",
+              validation: (r) => r.required(),
+            }),
+            defineField({
+              name: "tools",
+              title: "Tools",
+              type: "array",
+              of: [{ type: "string" }],
+              options: { layout: "tags" },
+            }),
+          ],
+          preview: {
+            select: { title: "category", subtitle: "tools" },
+            prepare({ title, subtitle }: Record<string, any>) {
+              return { title, subtitle: Array.isArray(subtitle) ? subtitle.join(", ") : subtitle };
             },
           },
         },

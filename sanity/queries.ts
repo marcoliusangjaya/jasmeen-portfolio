@@ -75,11 +75,19 @@ export const aboutQuery = groq`
   *[_type == "about"][0] {
     name,
     bio,
-    "polaroidPhoto": polaroidPhoto.asset->url,
+    "polaroidPhoto": polaroidPhoto.asset-> {
+      url,
+      "width": metadata.dimensions.width,
+      "height": metadata.dimensions.height
+    },
     credentials[] {
       degree,
       school,
       year
+    },
+    toolsByCategory[] {
+      category,
+      tools
     },
     skills,
     email,
@@ -87,6 +95,12 @@ export const aboutQuery = groq`
       platform,
       url
     }
+  }
+`;
+
+export const heroTaglineQuery = groq`
+  *[_type == "about"][0] {
+    heroTagline
   }
 `;
 
@@ -111,6 +125,11 @@ export const contactQuery = groq`
 
 export const siteSettingsQuery = groq`
   *[_type == "siteSettings"][0] {
+    "headerLogo": headerLogo.asset-> {
+      url,
+      "width": metadata.dimensions.width,
+      "height": metadata.dimensions.height
+    },
     headerBackground,
     headerText,
     headerBorder,
