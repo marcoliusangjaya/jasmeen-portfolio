@@ -191,14 +191,14 @@ function OtherWork({ projects }: { projects: Project[] }) {
         Other Work
       </h2>
       <div className="flex justify-center">
-        <div className="grid grid-cols-1 sm:grid-cols-2 w-full max-w-sm sm:max-w-none sm:w-1/2">
+        <div className="grid grid-cols-2 w-full sm:w-1/2">
           {projects.slice(0, 2).map((p, index) => (
             <Link
               key={p._id}
               href={`/projects/${p.slug}`}
               className={`group bg-bg aspect-square flex flex-col overflow-hidden transition-opacity duration-300
                 border-[1.5px] border-gridOutline
-                ${index > 0 ? "border-t-0 sm:border-t-[1.5px] sm:border-l-0" : ""}`}
+                ${index > 0 ? "border-l-0" : ""}`}
             >
               <div className="h-full flex flex-col">
                 <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between px-3 pt-3 pb-1 gap-0.5 sm:gap-1 shrink-0">
@@ -235,7 +235,7 @@ function OtherWork({ projects }: { projects: Project[] }) {
                   </div>
                 </div>
                 <div className="px-3 pb-3 shrink-0">
-                  <h3 className="font-cabinet text-sm font-medium leading-snug line-clamp-2 transition-colors duration-200 text-gridText group-hover:text-gridText/40">
+                  <h3 className="font-cabinet text-[11px] sm:text-sm font-medium leading-snug line-clamp-2 transition-colors duration-200 text-gridText group-hover:text-gridText/40">
                     {p.title}
                   </h3>
                 </div>

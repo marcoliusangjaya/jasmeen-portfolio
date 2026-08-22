@@ -125,11 +125,11 @@ export default function ProjectGrid({ projects }: { projects: Project[] }) {
               <div className="h-full flex flex-col">
                 {/* Meta row — stacks on narrow cards so location can't get clipped */}
                 <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between px-3 pt-3 pb-1 gap-0.5 sm:gap-1 shrink-0">
-                  <span className="font-satoshi text-[10px] tracking-widest uppercase text-gridText/60 leading-tight">
+                  <span className="font-satoshi text-[8px] sm:text-[9px] md:text-[10px] tracking-widest uppercase text-gridText/60 leading-tight">
                     {(project.categories ?? []).join(" · ")}
                   </span>
                   {project.location && (
-                    <span className="font-satoshi text-[10px] text-gridText/40 sm:text-right shrink-0">
+                    <span className="font-satoshi text-[8px] sm:text-[9px] md:text-[10px] text-gridText/40 sm:text-right shrink-0">
                       {project.location}
                     </span>
                   )}
@@ -162,7 +162,7 @@ export default function ProjectGrid({ projects }: { projects: Project[] }) {
 
                 {/* Title */}
                 <div className="px-3 pb-3 shrink-0">
-                  <h3 className="font-cabinet text-[15px] font-medium leading-snug line-clamp-2 transition-colors duration-200 text-gridText group-hover:text-gridText/40">
+                  <h3 className="font-cabinet text-[12px] sm:text-[13px] md:text-[15px] font-medium leading-snug line-clamp-2 transition-colors duration-200 text-gridText group-hover:text-gridText/40">
                     {project.title}
                   </h3>
                 </div>
