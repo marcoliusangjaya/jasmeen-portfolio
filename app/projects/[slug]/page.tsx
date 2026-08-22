@@ -72,7 +72,7 @@ export default async function ProjectPage({
                 {(project.categories ?? []).map((cat) => (
                   <span
                     key={cat}
-                    className="font-satoshi text-xs tracking-widest uppercase px-4 py-1.5 border-[1.5px] border-[#1A1A18] rounded-full"
+                    className="font-satoshi text-xs tracking-widest uppercase px-4 py-1.5 border-[1.5px] border-gridOutline rounded-full"
                   >
                     {cat}
                   </span>
@@ -131,7 +131,7 @@ export default async function ProjectPage({
                     href={link.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="font-satoshi text-xs tracking-wide px-5 py-2 rounded-full border-[1.5px] border-filterOutline bg-filterSelectedBg text-filterSelectedText hover:bg-white hover:text-filterText transition-colors duration-200"
+                    className="font-satoshi text-xs tracking-wide px-5 py-2 rounded-full border-[1.5px] border-filterOutline bg-filterSelectedBg text-filterSelectedText hover:bg-bg hover:text-filterText transition-colors duration-200"
                   >
                     {link.label}
                   </a>

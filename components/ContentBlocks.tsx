@@ -27,7 +27,7 @@ type Section = {
 type MockupItem = { url?: string; width?: number; height?: number; videoUrl?: string };
 type MockupRow = { items?: MockupItem[] };
 
-const B = "border-[1.5px] border-[#1A1A18]";
+const B = "border-[1.5px] border-gridOutline";
 
 /* ─── Single bento cell ─────────────────────────────────────────────────────── */
 
@@ -73,7 +73,7 @@ function Cell({
         )}
         {label && (
           <div className="absolute top-3 left-3 z-10 pointer-events-none">
-            <span className="font-satoshi text-xs tracking-wide text-[#1A1A18]/60">{label}</span>
+            <span className="font-satoshi text-xs tracking-wide text-gridText/60">{label}</span>
           </div>
         )}
       </div>
@@ -100,9 +100,9 @@ function BentoSection({
       return (
         <div className={outer}>
           <Cell item={items[0]} sizes="100vw" imgClass="aspect-[16/9]" onOpen={onOpen} />
-          <div className="grid grid-cols-2 border-t-[1.5px] border-[#1A1A18]">
+          <div className="grid grid-cols-2 border-t-[1.5px] border-gridOutline">
             <Cell item={items[1]} sizes="50vw" imgClass="aspect-square" onOpen={onOpen} />
-            <Cell item={items[2]} sizes="50vw" imgClass="aspect-square" className="border-l-[1.5px] border-[#1A1A18]" onOpen={onOpen} />
+            <Cell item={items[2]} sizes="50vw" imgClass="aspect-square" className="border-l-[1.5px] border-gridOutline" onOpen={onOpen} />
           </div>
         </div>
       );
@@ -110,9 +110,9 @@ function BentoSection({
     case "three-large-bottom":
       return (
         <div className={outer}>
-          <div className="grid grid-cols-2 border-b-[1.5px] border-[#1A1A18]">
+          <div className="grid grid-cols-2 border-b-[1.5px] border-gridOutline">
             <Cell item={items[0]} sizes="50vw" imgClass="aspect-square" onOpen={onOpen} />
-            <Cell item={items[1]} sizes="50vw" imgClass="aspect-square" className="border-l-[1.5px] border-[#1A1A18]" onOpen={onOpen} />
+            <Cell item={items[1]} sizes="50vw" imgClass="aspect-square" className="border-l-[1.5px] border-gridOutline" onOpen={onOpen} />
           </div>
           <Cell item={items[2]} sizes="100vw" imgClass="aspect-[16/9]" onOpen={onOpen} />
         </div>
@@ -121,14 +121,14 @@ function BentoSection({
     case "five-grid":
       return (
         <div className={outer}>
-          <div className="grid grid-cols-2 border-b-[1.5px] border-[#1A1A18]">
+          <div className="grid grid-cols-2 border-b-[1.5px] border-gridOutline">
             <Cell item={items[0]} sizes="50vw" imgClass="aspect-square" onOpen={onOpen} />
-            <Cell item={items[1]} sizes="50vw" imgClass="aspect-square" className="border-l-[1.5px] border-[#1A1A18]" onOpen={onOpen} />
+            <Cell item={items[1]} sizes="50vw" imgClass="aspect-square" className="border-l-[1.5px] border-gridOutline" onOpen={onOpen} />
           </div>
           <div className="grid grid-cols-3">
             <Cell item={items[2]} sizes="33vw" imgClass="aspect-square" onOpen={onOpen} />
-            <Cell item={items[3]} sizes="33vw" imgClass="aspect-square" className="border-l-[1.5px] border-[#1A1A18]" onOpen={onOpen} />
-            <Cell item={items[4]} sizes="33vw" imgClass="aspect-square" className="border-l-[1.5px] border-[#1A1A18]" onOpen={onOpen} />
+            <Cell item={items[3]} sizes="33vw" imgClass="aspect-square" className="border-l-[1.5px] border-gridOutline" onOpen={onOpen} />
+            <Cell item={items[4]} sizes="33vw" imgClass="aspect-square" className="border-l-[1.5px] border-gridOutline" onOpen={onOpen} />
           </div>
         </div>
       );
@@ -137,16 +137,16 @@ function BentoSection({
       return (
         <div className={outer}>
           <Cell item={items[0]} sizes="100vw" imgClass="aspect-[16/9]" onOpen={onOpen} />
-          <div className="grid grid-cols-2 border-t-[1.5px] border-[#1A1A18]">
+          <div className="grid grid-cols-2 border-t-[1.5px] border-gridOutline">
             <Cell item={items[1]} sizes="50vw" imgClass="aspect-square" onOpen={onOpen} />
-            <div className="grid grid-rows-2 border-l-[1.5px] border-[#1A1A18]">
+            <div className="grid grid-rows-2 border-l-[1.5px] border-gridOutline">
               <Cell item={items[2]} sizes="25vw" imgClass="aspect-square" onOpen={onOpen} />
-              <Cell item={items[3]} sizes="25vw" imgClass="aspect-square" className="border-t-[1.5px] border-[#1A1A18]" onOpen={onOpen} />
+              <Cell item={items[3]} sizes="25vw" imgClass="aspect-square" className="border-t-[1.5px] border-gridOutline" onOpen={onOpen} />
             </div>
           </div>
-          <div className="grid grid-cols-2 border-t-[1.5px] border-[#1A1A18]">
+          <div className="grid grid-cols-2 border-t-[1.5px] border-gridOutline">
             <Cell item={items[4]} sizes="25vw" imgClass="aspect-square" onOpen={onOpen} />
-            <Cell item={items[5]} sizes="25vw" imgClass="aspect-square" className="border-l-[1.5px] border-[#1A1A18]" onOpen={onOpen} />
+            <Cell item={items[5]} sizes="25vw" imgClass="aspect-square" className="border-l-[1.5px] border-gridOutline" onOpen={onOpen} />
           </div>
         </div>
       );
@@ -156,16 +156,16 @@ function BentoSection({
         <div className={outer}>
           <div className="grid grid-cols-2">
             <Cell item={items[0]} sizes="25vw" imgClass="aspect-square" onOpen={onOpen} />
-            <div className="grid grid-rows-2 border-l-[1.5px] border-[#1A1A18]">
+            <div className="grid grid-rows-2 border-l-[1.5px] border-gridOutline">
               <Cell item={items[1]} sizes="25vw" imgClass="aspect-square" onOpen={onOpen} />
-              <Cell item={items[2]} sizes="25vw" imgClass="aspect-square" className="border-t-[1.5px] border-[#1A1A18]" onOpen={onOpen} />
+              <Cell item={items[2]} sizes="25vw" imgClass="aspect-square" className="border-t-[1.5px] border-gridOutline" onOpen={onOpen} />
             </div>
           </div>
-          <div className="grid grid-cols-2 border-t-[1.5px] border-[#1A1A18]">
+          <div className="grid grid-cols-2 border-t-[1.5px] border-gridOutline">
             <Cell item={items[3]} sizes="25vw" imgClass="aspect-square" onOpen={onOpen} />
-            <Cell item={items[4]} sizes="25vw" imgClass="aspect-square" className="border-l-[1.5px] border-[#1A1A18]" onOpen={onOpen} />
+            <Cell item={items[4]} sizes="25vw" imgClass="aspect-square" className="border-l-[1.5px] border-gridOutline" onOpen={onOpen} />
           </div>
-          <Cell item={items[5]} sizes="100vw" imgClass="aspect-[16/9]" className="border-t-[1.5px] border-[#1A1A18]" onOpen={onOpen} />
+          <Cell item={items[5]} sizes="100vw" imgClass="aspect-[16/9]" className="border-t-[1.5px] border-gridOutline" onOpen={onOpen} />
         </div>
       );
 
@@ -173,7 +173,7 @@ function BentoSection({
       return (
         <div className={outer}>
           <Cell item={items[0]} sizes="100vw" imgClass="aspect-[16/9]" onOpen={onOpen} />
-          <Cell item={items[1]} sizes="100vw" imgClass="aspect-[16/9]" className="border-t-[1.5px] border-[#1A1A18]" onOpen={onOpen} />
+          <Cell item={items[1]} sizes="100vw" imgClass="aspect-[16/9]" className="border-t-[1.5px] border-gridOutline" onOpen={onOpen} />
         </div>
       );
 
@@ -181,7 +181,7 @@ function BentoSection({
       return (
         <div className={`${outer} grid grid-cols-2`}>
           <Cell item={items[0]} sizes="50vw" imgClass="aspect-[3/4]" onOpen={onOpen} />
-          <Cell item={items[1]} sizes="50vw" imgClass="aspect-[3/4]" className="border-l-[1.5px] border-[#1A1A18]" onOpen={onOpen} />
+          <Cell item={items[1]} sizes="50vw" imgClass="aspect-[3/4]" className="border-l-[1.5px] border-gridOutline" onOpen={onOpen} />
         </div>
       );
 
@@ -189,8 +189,8 @@ function BentoSection({
       return (
         <div className={`${outer} grid grid-cols-3`}>
           <Cell item={items[0]} sizes="33vw" imgClass="aspect-[3/4]" onOpen={onOpen} />
-          <Cell item={items[1]} sizes="33vw" imgClass="aspect-[3/4]" className="border-l-[1.5px] border-[#1A1A18]" onOpen={onOpen} />
-          <Cell item={items[2]} sizes="33vw" imgClass="aspect-[3/4]" className="border-l-[1.5px] border-[#1A1A18]" onOpen={onOpen} />
+          <Cell item={items[1]} sizes="33vw" imgClass="aspect-[3/4]" className="border-l-[1.5px] border-gridOutline" onOpen={onOpen} />
+          <Cell item={items[2]} sizes="33vw" imgClass="aspect-[3/4]" className="border-l-[1.5px] border-gridOutline" onOpen={onOpen} />
         </div>
       );
 
@@ -198,21 +198,21 @@ function BentoSection({
       return (
         <div className={outer}>
           <Cell item={items[0]} sizes="100vw" imgClass="aspect-[16/9]" onOpen={onOpen} />
-          <Cell item={items[1]} sizes="100vw" imgClass="aspect-[16/9]" className="border-t-[1.5px] border-[#1A1A18]" onOpen={onOpen} />
-          <Cell item={items[2]} sizes="100vw" imgClass="aspect-[16/9]" className="border-t-[1.5px] border-[#1A1A18]" onOpen={onOpen} />
+          <Cell item={items[1]} sizes="100vw" imgClass="aspect-[16/9]" className="border-t-[1.5px] border-gridOutline" onOpen={onOpen} />
+          <Cell item={items[2]} sizes="100vw" imgClass="aspect-[16/9]" className="border-t-[1.5px] border-gridOutline" onOpen={onOpen} />
         </div>
       );
 
     case "four-grid-2x2":
       return (
         <div className={outer}>
-          <div className="grid grid-cols-2 border-b-[1.5px] border-[#1A1A18]">
+          <div className="grid grid-cols-2 border-b-[1.5px] border-gridOutline">
             <Cell item={items[0]} sizes="50vw" imgClass="aspect-square" onOpen={onOpen} />
-            <Cell item={items[1]} sizes="50vw" imgClass="aspect-square" className="border-l-[1.5px] border-[#1A1A18]" onOpen={onOpen} />
+            <Cell item={items[1]} sizes="50vw" imgClass="aspect-square" className="border-l-[1.5px] border-gridOutline" onOpen={onOpen} />
           </div>
           <div className="grid grid-cols-2">
             <Cell item={items[2]} sizes="50vw" imgClass="aspect-square" onOpen={onOpen} />
-            <Cell item={items[3]} sizes="50vw" imgClass="aspect-square" className="border-l-[1.5px] border-[#1A1A18]" onOpen={onOpen} />
+            <Cell item={items[3]} sizes="50vw" imgClass="aspect-square" className="border-l-[1.5px] border-gridOutline" onOpen={onOpen} />
           </div>
         </div>
       );
@@ -220,10 +220,10 @@ function BentoSection({
     case "four-top3-bottom1":
       return (
         <div className={outer}>
-          <div className="grid grid-cols-3 border-b-[1.5px] border-[#1A1A18]">
+          <div className="grid grid-cols-3 border-b-[1.5px] border-gridOutline">
             <Cell item={items[0]} sizes="33vw" imgClass="aspect-square" onOpen={onOpen} />
-            <Cell item={items[1]} sizes="33vw" imgClass="aspect-square" className="border-l-[1.5px] border-[#1A1A18]" onOpen={onOpen} />
-            <Cell item={items[2]} sizes="33vw" imgClass="aspect-square" className="border-l-[1.5px] border-[#1A1A18]" onOpen={onOpen} />
+            <Cell item={items[1]} sizes="33vw" imgClass="aspect-square" className="border-l-[1.5px] border-gridOutline" onOpen={onOpen} />
+            <Cell item={items[2]} sizes="33vw" imgClass="aspect-square" className="border-l-[1.5px] border-gridOutline" onOpen={onOpen} />
           </div>
           <Cell item={items[3]} sizes="100vw" imgClass="aspect-[16/9]" onOpen={onOpen} />
         </div>
@@ -233,10 +233,10 @@ function BentoSection({
       return (
         <div className={outer}>
           <Cell item={items[0]} sizes="100vw" imgClass="aspect-[16/9]" onOpen={onOpen} />
-          <div className="grid grid-cols-3 border-t-[1.5px] border-[#1A1A18]">
+          <div className="grid grid-cols-3 border-t-[1.5px] border-gridOutline">
             <Cell item={items[1]} sizes="33vw" imgClass="aspect-square" onOpen={onOpen} />
-            <Cell item={items[2]} sizes="33vw" imgClass="aspect-square" className="border-l-[1.5px] border-[#1A1A18]" onOpen={onOpen} />
-            <Cell item={items[3]} sizes="33vw" imgClass="aspect-square" className="border-l-[1.5px] border-[#1A1A18]" onOpen={onOpen} />
+            <Cell item={items[2]} sizes="33vw" imgClass="aspect-square" className="border-l-[1.5px] border-gridOutline" onOpen={onOpen} />
+            <Cell item={items[3]} sizes="33vw" imgClass="aspect-square" className="border-l-[1.5px] border-gridOutline" onOpen={onOpen} />
           </div>
         </div>
       );
@@ -244,14 +244,14 @@ function BentoSection({
     case "five-top3-bottom2":
       return (
         <div className={outer}>
-          <div className="grid grid-cols-3 border-b-[1.5px] border-[#1A1A18]">
+          <div className="grid grid-cols-3 border-b-[1.5px] border-gridOutline">
             <Cell item={items[0]} sizes="33vw" imgClass="aspect-square" onOpen={onOpen} />
-            <Cell item={items[1]} sizes="33vw" imgClass="aspect-square" className="border-l-[1.5px] border-[#1A1A18]" onOpen={onOpen} />
-            <Cell item={items[2]} sizes="33vw" imgClass="aspect-square" className="border-l-[1.5px] border-[#1A1A18]" onOpen={onOpen} />
+            <Cell item={items[1]} sizes="33vw" imgClass="aspect-square" className="border-l-[1.5px] border-gridOutline" onOpen={onOpen} />
+            <Cell item={items[2]} sizes="33vw" imgClass="aspect-square" className="border-l-[1.5px] border-gridOutline" onOpen={onOpen} />
           </div>
           <div className="grid grid-cols-2">
             <Cell item={items[3]} sizes="50vw" imgClass="aspect-square" onOpen={onOpen} />
-            <Cell item={items[4]} sizes="50vw" imgClass="aspect-square" className="border-l-[1.5px] border-[#1A1A18]" onOpen={onOpen} />
+            <Cell item={items[4]} sizes="50vw" imgClass="aspect-square" className="border-l-[1.5px] border-gridOutline" onOpen={onOpen} />
           </div>
         </div>
       );
@@ -331,8 +331,8 @@ function Lightbox({ src, onClose }: { src: string; onClose: () => void }) {
   }, [onClose]);
 
   return (
-    <div className="fixed inset-0 z-[100] bg-black/90 flex items-center justify-center" onClick={onClose}>
-      <button className="absolute top-5 right-6 text-white/70 hover:text-white text-3xl leading-none font-light" onClick={onClose} aria-label="Close">×</button>
+    <div className="fixed inset-0 z-[100] bg-accent/90 flex items-center justify-center" onClick={onClose}>
+      <button className="absolute top-5 right-6 text-accent-text/70 hover:text-accent-text text-3xl leading-none font-light" onClick={onClose} aria-label="Close">×</button>
       <div className="relative max-w-[90vw] max-h-[90vh] w-full h-full" onClick={(e) => e.stopPropagation()}>
         <SmartFillImage src={src} alt="" objectFit="contain" sizes="90vw" priority />
       </div>

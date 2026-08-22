@@ -37,7 +37,7 @@ export default async function AboutPage() {
         <section className="pt-24 pb-20 grid grid-cols-2 gap-16 items-start">
           {/* Polaroid — frame sizes itself to the photo's own aspect ratio, no cropping */}
           <div className="flex justify-start">
-            <div className="bg-white p-4 pb-10 shadow-xl rotate-[-2deg] w-96 shrink-0">
+            <div className="bg-bg p-4 pb-10 shadow-xl rotate-[-2deg] w-96 shrink-0">
               <div
                 className="relative w-full overflow-hidden bg-border/20"
                 style={{
@@ -125,7 +125,7 @@ export default async function AboutPage() {
               <Link
                 key={f}
                 href="/"
-                className="font-satoshi text-xs tracking-wide px-5 py-2 rounded-full border-[1.5px] border-[#1A1A18] text-[#1A1A18] hover:bg-[#1A1A18] hover:text-[#F0F1ED] transition-colors duration-200"
+                className="font-satoshi text-xs tracking-wide px-5 py-2 rounded-full border-[1.5px] border-filterOutline text-filterText hover:bg-filterHoverBg hover:text-filterHoverText transition-colors duration-200"
               >
                 {f}
               </Link>
