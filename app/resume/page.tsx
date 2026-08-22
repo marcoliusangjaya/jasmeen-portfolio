@@ -127,13 +127,23 @@ export default async function ResumePage() {
   );
 }
 
+// Strips scheme/www/trailing-slash for a cleaner display label, e.g.
+// "https://www.linkedin.com/in/jasmeen-shaqueita/" -> "linkedin.com/jasmeen-shaqueita"
+function formatUrlLabel(url: string) {
+  return url
+    .replace(/^https?:\/\//, "")
+    .replace(/^www\./, "")
+    .replace(/\/$/, "")
+    .replace(/^linkedin\.com\/in\//, "linkedin.com/");
+}
+
 function Header({ resume }: { resume: ResumeData }) {
   const contactParts: { label: string; href: string }[] = [];
   if (resume.email) contactParts.push({ label: resume.email, href: `mailto:${resume.email}` });
   if (resume.portfolioUrl)
-    contactParts.push({ label: resume.portfolioUrl.replace(/^https?:\/\//, ""), href: resume.portfolioUrl });
+    contactParts.push({ label: formatUrlLabel(resume.portfolioUrl), href: resume.portfolioUrl });
   if (resume.linkedinUrl)
-    contactParts.push({ label: resume.linkedinUrl.replace(/^https?:\/\//, ""), href: resume.linkedinUrl });
+    contactParts.push({ label: formatUrlLabel(resume.linkedinUrl), href: resume.linkedinUrl });
 
   return (
     <div className="mb-16 text-center">
