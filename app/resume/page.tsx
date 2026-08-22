@@ -55,7 +55,7 @@ export default async function ResumePage() {
   return (
     <>
       <main className="px-[120px] pt-32 pb-24">
-        <div className="max-w-2xl mx-auto">
+        <div className="max-w-4xl mx-auto">
           {hasContent ? (
             <>
               <Header resume={resume} />
@@ -136,7 +136,7 @@ function Header({ resume }: { resume: ResumeData }) {
     contactParts.push({ label: resume.linkedinUrl.replace(/^https?:\/\//, ""), href: resume.linkedinUrl });
 
   return (
-    <div className="mb-16">
+    <div className="mb-16 text-center">
       {resume.name && (
         <h1 className="font-cabinet text-3xl md:text-4xl font-medium mb-3">{resume.name}</h1>
       )}
