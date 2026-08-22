@@ -108,6 +108,8 @@ export default async function ResumePage() {
                   <a
                     href={resume.resumeFile.url}
                     download={resume.resumeFile.originalFilename ?? "resume.pdf"}
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="font-satoshi text-xs tracking-widest uppercase px-6 py-3 rounded-full border-[1.5px] border-text text-text hover:bg-text hover:text-bg transition-colors duration-200"
                   >
                     Download Resume
