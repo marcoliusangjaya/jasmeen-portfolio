@@ -41,7 +41,7 @@ export default function Nav({ logo }: { logo: HeaderLogo | null }) {
           : "bg-headerBg border-headerBorder text-headerText"
       }`}
     >
-      <nav className="flex items-center justify-between px-[120px] py-2.5">
+      <nav className="flex items-center justify-between px-6 sm:px-10 md:px-16 lg:px-[120px] py-2.5">
         <Link href="/" className="shrink-0">
           {logo?.url &&
             (isGif(logo.url) ? (
@@ -49,7 +49,7 @@ export default function Nav({ logo }: { logo: HeaderLogo | null }) {
               <img
                 src={logo.url}
                 alt="Logo"
-                className="h-14 w-auto"
+                className="h-10 md:h-14 w-auto"
                 style={{ filter: overHero ? "invert(1)" : "none" }}
               />
             ) : (
@@ -58,7 +58,7 @@ export default function Nav({ logo }: { logo: HeaderLogo | null }) {
                 alt="Logo"
                 width={logo.width ?? 160}
                 height={logo.height ?? 48}
-                className="h-14 w-auto"
+                className="h-10 md:h-14 w-auto"
                 // The uploaded logo is expected to be a plain black mark on a
                 // transparent background — inverting it gives white for free
                 // over the dark hero, with no separate light-mode asset needed.
@@ -68,12 +68,12 @@ export default function Nav({ logo }: { logo: HeaderLogo | null }) {
             ))}
         </Link>
 
-        <ul className="flex items-center gap-8">
+        <ul className="flex items-center gap-3 sm:gap-6 md:gap-8">
           {links.map(({ label, href }) => (
             <li key={label}>
               <Link
                 href={href}
-                className="font-satoshi text-base relative after:absolute after:left-0 after:-bottom-0.5 after:h-px after:w-0 after:bg-current after:transition-all after:duration-300 hover:after:w-full"
+                className="font-satoshi text-sm md:text-base relative after:absolute after:left-0 after:-bottom-0.5 after:h-px after:w-0 after:bg-current after:transition-all after:duration-300 hover:after:w-full"
               >
                 {label}
               </Link>

@@ -28,11 +28,11 @@ export default async function Home() {
 
 function Hero({ tagline }: { tagline: string }) {
   return (
-    <section className="min-h-[80vh] flex flex-col items-center justify-center px-[120px] text-center bg-accent">
-      <h1 className="font-cabinet text-6xl md:text-8xl font-medium tracking-wide text-accent-text">
+    <section className="min-h-[80vh] flex flex-col items-center justify-center px-6 sm:px-10 md:px-16 lg:px-[120px] text-center bg-accent">
+      <h1 className="font-cabinet text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-medium tracking-wide text-accent-text">
         Jasmeen Shaqueita
       </h1>
-      <p className="font-satoshi text-base md:text-lg text-accent-text/70 max-w-xl mt-10">
+      <p className="font-satoshi text-sm sm:text-base md:text-lg text-accent-text/70 max-w-xl mt-6 md:mt-10">
         {tagline}
       </p>
     </section>

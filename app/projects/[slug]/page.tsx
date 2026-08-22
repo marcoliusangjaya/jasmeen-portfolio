@@ -64,11 +64,11 @@ export default async function ProjectPage({
     <>
       <main>
         {/* Title block */}
-        <section className="px-[120px] pt-12 pb-16">
-          <div className="flex items-start justify-between gap-8 mb-6">
+        <section className="px-6 sm:px-10 md:px-16 lg:px-[120px] pt-10 md:pt-12 pb-12 md:pb-16">
+          <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-6 md:gap-8 mb-6">
             <div className="flex flex-col max-w-2xl">
               {/* Category pills */}
-              <div className="flex flex-wrap gap-2 mb-10">
+              <div className="flex flex-wrap gap-2 mb-6 md:mb-10">
                 {(project.categories ?? []).map((cat) => (
                   <span
                     key={cat}
@@ -79,17 +79,17 @@ export default async function ProjectPage({
                 ))}
               </div>
               <div className="flex flex-col gap-3">
-                <h1 className="font-cabinet text-4xl md:text-5xl font-medium leading-tight">
+                <h1 className="font-cabinet text-3xl sm:text-4xl md:text-5xl font-medium leading-tight">
                   {project.title}
                 </h1>
                 {project.subheading && (
-                  <p className="font-satoshi text-lg text-text/60 leading-snug">
+                  <p className="font-satoshi text-base md:text-lg text-text/60 leading-snug">
                     {project.subheading}
                   </p>
                 )}
               </div>
             </div>
-            <div className="text-right shrink-0 pt-1">
+            <div className="text-left md:text-right shrink-0 md:pt-1">
               {project.location && (
                 <p className="font-satoshi text-sm text-text/60">{project.location}</p>
               )}
@@ -97,7 +97,7 @@ export default async function ProjectPage({
                 <p className="font-satoshi text-sm text-text/40 mt-0.5">{project.date}</p>
               )}
               {project.tools && project.tools.length > 0 && (
-                <div className="flex flex-wrap justify-end gap-1.5 mt-3 max-w-[220px]">
+                <div className="flex flex-wrap justify-start md:justify-end gap-1.5 mt-3 max-w-full md:max-w-[220px]">
                   {project.tools.map((tool) => (
                     <span
                       key={tool}
@@ -161,27 +161,27 @@ export default async function ProjectPage({
 
 function OtherWork({ projects }: { projects: Project[] }) {
   return (
-    <section className="px-[120px] py-20">
-      <h2 className="font-cabinet text-2xl font-medium mb-12 text-center">
+    <section className="px-6 sm:px-10 md:px-16 lg:px-[120px] py-14 md:py-20">
+      <h2 className="font-cabinet text-xl md:text-2xl font-medium mb-8 md:mb-12 text-center">
         Other Work
       </h2>
       <div className="flex justify-center">
-        <div className="grid grid-cols-2 w-1/2">
+        <div className="grid grid-cols-1 sm:grid-cols-2 w-full max-w-sm sm:max-w-none sm:w-1/2">
           {projects.slice(0, 2).map((p, index) => (
             <Link
               key={p._id}
               href={`/projects/${p.slug}`}
               className={`group bg-bg aspect-square flex flex-col overflow-hidden transition-opacity duration-300
                 border-[1.5px] border-gridOutline
-                ${index > 0 ? "border-l-0" : ""}`}
+                ${index > 0 ? "border-t-0 sm:border-t-[1.5px] sm:border-l-0" : ""}`}
             >
               <div className="h-full flex flex-col">
-                <div className="flex items-start justify-between px-3 pt-3 pb-1 gap-1 shrink-0">
+                <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between px-3 pt-3 pb-1 gap-0.5 sm:gap-1 shrink-0">
                   <span className="font-satoshi text-[9px] tracking-widest uppercase text-gridText/60 leading-tight">
                     {(p.categories ?? []).join(" · ")}
                   </span>
                   {p.location && (
-                    <span className="font-satoshi text-[9px] text-gridText/40 text-right shrink-0">
+                    <span className="font-satoshi text-[9px] text-gridText/40 sm:text-right shrink-0">
                       {p.location}
                     </span>
                   )}

@@ -13,8 +13,8 @@ export default async function ContactPage() {
 
   return (
     <>
-      <main className="px-[120px] pt-32 pb-24">
-        <h1 className="font-cabinet text-4xl md:text-5xl font-medium mb-12">
+      <main className="px-6 sm:px-10 md:px-16 lg:px-[120px] pt-24 md:pt-32 pb-16 md:pb-24">
+        <h1 className="font-cabinet text-3xl sm:text-4xl md:text-5xl font-medium mb-8 md:mb-12">
           Get In Touch
         </h1>
 

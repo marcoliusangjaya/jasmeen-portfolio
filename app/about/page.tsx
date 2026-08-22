@@ -32,12 +32,12 @@ export default async function AboutPage() {
 
   return (
     <>
-      <main className="px-[120px]">
+      <main className="px-6 sm:px-10 md:px-16 lg:px-[120px]">
         {/* Top — polaroid left, name + bio right */}
-        <section className="pt-24 pb-20 grid grid-cols-2 gap-16 items-start">
+        <section className="pt-16 md:pt-24 pb-12 md:pb-20 grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16 items-start">
           {/* Polaroid — frame sizes itself to the photo's own aspect ratio, no cropping */}
-          <div className="flex justify-start">
-            <div className="bg-bg p-4 pb-10 shadow-xl rotate-[-2deg] w-96 shrink-0">
+          <div className="flex justify-center md:justify-start">
+            <div className="bg-bg p-4 pb-10 shadow-xl rotate-[-2deg] w-full max-w-xs md:w-96 md:max-w-none shrink-0">
               <div
                 className="relative w-full overflow-hidden bg-border/20"
                 style={{
@@ -52,7 +52,7 @@ export default async function AboutPage() {
                     src={about.polaroidPhoto.url}
                     alt={about.name ?? "Jasmeen"}
                     objectFit="cover"
-                    sizes="384px"
+                    sizes="(max-width: 768px) 320px, 384px"
                     priority
                   />
                 ) : (
@@ -64,7 +64,7 @@ export default async function AboutPage() {
 
           {/* Name + bio */}
           <div className="flex flex-col gap-6">
-            <h1 className="font-cabinet text-3xl md:text-4xl font-medium tracking-widest uppercase leading-tight">
+            <h1 className="font-cabinet text-2xl sm:text-3xl md:text-4xl font-medium tracking-widest uppercase leading-tight">
               {about.name ?? "Jasmeen Shaqueita"}
             </h1>
             <p className="font-satoshi text-base leading-relaxed text-left text-text/80">
@@ -75,7 +75,7 @@ export default async function AboutPage() {
         </section>
 
         {/* Tools + Education Credentials */}
-        <section className="py-14 grid grid-cols-2 gap-16 border-t border-border">
+        <section className="py-10 md:py-14 grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16 border-t border-border">
           <div className="flex flex-col gap-7">
             {(about.toolsByCategory ?? []).map((tc, i) => (
               <div key={i} className="flex flex-col gap-1">
@@ -119,7 +119,7 @@ export default async function AboutPage() {
         </section>
 
         {/* Filter pills — link to homepage */}
-        <section className="py-14 border-t border-border">
+        <section className="py-10 md:py-14 border-t border-border">
           <div className="flex flex-wrap gap-3">
             {filters.map((f) => (
               <Link

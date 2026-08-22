@@ -357,7 +357,7 @@ export default function ContentBlocks({
     <>
       <div className="py-12">
         {sections.length > 0 && (
-          <div className="px-[220px]">
+          <div className="px-6 sm:px-10 md:px-20 lg:px-[220px]">
             {sections.map((section, i) => (
               <BentoSection key={i} section={section} isFirst={i === 0} onOpen={setLightboxSrc} />
             ))}

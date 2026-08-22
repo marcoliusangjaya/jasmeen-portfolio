@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { SmartFillImage } from "./SmartImage";
 
@@ -20,8 +20,25 @@ export type Project = {
 // Flip this one value to revert.
 const DIM_STYLE: "fade" | "solid" = "solid";
 
+// Matches the grid-cols-2 md:grid-cols-3 lg:grid-cols-4 breakpoints below —
+// tracked in JS because the border/box-shadow logic needs to know the
+// *actual* column count to suppress the right sides at each breakpoint.
+function columnsForWidth(width: number) {
+  if (width < 768) return 2;
+  if (width < 1024) return 3;
+  return 4;
+}
+
 export default function ProjectGrid({ projects }: { projects: Project[] }) {
   const [active, setActive] = useState<string | null>(null);
+  const [cols, setCols] = useState(4);
+
+  useEffect(() => {
+    const onResize = () => setCols(columnsForWidth(window.innerWidth));
+    onResize();
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
+  }, []);
 
   const filters = Array.from(
     new Set(projects.flatMap((p) => p.categories ?? []).filter(Boolean))
@@ -46,9 +63,9 @@ export default function ProjectGrid({ projects }: { projects: Project[] }) {
         });
 
   return (
-    <section className="px-[120px] py-16">
+    <section className="px-6 sm:px-10 md:px-16 lg:px-[120px] py-10 md:py-16">
       {/* Filters */}
-      <div className="flex flex-wrap gap-3 mb-12">
+      <div className="flex flex-wrap gap-3 mb-8 md:mb-12">
         {filters.map((f) => (
           <button
             key={f}
@@ -65,15 +82,15 @@ export default function ProjectGrid({ projects }: { projects: Project[] }) {
       </div>
 
       {/* Grid */}
-      <div className="grid grid-cols-4">
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
         {displayProjects.map((project, index) => {
-          const col = index % 4;
-          const row = Math.floor(index / 4);
+          const col = index % cols;
+          const row = Math.floor(index / cols);
           const dimmed = active !== null && !(project.categories ?? []).includes(active);
           const highlighted = active !== null && !dimmed;
 
           const leftNeighbour = col > 0 ? displayProjects[index - 1] : null;
-          const topNeighbour  = row > 0 ? displayProjects[index - 4] : null;
+          const topNeighbour  = row > 0 ? displayProjects[index - cols] : null;
 
           const isHL = (p: typeof displayProjects[0] | null | undefined) =>
             !!p && active !== null && !!(p.categories ?? []).includes(active);
@@ -106,13 +123,13 @@ export default function ProjectGrid({ projects }: { projects: Project[] }) {
                 <div className="absolute inset-0 bg-filteredBlock z-20" />
               )}
               <div className="h-full flex flex-col">
-                {/* Meta row */}
-                <div className="flex items-start justify-between px-3 pt-3 pb-1 gap-1 shrink-0">
+                {/* Meta row — stacks on narrow cards so location can't get clipped */}
+                <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between px-3 pt-3 pb-1 gap-0.5 sm:gap-1 shrink-0">
                   <span className="font-satoshi text-[10px] tracking-widest uppercase text-gridText/60 leading-tight">
                     {(project.categories ?? []).join(" · ")}
                   </span>
                   {project.location && (
-                    <span className="font-satoshi text-[10px] text-gridText/40 text-right shrink-0">
+                    <span className="font-satoshi text-[10px] text-gridText/40 sm:text-right shrink-0">
                       {project.location}
                     </span>
                   )}

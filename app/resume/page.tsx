@@ -54,7 +54,7 @@ export default async function ResumePage() {
 
   return (
     <>
-      <main className="px-[120px] pt-32 pb-24">
+      <main className="px-6 sm:px-10 md:px-16 lg:px-[120px] pt-24 md:pt-32 pb-16 md:pb-24">
         <div className="max-w-4xl mx-auto">
           {hasContent ? (
             <>
@@ -146,12 +146,12 @@ function Header({ resume }: { resume: ResumeData }) {
     contactParts.push({ label: formatUrlLabel(resume.linkedinUrl), href: resume.linkedinUrl });
 
   return (
-    <div className="mb-16 text-center">
+    <div className="mb-10 md:mb-16 text-center">
       {resume.name && (
-        <h1 className="font-cabinet text-3xl md:text-4xl font-medium mb-3">{resume.name}</h1>
+        <h1 className="font-cabinet text-2xl sm:text-3xl md:text-4xl font-medium mb-3">{resume.name}</h1>
       )}
       {contactParts.length > 0 && (
-        <p className="font-satoshi text-sm text-text/60">
+        <p className="font-satoshi text-xs sm:text-sm text-text/60 flex flex-wrap justify-center gap-x-1">
           {contactParts.map((c, i) => (
             <span key={c.href}>
               {i > 0 && " | "}
@@ -168,8 +168,8 @@ function Header({ resume }: { resume: ResumeData }) {
 
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
   return (
-    <section className="mb-14">
-      <h2 className="font-cabinet text-xl font-medium tracking-wide uppercase pb-2 mb-6 border-b border-border">
+    <section className="mb-10 md:mb-14">
+      <h2 className="font-cabinet text-lg md:text-xl font-medium tracking-wide uppercase pb-2 mb-6 border-b border-border">
         {title}
       </h2>
       {children}
@@ -248,7 +248,7 @@ function EducationRow({ entry }: { entry: EducationEntry }) {
   const hasHonors = entry.honors && entry.honors.length > 0;
   return (
     <div>
-      <div className="flex items-baseline justify-between gap-4">
+      <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-0.5 sm:gap-4">
         <EntryHeading entry={entry} label={entry.institution} />
         {entry.dates && (
           <span className="font-satoshi text-sm text-text/40 shrink-0">{entry.dates}</span>
@@ -271,13 +271,13 @@ function EducationRow({ entry }: { entry: EducationEntry }) {
 function ExperienceRow({ entry }: { entry: ExperienceEntry }) {
   return (
     <div>
-      <div className="flex items-baseline justify-between gap-4">
+      <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-0.5 sm:gap-4">
         <EntryHeading entry={entry} label={entry.organization} />
         {entry.location && (
           <span className="font-satoshi text-sm text-text/40 shrink-0">{entry.location}</span>
         )}
       </div>
-      <div className="flex items-baseline justify-between gap-4 mb-3">
+      <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-0.5 sm:gap-4 mb-3">
         {entry.role && (
           <span className="font-satoshi text-sm italic text-text/70">{entry.role}</span>
         )}

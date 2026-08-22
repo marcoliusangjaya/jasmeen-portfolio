@@ -9,7 +9,7 @@ export default async function Footer() {
   const links: SocialLink[] = data?.socialLinks ?? [];
 
   return (
-    <footer className="py-14 px-[120px] flex justify-end bg-footerBg">
+    <footer className="py-14 px-6 sm:px-10 md:px-16 lg:px-[120px] flex justify-end bg-footerBg">
       <div className="w-full max-w-xs">
         <h2 className="font-cabinet text-xl text-footerText mb-6">Reach Out</h2>
 
