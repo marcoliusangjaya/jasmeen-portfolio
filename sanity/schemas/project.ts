@@ -368,8 +368,9 @@ export default defineType({
     }),
     defineField({
       name: "otherWork",
-      title: "Other Work",
-      description: "Pick up to 2 related projects to show at the bottom",
+      title: "Other Work (legacy)",
+      description: "No longer used — Other Work is now picked automatically to rotate through every project",
+      hidden: true,
       type: "array",
       of: [{ type: "reference", to: [{ type: "project" }] }],
       validation: (r) => r.max(2),

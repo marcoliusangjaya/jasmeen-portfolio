@@ -6,7 +6,7 @@ import Footer from "@/components/Footer";
 export const revalidate = 60;
 
 const DEFAULT_TAGLINE =
-  "Multidisciplinary creative working across brand identity, experience design, and creative technology.";
+  "Brand strategist and designer working across identity, marketing, and experience design.";
 
 export default async function Home() {
   const [projects, heroData]: [Project[], { heroTagline?: string } | null] =

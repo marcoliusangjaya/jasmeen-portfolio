@@ -41,7 +41,6 @@ type ProjectDetail = Project & {
   relatedLinks?: RelatedLink[];
   sections?: Section[];
   mockupRows?: MockupRow[];
-  otherWork?: Project[];
 };
 
 export async function generateStaticParams() {
@@ -49,16 +48,44 @@ export async function generateStaticParams() {
   return projects.map((p) => ({ slug: p.slug }));
 }
 
+// Simple deterministic string hash (djb2-ish) — used to shuffle the project
+// order once, consistently, rather than pulling Math.random() per request.
+function hashString(s: string): number {
+  let h = 0;
+  for (let i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) | 0;
+  return h;
+}
+
+// Picks 2 "Other Work" projects per page automatically: the pairing comes
+// from a fixed pseudo-random shuffle of all projects (so it doesn't read as
+// "next in the admin-curated list"), then takes the next 2 after the
+// current project in that shuffled, wrapping order. Because every project
+// gets a fixed position in one cycle, every project is guaranteed to show
+// up as someone's Other Work — no manual curation needed.
+function getOtherWork(allProjects: Project[], currentSlug: string): Project[] {
+  const shuffled = [...allProjects].sort((a, b) => hashString(a._id) - hashString(b._id));
+  const idx = shuffled.findIndex((p) => p.slug === currentSlug);
+  if (idx === -1) return [];
+  const others: Project[] = [];
+  for (let offset = 1; offset < shuffled.length && others.length < 2; offset++) {
+    others.push(shuffled[(idx + offset) % shuffled.length]);
+  }
+  return others;
+}
+
 export default async function ProjectPage({
   params,
 }: {
   params: { slug: string };
 }) {
-  const project: ProjectDetail = await client.fetch(projectBySlugQuery, {
-    slug: params.slug,
-  });
+  const [project, allProjects]: [ProjectDetail, Project[]] = await Promise.all([
+    client.fetch(projectBySlugQuery, { slug: params.slug }),
+    client.fetch(projectsQuery),
+  ]);
 
   if (!project) notFound();
+
+  const otherWork = getOtherWork(allProjects, params.slug);
 
   return (
     <>
@@ -148,9 +175,7 @@ export default async function ProjectPage({
         />
 
         {/* Other Work */}
-        {project.otherWork && project.otherWork.length > 0 && (
-          <OtherWork projects={project.otherWork} />
-        )}
+        {otherWork.length > 0 && <OtherWork projects={otherWork} />}
       </main>
       <Footer />
     </>

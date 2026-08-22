@@ -59,15 +59,6 @@ export const projectBySlugQuery = groq`
           "height": asset->metadata.dimensions.height
         }
       )
-    },
-    "otherWork": otherWork[]-> {
-      _id,
-      title,
-      "slug": slug.current,
-      "categories": coalesce(categories, array::compact([category])),
-      location,
-      "coverImage": thumbnailImage.asset->url,
-      "coverVideo": coverVideo.asset->url
     }
   }
 `;
