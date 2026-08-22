@@ -55,7 +55,7 @@ export default async function ResumePage() {
   return (
     <>
       <main className="px-[120px] pt-32 pb-24">
-        <div className="max-w-3xl mx-auto">
+        <div className="max-w-2xl mx-auto">
           {hasContent ? (
             <>
               <Header resume={resume} />
@@ -167,13 +167,18 @@ function Section({ title, children }: { title: string; children: React.ReactNode
   );
 }
 
-// Wraps children in a Link (linked project takes priority) or a plain <a>,
-// falling back to no link at all when neither is set.
-function EntryLink({ entry, children }: { entry: EntryLink; children: React.ReactNode }) {
+// Org/institution heading — bold + underlined whenever it's actually a link
+// (project ref or external URL) so it's unmistakable, plain otherwise.
+function EntryHeading({ entry, label }: { entry: EntryLink; label?: string }) {
+  const isLinked = !!(entry.linkedProject?.slug || entry.externalUrl);
+  const textClass = `font-cabinet text-lg ${
+    isLinked ? "font-bold underline decoration-2 underline-offset-4" : "font-medium"
+  }`;
+
   if (entry.linkedProject?.slug) {
     return (
       <Link href={`/projects/${entry.linkedProject.slug}`} className="hover:text-text/60 transition-colors">
-        {children}
+        <span className={textClass}>{label}</span>
       </Link>
     );
   }
@@ -185,17 +190,17 @@ function EntryLink({ entry, children }: { entry: EntryLink; children: React.Reac
         rel="noopener noreferrer"
         className="hover:text-text/60 transition-colors"
       >
-        {children}
+        <span className={textClass}>{label}</span>
       </a>
     );
   }
-  return <>{children}</>;
+  return <span className={textClass}>{label}</span>;
 }
 
 // Renders an inline "link" mark from Portable Text (project ref takes
 // priority over an external URL) as an underlined link within running text.
 function InlineLinkMark({ value, children }: { value?: EntryLink; children: React.ReactNode }) {
-  const linkClass = "underline decoration-1 underline-offset-2 hover:text-text/50 transition-colors";
+  const linkClass = "font-semibold underline decoration-1 underline-offset-2 hover:text-text/60 transition-colors";
   if (value?.linkedProject?.slug) {
     return (
       <Link href={`/projects/${value.linkedProject.slug}`} className={linkClass}>
@@ -234,9 +239,7 @@ function EducationRow({ entry }: { entry: EducationEntry }) {
   return (
     <div>
       <div className="flex items-baseline justify-between gap-4">
-        <EntryLink entry={entry}>
-          <span className="font-cabinet text-lg font-medium">{entry.institution}</span>
-        </EntryLink>
+        <EntryHeading entry={entry} label={entry.institution} />
         {entry.dates && (
           <span className="font-satoshi text-sm text-text/40 shrink-0">{entry.dates}</span>
         )}
@@ -259,9 +262,7 @@ function ExperienceRow({ entry }: { entry: ExperienceEntry }) {
   return (
     <div>
       <div className="flex items-baseline justify-between gap-4">
-        <EntryLink entry={entry}>
-          <span className="font-cabinet text-lg font-medium">{entry.organization}</span>
-        </EntryLink>
+        <EntryHeading entry={entry} label={entry.organization} />
         {entry.location && (
           <span className="font-satoshi text-sm text-text/40 shrink-0">{entry.location}</span>
         )}
